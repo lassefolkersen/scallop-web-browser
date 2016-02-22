@@ -31,14 +31,16 @@ load("/home/ubuntu/misc/2014-07-16 gene locations.rdata")
 
 
 #Generating random naming scheme until we figure out the actual names
+
+protein_pos_file<-"/srv/shiny-server/olink-improve/2016-02-22_protein_pos_data.rdata"
+load(protein_pos_file)
+
 p<-data.frame(
-	row.names=paste("Phenotype",as.character(1:83)), 
-	pheno_id=as.character(1:83), 
-	CHR = sample(c(1,1,1,1,2,2,2,2,3,3,3,4,4,5,5,5,6,6,7,7,8:22),83,replace=T),
+	row.names=data[,"short_name"], 
+	pheno_id=data[,"No_in_GWAS_files"], 
+	CHR = data[,"trait_chr"],
+	BP = data[,"trait_pos"],
 	stringsAsFactors=F)
-for(i in 1:nrow(p)){
-	p[i,"BP"]<-runif(min=100,max=cl[p[i,"CHR"]],1)
-}
 
 
 phenotypes_vector<-p[,"pheno_id"]
