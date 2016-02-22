@@ -130,6 +130,7 @@ server <- function(input, output) {
 				file_name<-paste(in_dir,"trimmed_pheno_",phenotype,".txt.gz",sep="")
 				data<-read.table(file_name, header=T,sep="\t",stringsAsFactors=FALSE)
 				data<-data[data[,"P"] < 10^-p_value_cutoff,]
+				if(nrow(data)==0)stop("No SNPs were significant at this p_value_cutoff")
 				data[,"neglogp"] <- -log10(data[,"P"])
 				
 				
@@ -184,8 +185,8 @@ server <- function(input, output) {
 				}
 				
 				
-				#drawing the frame-work circles (we want a P 0, 10^-8 and a 10^-15 circe
-				ch<-data.frame(offset=c(0,log10(15),log10(8)),lty=c(1,2,1),col=c("black","grey70","grey50"),stringsAsFactors=F)
+				#drawing the frame-work circles (we want a P 0, 10^-8 and a 'current-cutoff-circle)
+				ch<-data.frame(offset=c(0,log10(p_value_cutoff),log10(8)),lty=c(1,2,1),col=c("black","grey70","grey50"),stringsAsFactors=F)
 				for(k in 1:nrow(ch)){
 					res<-50
 					b<-seq(0,2*pi,length.out=res)
@@ -242,6 +243,28 @@ server <- function(input, output) {
 					tooCloseHere<-data[abs(data[,"snp_abs_pos"] - pos) <tooCloseDist,"SNP"]
 					tooClose<-c(tooClose,tooCloseHere)
 				}
+				
+				
+				#drawing a legend
+				min<-3
+				max<-4
+				scale = (length(cols)-1)/(max-min)
+				plot(NULL,xlim=c(-4,4),ylim=c(-4,4),ylab="",xlab="",xaxt="n",yaxt="n")
+				for (i in 1:(length(cols)-1)) {
+					y = (i-1)/scale + min
+					rect(-4,y,-3.5,y+1/scale, col=cols[i], border=NA)
+				}
+				for(chr in 1:nrow(chrLengths)){
+					f <- chrLengths[chr,"startsum"] / chrLengths[nrow(chrLengths),"endsum"]
+					text(x=-3.2, y=f+min * (max-min),chr,cex=0.4)
+				}
+
+				
+				
+				
+				
+				
+				
 			}else if(type == "download"){
 				return(NULL)
 				
