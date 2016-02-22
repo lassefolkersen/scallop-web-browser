@@ -389,7 +389,7 @@ ui <- fluidPage(
 				sliderInput("p_value_cutoff","P-value cutoff (log)",min=4,max=12,value=6,step=0.1)
 			),
 			conditionalPanel(
-				condition = "input.advanced",
+				condition = "input.advanced & (input.type == 'protein' | input.type == 'dna')",
 				sliderInput("top_label_count","#SNPs to label",min=3,max=30,value=3,step=1)
 			),
 			
@@ -398,7 +398,10 @@ ui <- fluidPage(
 			width=4
 		),
 		mainPanel(
-			plotOutput("mainPlot",width = "800px", height = "800px"),
+			conditionalPanel(
+				condition = "input.type == 'protein' | input.type == 'dna'",
+				plotOutput("mainPlot",width = "800px", height = "800px")
+			),
 			dataTableOutput("mainTable")
 			
 		)
@@ -406,5 +409,6 @@ ui <- fluidPage(
 )
 
 shinyApp(ui = ui, server = server)
+
 
 
