@@ -131,3 +131,13 @@ done
 
 	
 for ~/data/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+#get real names
