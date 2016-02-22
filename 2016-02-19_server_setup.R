@@ -145,10 +145,11 @@ rm(list=ls())
 library(biomaRt)
 data<-read.table("Olink_panel_IMPROVE_May_28th.txt",sep="\t",header=T,stringsAsFactors=F)
 
-
+data[,"short_name"]
 data[data[,"gene"]%in%"BNP","gene"]<-"NPPC"
 data[data[,"gene"]%in%"CTSL1","gene"]<-"CTSL"
 data[data[,"gene"]%in%"IL8","gene"]<-"CXCL8"
+
 rownames(data)<-data[,"gene"]
 mart = useEnsembl(biomart="ensembl", dataset="hsapiens_gene_ensembl")
 attributes<-c("hgnc_symbol","start_position","end_position","chromosome_name")
@@ -160,3 +161,47 @@ colnames(trait_pos)[2]<-"trait_pos"
 
 
 data<-cbind(data,trait_pos[rownames(data),])
+
+save(data,file="2016-02-22_protein_pos_data.rdata")
+
+
+
+
+
+
+
+
+
+
+
+#this is the shiny-server.conf file
+ubuntu@ip-172-31-31-1:/srv/shiny-server$ sudo vi index.html
+ubuntu@ip-172-31-31-1:/srv/shiny-server$ cd /etc/shiny-server/
+	ubuntu@ip-172-31-31-1:/etc/shiny-server$ ls
+shiny-server.conf
+ubuntu@ip-172-31-31-1:/etc/shiny-server$ sudo vi shiny-server.conf
+# Instruct Shiny Server to run applications as the user "shiny"
+run_as shiny;
+
+# Define a server that listens on port 3838
+server {
+	listen 80;
+	
+	# Define a location at the base URL
+	location / {
+		run_as ubuntu;
+		
+		# Host the directory of Shiny Apps stored in this directory
+		site_dir /srv/shiny-server;
+		
+		# Log all Shiny output to files in this directory
+		log_dir /var/log/shiny-server;
+		
+		# When a user visits the base URL rather than a particular application,
+		# an index of the applications available in this directory will be shown.
+		directory_index off;
+	}
+}
+~
+	~
+	

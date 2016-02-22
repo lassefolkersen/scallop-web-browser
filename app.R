@@ -16,7 +16,7 @@ maxPos<-sum(cl)#max(data[,"snp_abs_pos"],na.rm=T)
 base<-2
 
 #permissions
-accepted_users<-c("per.eriksson@ki.se","lassefolkersen@gmail.com","daniel.ziemek@pfizer.com","anders.malarstig@pfizer.com")
+accepted_users<-tolower(read.table("/home/ubuntu/misc/accepted_emails.txt",sep="\t",header=F,stringsAsFactors=F)[,1])
 
 #colouring scheme
 #Setting colours
