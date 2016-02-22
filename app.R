@@ -40,12 +40,8 @@ server <- function(input, output) {
 			distance <- isolate(input$distance)
 			p_value_cutoff <- isolate(input$p_value_cutoff)
 			top_label_count<-isolate(input$top_label_count)
-			if(type == "dna"){
-				phenotype <- isolate(input$phenotype_dna)
-			}else{
-				phenotype <- isolate(input$phenotype_protein)
-			}
-			
+			phenotype <- isolate(input$phenotype)
+
 			if(!tolower(email) %in% c("lassefolkersen@gmail.com","daniel.ziemek@pfizer.com","anders.malarstig@pfizer.com") ){
 				m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"plot",email)
 				m<-paste(m,collapse="\t")
@@ -261,8 +257,8 @@ ui <- fluidPage(
 		sidebarPanel(
 			
 			radioButtons("type", "Focus", 
-									 c("Genomic region"="dna",
-									 	"Plasma protein" = "protein",
+									 c("Cis-effects"="dna",
+									 	"Trans-effects" = "protein",
 									 	"Data download"="download"), 
 									 selected = "dna", inline = TRUE),
 			
@@ -271,14 +267,14 @@ ui <- fluidPage(
 				condition = "input.type == 'dna'",
 				textInput(inputId="gene", label = "Gene", value = "")
 			),
-			conditionalPanel(
-				condition = "input.type == 'protein'",
-				selectInput("phenotype_protein", "Phenotype", choices = phenotypes_vector)
-			),
+			# conditionalPanel(
+				# condition = "input.type == 'protein'",
+				selectInput("Protein", "Phenotype", choices = phenotypes_vector),
+			# ),
 			checkboxInput("advanced", "Advanced options", value = FALSE),
 			conditionalPanel(
 				condition = "input.type == 'dna'  & input.advanced",
-				selectInput("phenotype_dna", "Protein selection", choices = c("all",phenotypes_vector),selected="10"),
+				# selectInput("phenotype_dna", "Protein selection", choices = c("all",phenotypes_vector),selected="10"),
 				sliderInput("distance","Distance from gene (bp)",min=100000,max=500000,value=200000)
 			),
 			conditionalPanel(
