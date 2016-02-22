@@ -289,6 +289,15 @@ server <- function(input, output) {
 			}
 			
 			
+			#labelling the trait
+			trait<-rownames(p)[p[,"pheno_id"]%in%phenotype]
+			dest<-data[i,"trait_abs_pos"]
+			x3 = (base) * cos( 2*pi*(dest/maxPos) )
+			y3 = (base) * sin( 2*pi*(dest/maxPos) )
+			text(x3,y3,trait,adj=0,font=4)
+			
+			
+			
 			#drawing a legend
 			cols<-cols[seq(1,length(cols),by=3)]
 			min<-3
