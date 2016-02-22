@@ -308,7 +308,8 @@ server <- function(input, output) {
 			)
 			
 		}else if(type == "download"){
-			return(NULL)
+			frame()
+			mtext("Refer to table below")
 		}else{ 
 			stop("Aspect not implemented yet")
 		}
@@ -344,6 +345,7 @@ server <- function(input, output) {
 				phenotype=pheno,
 				link=paste(ip,"www/",allFiles,sep="")
 			)
+			data<-data[data[,"phenotype"]%in%phenotype,]
 			return(data)
 			
 			
@@ -404,6 +406,5 @@ ui <- fluidPage(
 )
 
 shinyApp(ui = ui, server = server)
-
 
 

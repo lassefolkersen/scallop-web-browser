@@ -105,3 +105,29 @@ out<-qsubLapply(phenotypes, trimmer, in_dir=in_dir,out_dir=out_dir,cutoff=cutoff
 
 cd data/2016-02-20_significant_bits
 scp lasfol@computerome.cbs.dtu.dk:/home/people/lasfol/2016-02-20_significant_bits/* .
+
+
+
+
+
+
+
+
+
+
+
+
+
+#create symlinks for data download
+mkdir /srv/shiny-server/www/
+cd /srv/shiny-server/www/
+	
+for x in $(ls /home/ubuntu/data/2015-12-01_olink_gwas_data/)
+do 
+echo "/home/ubuntu/data/2015-12-01_olink_gwas_data/"
+sudo ln -s /home/ubuntu/data/2015-12-01_olink_gwas_data/$x
+done
+
+
+	
+for ~/data/
