@@ -246,19 +246,29 @@ server <- function(input, output) {
 				
 				
 				#drawing a legend
+				cols<-cols[seq(1,length(cols),by=3)]
 				min<-3
 				max<-4
 				scale = (length(cols)-1)/(max-min)
-				plot(NULL,xlim=c(-4,4),ylim=c(-4,4),ylab="",xlab="",xaxt="n",yaxt="n")
+				# plot(NULL,xlim=c(-4,4),ylim=c(-4,4),ylab="",xlab="",xaxt="n",yaxt="n")
 				for (i in 1:(length(cols)-1)) {
 					y = (i-1)/scale + min
 					rect(-4,y,-3.5,y+1/scale, col=cols[i], border=NA)
 				}
-				for(chr in 1:nrow(chrLengths)){
+				text(x=-3.4,y=4.05,"Chr",cex=0.7)
+				
+				for(chr in c(1,2,3,5,7,9,11,13,15,18,22)){
 					f <- chrLengths[chr,"startsum"] / chrLengths[nrow(chrLengths),"endsum"]
-					text(x=-3.2, y=f+min * (max-min),chr,cex=0.4)
+					text(x=-3.4, y=f+min * (max-min),chr,cex=0.5)
 				}
-
+				legend(
+					x=-3,y=4,
+							 legend=c("P=1e-8",paste("P=1e-",signif(p_value_cutoff,2),sep="")),
+					lty=c(1,2),
+					lwd=c(1,1),
+					col=c("grey50","grey70"),
+					cex=0.7,bty="n"
+				)
 				
 				
 				
@@ -321,5 +331,6 @@ ui <- fluidPage(
 )
 
 shinyApp(ui = ui, server = server)
+
 
 
