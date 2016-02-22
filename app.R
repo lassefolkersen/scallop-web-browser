@@ -41,6 +41,7 @@ p<-data.frame(
 	CHR = data[,"trait_chr"],
 	BP = data[,"trait_pos"],
 	stringsAsFactors=F)
+p<-p[order(rownames(p)),]
 
 
 phenotypes_vector<-p[,"pheno_id"]
@@ -188,7 +189,7 @@ server <- function(input, output) {
 					 ylim=ylim,
 					 xlab=paste("chr",chr),
 					 ylab="-log10(P)",
-					 main=paste("SNPs around",gene)
+					 main=paste(phenotype,"affecting SNPs around",gene)
 			)
 			
 			points(
