@@ -15,6 +15,9 @@ p_range<-1
 maxPos<-sum(cl)#max(data[,"snp_abs_pos"],na.rm=T)
 base<-2
 
+#permissions
+accepted_users<-c("per.eriksson@ki.se","lassefolkersen@gmail.com","daniel.ziemek@pfizer.com","anders.malarstig@pfizer.com")
+
 #colouring scheme
 #Setting colours
 # sum(cl)/1e7 this is 307 (meaning we could divide the genome into 307 1e7 bp chunks. Let's.
@@ -61,7 +64,7 @@ server <- function(input, output) {
 			top_label_count<-isolate(input$top_label_count)
 			phenotype <- isolate(input$phenotype)
 			
-			if(!tolower(email) %in% c("lassefolkersen@gmail.com","daniel.ziemek@pfizer.com","anders.malarstig@pfizer.com") ){
+			if(!tolower(email) %in% accepted_users ){
 				m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"plot",email)
 				m<-paste(m,collapse="\t")
 				write(m,file="/home/ubuntu/logs/illegal_access_log.txt",append=TRUE)
@@ -346,6 +349,7 @@ server <- function(input, output) {
 				link=paste(ip,"www/",allFiles,sep="")
 			)
 			data<-data[data[,"phenotype"]%in%phenotype,]
+			data<-data[order(data[,"chr"]),]
 			return(data)
 			
 			
@@ -409,6 +413,5 @@ ui <- fluidPage(
 )
 
 shinyApp(ui = ui, server = server)
-
 
 
