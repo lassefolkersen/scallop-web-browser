@@ -50,7 +50,7 @@ server <- function(input, output) {
 				stop("In the test-phase non-privileged users are not allowed")
 			}else{
 				
-				m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"plot",email,gene,phenotype)
+				m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),email,type,phenotype, gene, distance, p_value_cutoff, top_label_count)
 				m<-paste(m,collapse="\t")
 				write(m,file="/home/ubuntu/logs/log.txt",append=TRUE)
 			}
@@ -164,7 +164,12 @@ server <- function(input, output) {
 				}
 				data<-data[!is.na(data[,"x"]),]
 				data<-data[order(data[,"snp_abs_pos"]),]
-				data[,"colours"]<-rainbow(nrow(data), s = 1, v = 1, start = 0, end = 1, alpha = 1)
+				
+				#Setting colours
+				# sum(cl)/1e7 this is 307 (meaning we could divide the genome into 307 1e7 bp chunks. Let's.
+				cols<-rainbow(307, s = 1, v = 1, start = 0, end = 1, alpha = 1)
+				names(cols) <- as.character(1:length(cols))
+				data[,"colours"]<-cols[as.character(round(data[,"snp_abs_pos"]/1e7))]
 				
 				
 				#Open up the actual plotting mechanism with an empty canvas
@@ -267,14 +272,10 @@ ui <- fluidPage(
 				condition = "input.type == 'dna'",
 				textInput(inputId="gene", label = "Gene", value = "")
 			),
-			# conditionalPanel(
-				# condition = "input.type == 'protein'",
-				selectInput("Protein", "Phenotype", choices = phenotypes_vector),
-			# ),
+				selectInput("phenotype", "Protein", choices = phenotypes_vector),
 			checkboxInput("advanced", "Advanced options", value = FALSE),
 			conditionalPanel(
 				condition = "input.type == 'dna'  & input.advanced",
-				# selectInput("phenotype_dna", "Protein selection", choices = c("all",phenotypes_vector),selected="10"),
 				sliderInput("distance","Distance from gene (bp)",min=100000,max=500000,value=200000)
 			),
 			conditionalPanel(
