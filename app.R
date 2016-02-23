@@ -425,6 +425,11 @@ ui <- fluidPage(
 				condition = "input.advanced & (input.type == 'protein' | input.type == 'dna')",
 				sliderInput("top_label_count","#SNPs to label",min=3,max=30,value=3,step=1)
 			),
+			conditionalPanel(
+				condition = "input.advanced",
+				HTML("In the review phase access to this browser is available only through the reviewer-provided pass-email<br><br>Documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-improve'>github</a></u>..")
+			),
+			
 			
 			
 			actionButton("goButton","Start"),
