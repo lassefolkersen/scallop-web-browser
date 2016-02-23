@@ -14,6 +14,7 @@ chrLengths[,"startsum"]<- chrLengths[,"endsum"] - chrLengths[,"sum"]
 p_range<-1
 maxPos<-sum(cl)#max(data[,"snp_abs_pos"],na.rm=T)
 base<-2
+ip<-read.table("/home/ubuntu/misc/current_address.txt",stringsAsFactors=F)[1,1]
 
 #permissions
 accepted_users<-tolower(read.table("/home/ubuntu/misc/accepted_emails.txt",sep="\t",header=F,stringsAsFactors=F)[,1])
@@ -164,6 +165,16 @@ server <- function(input, output) {
 		}
 	})
 	
+	
+	output$explanatoryText <- renderText({
+		if(input$goButton == 0){
+			link<-paste(ip,"www/","Olink_panel_IMPROVE_May_28th.txt",sep="")
+			o<-"Users of <i>wget</i> may wish to batch-download data and refer to <u><a href='",link,"'this file for protein-number to protein-name conversion</a></u>.<br><br>"
+		}else{
+			o<-""
+		}
+		return(o)
+	})
 	
 	output$mainPlot <- renderPlot({ 
 		email <- isolate(input$email)
@@ -352,7 +363,6 @@ server <- function(input, output) {
 			data<-data[,c("SNP","CHR","BP","P")]
 			return(data)
 		}else if(type == "download"){
-			ip<-"http://52.36.74.109/"
 			allFiles<-list.files("/srv/shiny-server/www")
 			chr<-sub("_pheno.+$","",sub("^.+chr","",allFiles)	)
 			pheno<-sub("\\.txt.+$","",sub("^.+pheno","",allFiles)	)
@@ -415,6 +425,10 @@ ui <- fluidPage(
 			width=4
 		),
 		mainPanel(
+			conditionalPanel(
+				condition = "input.type == 'download'",
+				htmlOutput("explanatoryText")
+			),
 			conditionalPanel(
 				condition = "input.type == 'protein' | input.type == 'dna'",
 				plotOutput("mainPlot",width = "800px", height = "800px")

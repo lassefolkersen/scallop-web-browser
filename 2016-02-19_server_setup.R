@@ -129,11 +129,11 @@ sudo ln -s /home/ubuntu/data/2015-12-01_olink_gwas_data/$x
 done
 
 
+cd /srv/shiny-server/www
+sudo ln -s /srv/shiny-server/olink-improve/Olink_panel_IMPROVE_May_28th.txt
+
 	
-for ~/data/
-	
-	
-	
+
 	
 	
 	
@@ -202,6 +202,9 @@ server {
 		directory_index off;
 	}
 }
+
+
+
+
 ~
-	~
 	
