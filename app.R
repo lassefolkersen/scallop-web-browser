@@ -169,7 +169,7 @@ server <- function(input, output) {
 	output$explanatoryText <- renderText({
 		if(input$goButton == 0){
 			link<-paste(ip,"www/","Olink_panel_IMPROVE_May_28th.txt",sep="")
-			o<-"Users of <i>wget</i> may wish to batch-download data and refer to <u><a href='",link,"'this file for protein-number to protein-name conversion</a></u>.<br><br>"
+			o<-paste("Users of <i>wget</i> may wish to batch-download data and refer to <u><a href='",link,"'this file for protein-number to protein-name conversion</a></u>.<br><br>")
 		}else{
 			o<-""
 		}
