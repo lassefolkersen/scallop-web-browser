@@ -83,16 +83,21 @@ shinyServer(function(input, output) {
     
     get_data()
     
-    allFiles<-list.files("/srv/shiny-server/www")
+    allFiles<-list.files("/srv/shiny-server/olink-improve/www/dl/")
     chr<-sub("_pheno.+$","",sub("^.+chr","",allFiles)	)
-    # pheno<-sub("\\.txt.+$","",sub("^.+pheno","",allFiles)	)
+    phenoNumber<-sub("\\.txt.+$","",sub("^.+pheno","",allFiles)	)
+    phenoName<-rownames(p)[p[,"pheno_id"]%in%phenotype]
     data<-data.frame(
       chr=chr,
-      phenotype=rownames(p)[p[,"pheno_id"]%in%phenotype],
-      link=paste("http://www.olink-improve.com/www/dl/",allFiles,sep="")
+      phenotypeName=phenoName,
+      phenotypeNumber=phenoNumber,
+      link=paste("http://www.olink-improve.com/www/dl/",allFiles,sep=""),
+      stringsAsFactors = 
     )
-    data<-data[data[,"phenotype"]%in%phenotype,]
-    data<-data[order(data[,"chr"]),]
+    data<-data[data[,"phenotypeNumber"]%in%phenotype,]
+    data<-data[order(as.numeric(data[,"chr"])),]
+    data[,"phenotypeNumber"]<-NULL
+    colnames(data)[2]<-"phenotype"
     return(data)
     }
   })
