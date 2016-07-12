@@ -232,7 +232,7 @@ shinyServer(function(input, output) {
       lty=c(1,2),
       lwd=c(1,1),
       col=c("grey50","grey70"),
-      cex=0.7,bty="n"
+      cex=0.9,bty="n"
     )
   })
   
@@ -242,10 +242,11 @@ shinyServer(function(input, output) {
     p_value_cutoff <- isolate(input$p_value_cutoff)
     top_label_count<-isolate(input$top_label_count)
     phenotype <- isolate(input$phenotype)
-    print("test")
+    
     data<-get_data()
     if( is.null(data))return(NULL)
     data<-data[,c("SNP","CHR","BP","P")]
+    data<-data[data[,"P"]<p_value_cutoff,]
     return(data)
     
     
