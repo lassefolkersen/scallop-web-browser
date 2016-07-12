@@ -17,8 +17,8 @@ library("shiny")
 # base<-2
 # ip<-read.table("/home/ubuntu/misc/current_address.txt",stringsAsFactors=F)[1,1]
 # 
-# #permissions
-# accepted_users<-tolower(read.table("/home/ubuntu/misc/accepted_emails.txt",sep="\t",header=F,stringsAsFactors=F)[,1])
+#permissions
+accepted_users<-tolower(read.table("/home/ubuntu/misc/accepted_emails.txt",sep="\t",header=F,stringsAsFactors=F)[,1])
 # 
 # #colouring scheme
 # #Setting colours
