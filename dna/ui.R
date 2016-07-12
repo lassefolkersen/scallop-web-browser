@@ -104,10 +104,12 @@ shinyUI(bootstrapPage(
   actionButton("goButton","Run analysis"),
   endPanel(),
   beginPanel('2/3'),
-  endPanel(),
   HTML("This show the area proximal to the selected gene"),
   plotOutput("mainPlot"),
+  
   dataTableOutput("mainTable"),
+  endPanel(),
+  
   endPage(),
   footer()
   
