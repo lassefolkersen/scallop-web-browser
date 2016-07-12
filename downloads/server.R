@@ -62,7 +62,7 @@ shinyServer(function(input, output) {
   output$explanatoryText <- renderText({
     if(input$goButton > 0){
       email <- isolate(input$email)
-      link<-paste(ip,"www/","Olink_panel_IMPROVE_May_28th.txt",sep="")
+      link<-paste("http://www.olink-improve.com/www/dl/Olink_panel_IMPROVE_May_28th.txt",sep="")
       if(tolower(email) %in% accepted_users ){
         o<-paste("Users of <i>wget</i> may wish to batch-download data and refer to <u><a href='",link,"'>this file for protein-number to protein-name conversion</a></u>.<br><br>")
       }else{
