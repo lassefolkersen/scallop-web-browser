@@ -31,10 +31,9 @@ names(cols) <- as.character(1:length(cols))
 load("/srv/shiny-server/olink-improve/2014-07-16 gene locations.rdata")
 protein_pos_file<-"/srv/shiny-server/olink-improve/2016-02-22_protein_pos_data.rdata"
 load(protein_pos_file)
-
 p<-data.frame(
-  row.names=data[,"hgnc_symbol"], 
-  pheno_id=data[,"No_in_GWAS_files"], 
+  row.names=data[,"hgnc_symbol"],
+  pheno_id=data[,"No_in_GWAS_files"],
   CHR = data[,"trait_chr"],
   BP = data[,"trait_pos"],
   stringsAsFactors=F)

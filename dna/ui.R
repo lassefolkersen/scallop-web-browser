@@ -2,6 +2,22 @@ source("../uifunctions.R")
 initialize('con',TRUE)
 
 
+
+#gene positions
+load("/srv/shiny-server/olink-improve/2014-07-16 gene locations.rdata")
+protein_pos_file<-"/srv/shiny-server/olink-improve/2016-02-22_protein_pos_data.rdata"
+load(protein_pos_file)
+p<-data.frame(
+  row.names=data[,"hgnc_symbol"], 
+  pheno_id=data[,"No_in_GWAS_files"], 
+  CHR = data[,"trait_chr"],
+  BP = data[,"trait_pos"],
+  stringsAsFactors=F)
+p<-p[order(rownames(p)),]
+phenotypes_vector<-p[,"pheno_id"]
+names(phenotypes_vector) <- rownames(p)
+
+
 # 
 # ui <- fluidPage(
 #   titlePanel("Improve-OLINK browser"),
