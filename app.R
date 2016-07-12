@@ -27,12 +27,7 @@ names(cols) <- as.character(1:length(cols))
 
 
 #gene positions
-load("/home/ubuntu/misc/2014-07-16 gene locations.rdata")
-
-
-
-#Generating random naming scheme until we figure out the actual names
-
+load("/srv/shiny-server/olink-improve/2014-07-16 gene locations.rdata")
 protein_pos_file<-"/srv/shiny-server/olink-improve/2016-02-22_protein_pos_data.rdata"
 load(protein_pos_file)
 
@@ -43,11 +38,12 @@ p<-data.frame(
 	BP = data[,"trait_pos"],
 	stringsAsFactors=F)
 p<-p[order(rownames(p)),]
-
-
-
 phenotypes_vector<-p[,"pheno_id"]
 names(phenotypes_vector) <- rownames(p)
+
+
+
+
 
 
 server <- function(input, output) {

@@ -1,0 +1,106 @@
+source("../uifunctions.R")
+initialize('con',TRUE)
+
+
+# 
+# ui <- fluidPage(
+#   titlePanel("Improve-OLINK browser"),
+#   sidebarLayout(
+#     sidebarPanel(
+#       
+#       radioButtons("type", "Focus", 
+#                    c("Cis-effects"="dna",
+#                      "Trans-effects" = "protein",
+#                      "Data download"="download"), 
+#                    selected = "dna", inline = TRUE),
+#       
+#       textInput(inputId="email", label = "E-mail", value = ""),
+#       conditionalPanel(
+#         condition = "input.type == 'dna'",
+#         textInput(inputId="gene", label = "Gene", value = "")
+#       ),
+#       selectInput("phenotype", "Protein", choices = phenotypes_vector),
+#       checkboxInput("advanced", "Advanced options", value = FALSE),
+#       conditionalPanel(
+#         condition = "input.type == 'dna'  & input.advanced",
+#         sliderInput("distance","Distance from gene (bp)",min=100000,max=500000,value=200000)
+#       ),
+#       conditionalPanel(
+#         condition = "input.type == 'protein'  & input.advanced",
+#         sliderInput("p_value_cutoff","P-value cutoff (log)",min=4,max=12,value=6,step=0.1)
+#       ),
+#       conditionalPanel(
+#         condition = "input.advanced & (input.type == 'protein' | input.type == 'dna')",
+#         sliderInput("top_label_count","#SNPs to label",min=3,max=30,value=3,step=1)
+#       ),
+#       conditionalPanel(
+#         condition = "input.advanced",
+#         HTML("In the review phase access to this browser is available only through the reviewer-provided pass-email<br><br>Documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-improve'>github</a></u>..")
+#       ),
+#       
+#       
+#       
+#       actionButton("goButton","Start"),
+#       width=4
+#     ),
+#     mainPanel(
+#       conditionalPanel(
+#         condition = "input.type == 'download'",
+#         htmlOutput("explanatoryText")
+#       ),
+#       conditionalPanel(
+#         condition = "input.type == 'protein' | input.type == 'dna'",
+#         plotOutput("mainPlot",width = "800px", height = "800px")
+#       ),
+#       dataTableOutput("mainTable")
+#       
+#     )
+#   )
+# )
+# 
+# shinyApp(ui = ui, server = server)
+# 
+
+
+shinyUI(bootstrapPage(
+  head(),
+  navigation(),
+  titlePanel("Cis-pQTLs"),
+  beginPage(),
+  beginPanel('1/3'),
+  HTML("This page can be used to browse detailed pQTL effects of SNPs proximal to any gene in the genome :<br><br>"),
+  textInput(inputId="email", label = "E-mail", value = ""),
+  textInput(inputId="gene", label = "Gene", value = ""),
+  selectInput("phenotype", "Protein", choices = phenotypes_vector),
+  checkboxInput("advanced", "Advanced options", value = FALSE),
+  conditionalPanel(
+    condition = "input.advanced",
+    sliderInput("distance","Distance from gene (bp)",min=100000,max=500000,value=200000)
+  ),
+  conditionalPanel(
+    condition = "input.advanced",
+    sliderInput("top_label_count","#SNPs to label",min=3,max=30,value=3,step=1)
+  ),
+  conditionalPanel(
+    condition = "input.advanced",
+    HTML("In the review phase access to this browser is available only through the reviewer-provided pass-email<br><br>Documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-improve'>github</a></u>..")
+  ),
+  actionButton("goButton","Run analysis"),
+  endPanel(),
+  beginPanel('2/3'),
+  endPanel(),
+  HTML("This show the area proximal to the selected gene"),
+  plotOutput("mainPlot",width = "800px", height = "800px"),
+  dataTableOutput("mainTable"),
+  endPage(),
+  footer()
+  
+)	
+)
+
+
+
+
+
+
+
