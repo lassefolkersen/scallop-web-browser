@@ -60,7 +60,6 @@ shinyServer(function(input, output) {
       #input-variables, log and register	
       ##################################
       email <- isolate(input$email)
-      type <- "dna"
       gene <- isolate(input$gene)
       distance <- isolate(input$distance)
       p_value_cutoff <- isolate(input$p_value_cutoff)
@@ -75,7 +74,7 @@ shinyServer(function(input, output) {
         stop("In the test-phase non-privileged users are not allowed")
       }else{
         
-        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),email,type,phenotype, gene, distance, p_value_cutoff, top_label_count)
+        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),email,"dna",phenotype, gene, distance, p_value_cutoff, top_label_count)
         m<-paste(m,collapse="\t")
         write(m,file="/home/ubuntu/logs/log.txt",append=TRUE)
       }
@@ -173,7 +172,6 @@ shinyServer(function(input, output) {
   
   output$mainPlot <- renderPlot({ 
     email <- isolate(input$email)
-    # type <- isolate(input$type)
     gene <- isolate(input$gene)
     distance <- isolate(input$distance)
     p_value_cutoff <- isolate(input$p_value_cutoff)
@@ -183,7 +181,7 @@ shinyServer(function(input, output) {
     data<-get_data()
     if(is.null(data))return(NULL)
     
-    # if(type == "dna"){
+    
     chr<-sub("^chr","",geneLocations[gene,"chr_name"])
     start<-geneLocations[gene,"start"] - distance
     end<-geneLocations[gene,"end"] + distance
@@ -333,7 +331,7 @@ shinyServer(function(input, output) {
   
   output$mainTable <- renderDataTable({ 
     email <- isolate(input$email)
-    # type <- isolate(input$type)
+    
     gene <- isolate(input$gene)
     distance <- isolate(input$distance)
     p_value_cutoff <- isolate(input$p_value_cutoff)
@@ -341,12 +339,11 @@ shinyServer(function(input, output) {
     phenotype <- isolate(input$phenotype)
     
     data<-get_data()
-    if(type%in%c("dna","protein") & is.null(data))return(NULL)
+    if( is.null(data))return(NULL)
     
-    # if(type == "dna"){
+    
       data<-data[,c("SNP","CHR","BP","P")]
       return(data)
-    # }
     # }else if(type =="protein"){
     #   data<-data[,c("SNP","CHR","BP","P")]
     #   return(data)
