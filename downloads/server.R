@@ -85,10 +85,10 @@ shinyServer(function(input, output) {
     
     allFiles<-list.files("/srv/shiny-server/www")
     chr<-sub("_pheno.+$","",sub("^.+chr","",allFiles)	)
-    pheno<-sub("\\.txt.+$","",sub("^.+pheno","",allFiles)	)
+    # pheno<-sub("\\.txt.+$","",sub("^.+pheno","",allFiles)	)
     data<-data.frame(
       chr=chr,
-      phenotype=rownames(p)[p[,"pheno_id"]%in%pheno],
+      phenotype=rownames(p)[p[,"pheno_id"]%in%phenotype],
       link=paste("http://www.olink-improve.com/www/dl/",allFiles,sep="")
     )
     data<-data[data[,"phenotype"]%in%phenotype,]
