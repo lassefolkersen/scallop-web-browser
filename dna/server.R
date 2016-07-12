@@ -60,7 +60,7 @@ shinyServer(function(input, output) {
       #input-variables, log and register	
       ##################################
       email <- isolate(input$email)
-      # type <- isolate(input$type)
+      type <- "dna"
       gene <- isolate(input$gene)
       distance <- isolate(input$distance)
       p_value_cutoff <- isolate(input$p_value_cutoff)
@@ -343,10 +343,10 @@ shinyServer(function(input, output) {
     data<-get_data()
     if(type%in%c("dna","protein") & is.null(data))return(NULL)
     
-    if(type == "dna"){
+    # if(type == "dna"){
       data<-data[,c("SNP","CHR","BP","P")]
       return(data)
-    }
+    # }
     # }else if(type =="protein"){
     #   data<-data[,c("SNP","CHR","BP","P")]
     #   return(data)
