@@ -1,30 +1,8 @@
 library("shiny")
 
 
-#saving global variables
-#chr lengths #from here https://support.bioconductor.org/p/14766/
-# cl<-c(247197891, 242713278, 199439629, 191246650, 180727832,
-#       170735623, 158630410, 146252219, 140191642, 135347681,
-#       134361903, 132289533, 114110907, 106354309, 100334282,
-#       88771793,  78646005,  76106388,  63802660,  62429769,
-#       46935585, 49396972, 154908521,  57767721)
-# chrLengths<-data.frame(row.names=c(1:22,"X","Y"),sum=cl,number=1:length(cl),endsum=cumsum(cl))
-# chrLengths[,"startsum"]<- chrLengths[,"endsum"] - chrLengths[,"sum"]
-# 
-# #Misc small variables
-# p_range<-1
-# maxPos<-sum(cl)#max(data[,"snp_abs_pos"],na.rm=T)
-# base<-2
-# ip<-read.table("/home/ubuntu/misc/current_address.txt",stringsAsFactors=F)[1,1]
-# 
 #permissions
 accepted_users<-tolower(read.table("/home/ubuntu/misc/accepted_emails.txt",sep="\t",header=F,stringsAsFactors=F)[,1])
-# 
-# #colouring scheme
-# #Setting colours
-# # sum(cl)/1e7 this is 307 (meaning we could divide the genome into 307 1e7 bp chunks. Let's.
-# cols<-rainbow(307, s = 1, v = 1, start = 0, end = 1, alpha = 1)
-# names(cols) <- as.character(1:length(cols))
 
 
 #gene positions
@@ -99,6 +77,7 @@ shinyServer(function(input, output) {
   
   
   output$mainTable <- renderDataTable({ 
+    if(input$goButton > 0){
     email <- isolate(input$email)
     phenotype <- isolate(input$phenotype)
     
@@ -109,13 +88,13 @@ shinyServer(function(input, output) {
     pheno<-sub("\\.txt.+$","",sub("^.+pheno","",allFiles)	)
     data<-data.frame(
       chr=chr,
-      phenotype=pheno,
-      link=paste("http://www.olink-improve.com/www/",allFiles,sep="")
+      phenotype=rownames(p)[p[,"pheno_id"]%in%pheno],
+      link=paste("http://www.olink-improve.com/www/dl/",allFiles,sep="")
     )
     data<-data[data[,"phenotype"]%in%phenotype,]
     data<-data[order(data[,"chr"]),]
     return(data)
-    
+    }
   })
 })
 

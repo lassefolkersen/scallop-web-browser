@@ -139,7 +139,7 @@ shinyServer(function(input, output) {
          ylim=ylim,
          xlab=paste("chr",chr),
          ylab="-log10(P)",
-         main=paste(rownames(p)[p[,"pheno_id"]%in%phenotype],"affecting SNPs around",gene)
+         main=paste0(rownames(p)[p[,"pheno_id"]%in%phenotype],"-affecting SNPs around ",gene)
     )
     
     points(

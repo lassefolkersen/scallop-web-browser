@@ -37,7 +37,7 @@ shinyUI(bootstrapPage(
   actionButton("goButton","Run analysis"),
   endPanel(),
   beginPanel('2/3'),
-  plotOutput("mainPlot"),
+  # plotOutput("mainPlot"),
   
   dataTableOutput("mainTable"),
   endPanel(),
