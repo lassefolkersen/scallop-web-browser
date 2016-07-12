@@ -86,7 +86,6 @@ shinyUI(bootstrapPage(
   beginPanel('1/3'),
   HTML("This page can be used to browse the significant pQTL effects of SNPs anywhere in the genome:<br><br>"),
   textInput(inputId="email", label = "E-mail", value = ""),
-  textInput(inputId="gene", label = "Gene", value = ""),
   selectInput("phenotype", "Protein", choices = phenotypes_vector),
   checkboxInput("advanced", "Advanced options", value = FALSE),
   conditionalPanel(
@@ -104,7 +103,7 @@ shinyUI(bootstrapPage(
   actionButton("goButton","Run analysis"),
   endPanel(),
   beginPanel('2/3'),
-  plotOutput("mainPlot"),
+  plotOutput("mainPlot",height="800px",width="800px"),
   
   # dataTableOutput("mainTable"),
   endPanel(),

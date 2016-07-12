@@ -331,9 +331,7 @@ shinyServer(function(input, output) {
   
   output$mainTable <- renderDataTable({ 
     email <- isolate(input$email)
-    
     gene <- isolate(input$gene)
-    distance <- isolate(input$distance)
     p_value_cutoff <- isolate(input$p_value_cutoff)
     top_label_count<-isolate(input$top_label_count)
     phenotype <- isolate(input$phenotype)
@@ -344,9 +342,6 @@ shinyServer(function(input, output) {
     
       data<-data[,c("SNP","CHR","BP","P")]
       return(data)
-    # }else if(type =="protein"){
-    #   data<-data[,c("SNP","CHR","BP","P")]
-    #   return(data)
     # }else if(type == "download"){
     #   allFiles<-list.files("/srv/shiny-server/www")
     #   chr<-sub("_pheno.+$","",sub("^.+chr","",allFiles)	)

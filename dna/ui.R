@@ -81,7 +81,7 @@ names(phenotypes_vector) <- rownames(p)
 shinyUI(bootstrapPage(
   head(),
   navigation(),
-  titlePanel("Cis-pQTLs"),
+  titlePanel("Gene-centric view"),
   beginPage(),
   beginPanel('1/3'),
   HTML("This page can be used to browse the pQTL effects of all SNPs proximal to any gene in the genome:<br><br>"),
