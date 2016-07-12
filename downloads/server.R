@@ -110,7 +110,7 @@ shinyServer(function(input, output) {
     data<-data.frame(
       chr=chr,
       phenotype=pheno,
-      link=paste(ip,"www/",allFiles,sep="")
+      link=paste("http://www.olink-improve.com/www/",allFiles,sep="")
     )
     data<-data[data[,"phenotype"]%in%phenotype,]
     data<-data[order(data[,"chr"]),]
