@@ -84,7 +84,7 @@ shinyUI(bootstrapPage(
   titlePanel("Cis-pQTLs"),
   beginPage(),
   beginPanel('1/3'),
-  HTML("This page can be used to browse detailed pQTL effects of SNPs proximal to any gene in the genome :<br><br>"),
+  HTML("This page can be used to browse the pQTL effects of all SNPs proximal to any gene in the genome:<br><br>"),
   textInput(inputId="email", label = "E-mail", value = ""),
   textInput(inputId="gene", label = "Gene", value = ""),
   selectInput("phenotype", "Protein", choices = phenotypes_vector),
@@ -104,7 +104,6 @@ shinyUI(bootstrapPage(
   actionButton("goButton","Run analysis"),
   endPanel(),
   beginPanel('2/3'),
-  HTML("This show the area proximal to the selected gene"),
   plotOutput("mainPlot"),
   
   dataTableOutput("mainTable"),
