@@ -23,7 +23,7 @@ names(phenotypes_vector) <- rownames(p)
 shinyUI(bootstrapPage(
   head(),
   navigation(),
-  titlePanel("Protein-centric overview"),
+  titlePanel("Protein-centric view - all of the genome"),
   beginPage(),
   beginPanel('1/3'),
   HTML("This page can be used to browse the significant pQTL effects of SNPs anywhere in the genome:<br><br>"),
