@@ -146,7 +146,7 @@ shinyServer(function(input, output) {
       x=data[,"BP"],
       y=data[,"-log10(P)"],
       pch=19,
-      col="dodgerblue"
+      col="#821556"
     )
     
     #highlight top-3 SNPs
