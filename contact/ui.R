@@ -16,6 +16,8 @@ shinyUI(bootstrapPage(
                 Rona Strawbridge<br>
                 Eric Fauman<br>
                 Daniel Ziemek<br>
+<br><br>
+<b>Web-page styling:</b><br>Stefan Delport.<br><br>
 
 	      				"),
 	footer()
