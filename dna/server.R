@@ -73,7 +73,7 @@ shinyServer(function(input, output) {
         stop("In the test-phase non-privileged users are not allowed")
       }else{
         
-        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),email,"dna",phenotype, gene, distance, p_value_cutoff, top_label_count)
+        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),email,"dna",phenotype, gene, distance, top_label_count)
         m<-paste(m,collapse="\t")
         write(m,file="/home/ubuntu/logs/log.txt",append=TRUE)
       }
@@ -119,7 +119,7 @@ shinyServer(function(input, output) {
     email <- isolate(input$email)
     gene <- isolate(input$gene)
     distance <- isolate(input$distance)
-    p_value_cutoff <- isolate(input$p_value_cutoff)
+    # p_value_cutoff <- isolate(input$p_value_cutoff)
     top_label_count<-isolate(input$top_label_count)
     phenotype <- isolate(input$phenotype)
     
@@ -173,7 +173,7 @@ shinyServer(function(input, output) {
     
     gene <- isolate(input$gene)
     distance <- isolate(input$distance)
-    p_value_cutoff <- isolate(input$p_value_cutoff)
+    # p_value_cutoff <- isolate(input$p_value_cutoff)
     top_label_count<-isolate(input$top_label_count)
     phenotype <- isolate(input$phenotype)
     
