@@ -27,7 +27,7 @@ shinyUI(bootstrapPage(
   beginPage(),
   beginPanel('1/3'),
   HTML("This page can be used to browse the significant pQTL effects of SNPs anywhere in the genome:<br><br>"),
-  textInput(inputId="email", label = "E-mail", value = ""),
+  # textInput(inputId="email", label = "E-mail", value = ""),
   selectInput("phenotype", "Protein", choices = phenotypes_vector),
   checkboxInput("advanced", "Advanced options", value = FALSE),
   conditionalPanel(

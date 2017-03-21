@@ -18,7 +18,7 @@ base<-2
 ip<-read.table("/home/ubuntu/misc/current_address.txt",stringsAsFactors=F)[1,1]
 
 #permissions
-accepted_users<-tolower(read.table("/home/ubuntu/misc/accepted_emails.txt",sep="\t",header=F,stringsAsFactors=F)[,1])
+# accepted_users<-tolower(read.table("/home/ubuntu/misc/accepted_emails.txt",sep="\t",header=F,stringsAsFactors=F)[,1])
 
 #colouring scheme
 #Setting colours
@@ -59,25 +59,25 @@ shinyServer(function(input, output) {
       ##################################
       #input-variables, log and register	
       ##################################
-      email <- isolate(input$email)
+      # email <- isolate(input$email)
       gene <- isolate(input$gene)
       distance <- isolate(input$distance)
       p_value_cutoff <- isolate(input$p_value_cutoff)
       top_label_count<-isolate(input$top_label_count)
       phenotype <- isolate(input$phenotype)
       
-      if(!tolower(email) %in% accepted_users ){
-        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"plot",email)
-        m<-paste(m,collapse="\t")
-        write(m,file="/home/ubuntu/logs/illegal_access_log.txt",append=TRUE)
-        Sys.sleep(2)
-        stop("In the test-phase non-privileged users are not allowed")
-      }else{
-        
-        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),email,"protein",phenotype, gene, distance, p_value_cutoff, top_label_count)
-        m<-paste(m,collapse="\t")
-        write(m,file="/home/ubuntu/logs/log.txt",append=TRUE)
-      }
+      # if(!tolower(email) %in% accepted_users ){
+      #   m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"plot",email)
+      #   m<-paste(m,collapse="\t")
+      #   write(m,file="/home/ubuntu/logs/illegal_access_log.txt",append=TRUE)
+      #   Sys.sleep(2)
+      #   stop("In the test-phase non-privileged users are not allowed")
+      # }else{
+      #   
+      #   m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),email,"protein",phenotype, gene, distance, p_value_cutoff, top_label_count)
+      #   m<-paste(m,collapse="\t")
+      #   write(m,file="/home/ubuntu/logs/log.txt",append=TRUE)
+      # }
     
       ##################################
       #Protein-aspect --- starting with 
@@ -119,7 +119,7 @@ shinyServer(function(input, output) {
   })
   
   output$mainPlot <- renderPlot({ 
-    email <- isolate(input$email)
+    # email <- isolate(input$email)
     gene <- isolate(input$gene)
     # distance <- isolate(input$distance)
     p_value_cutoff <- isolate(input$p_value_cutoff)
@@ -237,7 +237,7 @@ shinyServer(function(input, output) {
   })
   
   output$mainTable <- renderDataTable({ 
-    email <- isolate(input$email)
+    # email <- isolate(input$email)
     gene <- isolate(input$gene)
     p_value_cutoff <- isolate(input$p_value_cutoff)
     top_label_count<-isolate(input$top_label_count)

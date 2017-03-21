@@ -27,7 +27,7 @@ shinyUI(bootstrapPage(
   beginPage(),
   beginPanel('1/3'),
   HTML("This page can be used to browse the pQTL effects of all SNPs proximal to any gene in the genome:<br><br>"),
-  textInput(inputId="email", label = "E-mail", value = ""),
+  # textInput(inputId="email", label = "E-mail", value = ""),
   textInput(inputId="gene", label = "Gene", value = ""),
   selectInput("phenotype", "Protein", choices = phenotypes_vector),
   checkboxInput("advanced", "Advanced options", value = FALSE),

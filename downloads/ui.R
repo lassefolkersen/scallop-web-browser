@@ -26,7 +26,7 @@ shinyUI(bootstrapPage(
   beginPage(),
   beginPanel('1/3'),
   HTML("This page can be used to download per-SNP summary data:<br><br>"),
-  textInput(inputId="email", label = "E-mail", value = ""),
+  # textInput(inputId="email", label = "E-mail", value = ""),
   # textInput(inputId="gene", label = "Gene", value = ""),
   selectInput("phenotype", "Protein", choices = phenotypes_vector),
   checkboxInput("advanced", "Advanced options", value = FALSE),
