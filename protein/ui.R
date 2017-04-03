@@ -40,7 +40,7 @@ shinyUI(bootstrapPage(
   ),
   conditionalPanel(
     condition = "input.advanced",
-    HTML("In the review phase access to this browser is available only through the reviewer-provided pass-email<br><br>Documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-improve'>github</a></u>..")
+    HTML("Documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-improve'>github</a></u>..")
   ),
   actionButton("goButton","Run analysis"),
   endPanel(),
