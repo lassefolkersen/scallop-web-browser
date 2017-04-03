@@ -40,7 +40,7 @@ shinyUI(bootstrapPage(
   ),
   conditionalPanel(
     condition = "input.advanced",
-    HTML("Documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-improve'>github</a></u>..")
+    HTML("Documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-improve'>github</a></u>.")
   ),
   actionButton("goButton","Run analysis"),
   endPanel(),
