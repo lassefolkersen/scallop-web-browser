@@ -74,9 +74,9 @@ shinyServer(function(input, output) {
       #   stop("In the test-phase non-privileged users are not allowed")
       # }else{
       #   
-      #   m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),email,"protein",phenotype, gene, distance, p_value_cutoff, top_label_count)
-      #   m<-paste(m,collapse="\t")
-      #   write(m,file="/home/ubuntu/logs/log.txt",append=TRUE)
+      m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"protein",phenotype, gene, distance, p_value_cutoff, top_label_count)
+      m<-paste(m,collapse="\t")
+      write(m,file="/home/ubuntu/logs/log.txt",append=TRUE)
       # }
     
       ##################################
