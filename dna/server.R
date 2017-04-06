@@ -86,7 +86,7 @@ shinyServer(function(input, output) {
       ##################################
       in_dir<-"~/data/2016-02-19_splits/"
       window<-1000000
-      if(!gene%in%rownames(geneLocations)){stop(paste(gene,"not found"))}
+      if(!gene%in%rownames(geneLocations)){stop(paste(gene,"not found. Please only use human genesymbols (all upper-case letters)."))}
       chr<-sub("^chr","",geneLocations[gene,"chr_name"])
       start<-geneLocations[gene,"start"] - distance
       end<-geneLocations[gene,"end"] + distance
