@@ -208,3 +208,41 @@ server {
 
 ~
 	
+  
+  
+#2017-04-07  
+#re-doing list of genes, because a ' left out the two last ones
+#getting names and positions of proteins in order
+rm(list=ls())
+library(biomaRt)
+data<-read.table("Olink_panel_IMPROVE_May_28th.txt",sep="\t",header=T,stringsAsFactors=F,quote="")
+
+data[,"short_name"]
+data[data[,"gene"]%in%"BNP","gene"]<-"NPPC"
+data[data[,"gene"]%in%"CTSL1","gene"]<-"CTSL"
+data[data[,"gene"]%in%"IL8","gene"]<-"CXCL8"
+
+rownames(data)<-data[,"gene"]
+mart = useEnsembl(biomart="ensembl", dataset="hsapiens_gene_ensembl")
+attributes<-c("hgnc_symbol","start_position","end_position","chromosome_name")
+trait_pos <- getBM(attributes=attributes, filters="hgnc_symbol",values=rownames(data),mart=mart)
+trait_pos<-trait_pos[nchar(trait_pos[,"chromosome_name"])%in%1:2,]
+rownames(trait_pos)<-trait_pos[,"hgnc_symbol"]
+colnames(trait_pos)[4]<-"trait_chr"
+colnames(trait_pos)[2]<-"trait_pos"
+
+
+data<-cbind(data,trait_pos[rownames(data),])
+
+save(data,file="2017-04-07_protein_pos_data.rdata")
+
+
+#comparing
+rm(list=ls())
+load("2017-04-07_protein_pos_data.rdata")
+new<-data
+load("2016-02-22_protein_pos_data.rdata")
+old<-data
+
+cor.test(new[rownames(old),"trait_pos"],old[rownames(old),"trait_pos"])
+#good

@@ -5,7 +5,7 @@ initialize('con',TRUE)
 
 #gene positions
 load("/srv/shiny-server/olink-improve/2014-07-16 gene locations.rdata")
-protein_pos_file<-"/srv/shiny-server/olink-improve/2016-02-22_protein_pos_data.rdata"
+protein_pos_file<-"/srv/shiny-server/olink-improve/2017-04-07_protein_pos_data.rdata"
 load(protein_pos_file)
 p<-data.frame(
   row.names=data[,"hgnc_symbol"], 
