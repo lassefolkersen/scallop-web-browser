@@ -246,3 +246,11 @@ old<-data
 
 cor.test(new[rownames(old),"trait_pos"],old[rownames(old),"trait_pos"])
 #good
+
+na_in_new<-rownames(new)[is.na(new[,"trait_pos"])]
+new[na_in_new,"trait_pos"]<-old[na_in_new,"trait_pos"]
+new[na_in_new,"trait_chr"]<-old[na_in_new,"trait_chr"]
+new[na_in_new,"end_position"]<-old[na_in_new,"end_position"]
+
+save(data,file="2017-04-07_protein_pos_data.rdata")
+
