@@ -251,6 +251,10 @@ na_in_new<-rownames(new)[is.na(new[,"trait_pos"])]
 new[na_in_new,"trait_pos"]<-old[na_in_new,"trait_pos"]
 new[na_in_new,"trait_chr"]<-old[na_in_new,"trait_chr"]
 new[na_in_new,"end_position"]<-old[na_in_new,"end_position"]
+new[na_in_new,"hgnc_symbol"]<-old[na_in_new,"hgnc_symbol"]
+
 data<-new
+
+
 save(data,file="2017-04-07_protein_pos_data.rdata")
 
