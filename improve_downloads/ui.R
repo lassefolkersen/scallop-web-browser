@@ -25,7 +25,7 @@ shinyUI(bootstrapPage(
   titlePanel("Per-SNP summary downloads"),
   beginPage(),
   beginPanel('1/3'),
-  HTML("This page can be used to download per-SNP summary data:<br><br>"),
+  HTML("<i>Note: This module queries the data presented in our <u><a href='http://dx.plos.org/10.1371/journal.pgen.1006706'>2017-paper on pQTL</a></u>. They are conserved here for consistency-reasons. You may however wish to start analysis with the larger SCALLOP analysis in other modules.</i><br><br>This page can be used to download per-SNP summary data:<br><br>"),
   # textInput(inputId="email", label = "E-mail", value = ""),
   # textInput(inputId="gene", label = "Gene", value = ""),
   selectInput("phenotype", "Protein", choices = phenotypes_vector),

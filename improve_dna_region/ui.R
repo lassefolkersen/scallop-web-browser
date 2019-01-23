@@ -26,7 +26,7 @@ shinyUI(bootstrapPage(
   titlePanel("SNP-centric view - by a specific gene"),
   beginPage(),
   beginPanel('1/3'),
-  HTML("This page can be used to browse the pQTL effects of all SNPs proximal to any gene in the genome:<br><br>"),
+  HTML("<i>Note: This module queries the data presented in our <u><a href='http://dx.plos.org/10.1371/journal.pgen.1006706'>2017-paper on pQTL</a></u>. They are conserved here for consistency-reasons. You may however wish to start analysis with the larger SCALLOP analysis in other modules.</i><br><br> This page can be used to browse the pQTL effects of all SNPs proximal to any gene in the genome:<br><br>"),
   # textInput(inputId="email", label = "E-mail", value = ""),
   textInput(inputId="gene", label = "Gene", value = ""),
   selectInput("phenotype", "Protein", choices = phenotypes_vector),
