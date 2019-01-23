@@ -1,6 +1,7 @@
 library("shiny")
 
 
+
 #saving global variables
 #chr lengths #from here https://support.bioconductor.org/p/14766/
 cl<-c(247197891, 242713278, 199439629, 191246650, 180727832,
