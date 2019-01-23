@@ -130,7 +130,7 @@ done
 
 
 cd /srv/shiny-server/www
-sudo ln -s /srv/shiny-server/olink-improve/Olink_panel_IMPROVE_May_28th.txt
+sudo ln -s /srv/shiny-server/olink-scallop/Olink_panel_IMPROVE_May_28th.txt
 
 	
 

@@ -6,8 +6,8 @@ library("shiny")
 
 
 #gene positions
-load("/srv/shiny-server/olink-improve/2014-07-16 gene locations.rdata")
-protein_pos_file<-"/srv/shiny-server/olink-improve/2017-04-07_protein_pos_data.rdata"
+load("~/srv/olink-scallop/2014-07-16 gene locations.rdata")
+protein_pos_file<-"~/srv/olink-scallop/2017-04-07_protein_pos_data.rdata"
 load(protein_pos_file)
 p<-data.frame(
   row.names=data[,"hgnc_symbol"],
@@ -83,7 +83,7 @@ shinyServer(function(input, output) {
       
       # get_data()
       
-      allFiles<-list.files("/srv/shiny-server/olink-improve/www/dl/")
+      allFiles<-list.files("~/srv/olink-scallop/www/dl/")
       chr<-sub("_pheno.+$","",sub("^.+chr","",allFiles)	)
       phenoNumber<-sub("\\.txt.+$","",sub("^.+pheno","",allFiles)	)
       phenoName<-rownames(p)[p[,"pheno_id"]%in%phenotype]
