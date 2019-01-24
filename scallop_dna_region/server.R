@@ -23,8 +23,8 @@ p<-data.frame(
   BP = data[,"trait_pos"],
   stringsAsFactors=F)
 p<-p[order(rownames(p)),]
-phenotypes_vector<-c("none",p[,"pheno_id"])
-names(phenotypes_vector) <- c("none",rownames(p))
+phenotypes_vector<-c("none",rownames(p))
+
 
 
 
@@ -191,7 +191,7 @@ shinyServer(function(input, output) {
       
       #set lwd 2 if within the top hits in legend and 5 if highlighted
       if(protein_to_highlight == protein){
-        lwd <- 5
+        lwd <- 10
       }else if(which(names(colours)%in%protein) <= n_legend){
         lwd <- 2
       }else{
