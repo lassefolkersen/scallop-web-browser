@@ -74,6 +74,7 @@ shinyServer(function(input, output) {
       ##################################
       data_dir<-"~/data/2019-01-23_regional/"
       window<-1000000
+      distance <- distance * 1.2
       if(!gene%in%rownames(geneLocations)){stop(safeError(paste(gene,"not found. Please only use human genesymbols (all upper-case letters).")))}
       chr<-sub("^chr","",geneLocations[gene,"chr_name"])
       start<-geneLocations[gene,"start"] - distance
@@ -116,7 +117,7 @@ shinyServer(function(input, output) {
       
       
       
-      d<-d[d[,"pos"]>start-10000 & d[,"pos"]<end+10000,]
+      d<-d[d[,"pos"]>start & d[,"pos"]<end,]
       if(nrow(d)==0){stop(safeError(paste("No SNPs found around gene",gene)))}
       
       
