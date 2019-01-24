@@ -74,13 +74,28 @@ shinyServer(function(input, output) {
       ##################################
       data_dir<-"~/data/2019-01-23_regional/"
       window<-1000000
-      distance <- distance * 1.2
-      if(!gene%in%rownames(geneLocations)){stop(safeError(paste(gene,"not found. Please only use human genesymbols (all upper-case letters).")))}
-      chr<-sub("^chr","",geneLocations[gene,"chr_name"])
-      start<-geneLocations[gene,"start"] - distance
-      end<-geneLocations[gene,"end"] + distance
+      distance <- distance * 1.5
+      
+      #position or gene
+      if(length(grep(":",gene))>0){
+        gene<-sub("^chr","",gene)
+        gene<-gsub(" ","",gene)
+        s <- strsplit(gene,":")[[1]]
+        if(length(s)!=2)stop(safeError("If giving position as e.g. chr4:43254 - there must exactly one :"))
+        chr <- as.numeric(s[1])
+        end <- start <- as.numeric(s[1])
+        if(is.na(chr)|is.na(end)| is.na(start))stop(safeError(paste("couldn't recognize", gene, "as a chr5:423432 position. Make sure there's no non-numeric characters")))
+
+      }else{
+        if(!gene%in%rownames(geneLocations)){stop(safeError(paste(gene,"not found. Please only use human genesymbols (all upper-case letters).")))}
+        chr<-sub("^chr","",geneLocations[gene,"chr_name"])
+        start<-geneLocations[gene,"start"] - distance
+        end<-geneLocations[gene,"end"] + distance
+      }
+
       p1<-floor(start/window)
       p2<-floor(end/window)
+      
 
       
       
