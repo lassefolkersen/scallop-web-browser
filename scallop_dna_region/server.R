@@ -98,7 +98,7 @@ shinyServer(function(input, output) {
       }
 
       p1<-floor(start/window)
-      p2<-floor(end/window)
+      # p2<-floor(end/window)
       
 
       
@@ -273,7 +273,12 @@ shinyServer(function(input, output) {
       print("no data ready")
       return(NULL)
     }
-    d[,"Direction"] <- d[,"chr"]<- d[,"pos_mb"] <- d[,"P.value.character"] <- d[,"logP"] <- NULL
+
+    #set columns    
+    wanted_columns <- c('protein','MarkerName','Allele1','Allele2','Freq1','FreqSE','Effect','StdErr','P.value.character','TotalSampleSize','pos')
+    wanted_column_names <- c('Protein','MarkerName','Allele1','Allele2','Freq1','FreqSE','Effect','StdErr','P-value','SampleSize','Position')
+    d<-d[,wanted_column]
+    colnames(d)<-wanted_column_names
     
     #order by P-value
     d <- d[order(d[,"P.value"]),]
@@ -283,6 +288,10 @@ shinyServer(function(input, output) {
     d<-d[1:top_label_count,]
     
     
+    #round sample size
+    d[,"TotalSampleSize"] <- round(d[,"TotalSampleSize"])
+    
+    #return
     return(d) 
      
   })
