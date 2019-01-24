@@ -18,18 +18,22 @@ base<-2
 ip<-read.table("/home/ubuntu/misc/current_address.txt",stringsAsFactors=F)[1,1]
 
 #permissions
-# accepted_users<-tolower(read.table("/home/ubuntu/misc/accepted_emails.txt",sep="\t",header=F,stringsAsFactors=F)[,1])
+accepted_users<-tolower(read.table("/home/ubuntu/misc/accepted_emails.txt",sep="\t",header=F,stringsAsFactors=F)[,1])
 
 #colouring scheme
 #Setting colours
 # sum(cl)/1e7 this is 307 (meaning we could divide the genome into 307 1e7 bp chunks. Let's.
-cols<-rainbow(307, s = 1, v = 1, start = 0, end = 1, alpha = 1)
-names(cols) <- as.character(1:length(cols))
+cols<-rainbow(308, s = 1, v = 1, start = 0, end = 1, alpha = 1)
+names(cols) <- as.character(1:(length(cols)-1))
 
 
 #gene positions
 load("~/srv/olink-scallop/2014-07-16 gene locations.rdata")
-protein_pos_file<-"~/srv/olink-scallop/2017-04-07_protein_pos_data.rdata"
+load("~/srv/olink-scallop/scallop_protein_centric/2019-01-24_cvd1_protein_positions.rdata")
+
+
+
+
 load(protein_pos_file)
 p<-data.frame(
   row.names=data[,"hgnc_symbol"],
@@ -59,7 +63,7 @@ shinyServer(function(input, output) {
       ##################################
       #input-variables, log and register	
       ##################################
-      # email <- isolate(input$email)
+      email <- isolate(input$email)
       gene <- isolate(input$gene)
       distance <- isolate(input$distance)
       p_value_cutoff <- isolate(input$p_value_cutoff)
