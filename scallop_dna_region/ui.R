@@ -55,8 +55,22 @@ shinyUI(bootstrapPage(
   actionButton("goButton","Run analysis"),
   endPanel(),
   beginPanel('2/3'),
-  plotOutput("mainPlot",height = "700px"),
   
+  
+  conditionalPanel(
+    condition = "show_gene_map",
+    plotOutput("mainPlot",height = "700px")
+  ),
+  
+  conditionalPanel(
+    condition = "!show_gene_map",
+    plotOutput("mainPlot",height = "400px")
+  ),
+  
+  
+  
+  
+  HTML("<br><br>"),
   dataTableOutput("mainTable"),
   endPanel(),
   

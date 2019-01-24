@@ -280,7 +280,7 @@ shinyServer(function(input, output) {
         end_gene <-geneLocations[w[j],"end"] / 1000000
         gene_name <-rownames(geneLocations)[w[j]]
         lines(x=c(start_gene,end_gene),y=c((j%%10)/10,(j%%10)/10))
-        text(x=start_gene,y=0.02+(j%%10)/10,label=gene_name,adj=0)
+        text(x=start_gene,y=0.07+(j%%10)/10,label=gene_name,adj=0,cex=0.6)
       }
     }
     
