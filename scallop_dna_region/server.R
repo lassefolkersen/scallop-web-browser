@@ -99,26 +99,30 @@ shinyServer(function(input, output) {
       
       
       
-      #in case we are at a window breakpoint
-      if(p1!=p2){
-        print(paste("breakpoint",p1,p2))
-        d1 <- d
-        dh2 <- list()
-        for(protein in proteins){
-          filename1<-paste(data_dir,"2019-01-22_",protein,"_",chr,"_",p2,"_region.txt",sep="")
-          if(!file.exists(filename1))stop(safeError(paste("Could not find file",filename1)))
-          if(!file.exists(filename1))next
-          dh2[[protein]]<-read.table(filename1,stringsAsFactors = F, header=T)
-          
-        }
-        d2<-do.call(rbind,dh2)
-        d<-rbind(d1,d2)
-      }
+      # #in case we are at a window breakpoint
+      # if(p1!=p2){
+      #   print(paste("breakpoint",p1,p2))
+      #   d1 <- d
+      #   dh2 <- list()
+      #   for(protein in proteins){
+      #     filename1<-paste(data_dir,"2019-01-22_",protein,"_",chr,"_",p2,"_region.txt",sep="")
+      #     if(!file.exists(filename1))stop(safeError(paste("Could not find file",filename1)))
+      #     if(!file.exists(filename1))next
+      #     dh2[[protein]]<-read.table(filename1,stringsAsFactors = F, header=T)
+      #     
+      #   }
+      #   d2<-do.call(rbind,dh2)
+      #   d<-rbind(d1,d2)
+      # }
+      #some duplicates because of double load in
+      # d <- d[!duplicated(apply(d[,c("MarkerName","protein")],1,paste,collapse="_")),]
       
       
       
       d<-d[d[,"pos"]>start & d[,"pos"]<end,]
       if(nrow(d)==0){stop(safeError(paste("No SNPs found around gene",gene)))}
+      
+      
       
       
       return(d)				
@@ -261,9 +265,7 @@ shinyServer(function(input, output) {
       print("no data ready")
       return(NULL)
     }
-    d[,"chr"]<- d[,"pos_mb"] <- d[,"P.value.character"] <- d[,"logP"] <- NULL
-    
-    
+    d[,"Direction"] <- d[,"chr"]<- d[,"pos_mb"] <- d[,"P.value.character"] <- d[,"logP"] <- NULL
     
     #order by P-value
     d <- d[order(d[,"P.value"]),]
