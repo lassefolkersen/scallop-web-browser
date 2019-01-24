@@ -83,7 +83,7 @@ shinyServer(function(input, output) {
         s <- strsplit(gene,":")[[1]]
         if(length(s)!=2)stop(safeError("If giving position as e.g. chr4:43254 - there must exactly one :"))
         chr <- as.numeric(s[1])
-        end <- start <- as.numeric(s[1])
+        end <- start <- as.numeric(s[2])
         if(is.na(chr)|is.na(end)| is.na(start))stop(safeError(paste("couldn't recognize", gene, "as a chr5:423432 position. Make sure there's no non-numeric characters")))
 
       }else{
