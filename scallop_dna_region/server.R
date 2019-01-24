@@ -24,7 +24,8 @@ p<-data.frame(
   stringsAsFactors=F)
 p<-p[order(rownames(p)),]
 phenotypes_vector<-p[,"pheno_id"]
-names(phenotypes_vector) <- rownames(p)
+names(phenotypes_vector) <- c("none",rownames(p))
+
 
 
 proteins<-c('ADM','AGRP','Beta-NGF','CA-125','CASP-8','CCL20','CCL3','CCL4','CD40','CD40-L','CHI3L1','CSF-1','CSTB','CTSD','CTSL1','CX3CL1','CXCL1','CXCL16','CXCL6','Dkk-1','ECP','EGF','EN-RAGE','ESM-1','FABP4','FAS','FGF-23','FS','GAL','Gal-3','GDF-15','GH','HB-EGF','HGF','hK11','HSP_27','IL-18','IL-1ra','IL-27','IL-6','IL-6RA','IL-8','IL16','ITGB1BP2','KIM-1','KLK6','LEP','LOX-1','mAmP','MB','MCP-1','MMP-1','MMP-10','MMP-12','MMP-3','MMP-7','MPO','NEMO','NT-pro_BNP','OPG','PAPPA','PAR-1','PDGF_subunit_B','PECAM-1','PlGF','PSGL-1','PTX3','RAGE','REN','RETN','SCF','SELE','SIRT2','SPON1','ST2','t-PA','TF','TIE2','TM','TNF-R1','TNF-R2','TNFSF14','TRAIL','TRAIL-R2','TRANCE','U-PAR','VEGF-A','VEGF-D')
@@ -48,7 +49,7 @@ shinyServer(function(input, output) {
       gene <- isolate(input$gene)
       distance <- isolate(input$distance)
       top_label_count<-isolate(input$top_label_count)
-      phenotype <- isolate(input$phenotype)
+      protein_to_highlight <- isolate(input$protein_to_highlight)
       
       if(!tolower(email) %in% accepted_users ){
         m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"plot",email)
@@ -58,7 +59,7 @@ shinyServer(function(input, output) {
         stop(safeError("In the test-phase non-privileged users are not allowed"))
       }else{
         
-        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),NA,"scallop_regional",phenotype, gene, distance, top_label_count)
+        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),NA,"scallop_regional",protein_to_highlight, gene, distance, top_label_count)
         m<-paste(m,collapse="\t")
         write(m,file="/home/ubuntu/logs/log.txt",append=TRUE)
       }
@@ -126,12 +127,11 @@ shinyServer(function(input, output) {
   output$mainPlot <- renderPlot({ 
     gene <- isolate(input$gene)
     distance <- isolate(input$distance)
-    # p_value_cutoff <- isolate(input$p_value_cutoff)
     top_label_count<-isolate(input$top_label_count)
-    phenotype <- isolate(input$phenotype)
+    protein_to_highlight <- isolate(input$protein_to_highlight)
     
     d<-get_data()
-    if(is.null(data) | nrow(data)==0){
+    if(is.null(d) | nrow(d)==0){
       print("no data ready")
       return(NULL)
     }
@@ -155,9 +155,7 @@ shinyServer(function(input, output) {
     
     #auto-extract n_legend (=all stronger then cutoff)
     n_legend <- length(unique(d[d[,"logP"] > -log10(cutoff),"protein"]))
-    
-    
-    
+
     #set ylim
     ylim <- c(0, max(d[,"logP"],na.rm=T))
     if(ylim[2]>artifical_max){ylim[2]<-artifical_max  }
@@ -191,8 +189,10 @@ shinyServer(function(input, output) {
       d2<-d1[!duplicated(round(d1[,"pos_mb"] / (hit_per_kb/1000)   )),]
       d2<-d2[order(d2[,"pos_mb"]),]
       
-      #set lwd 2 if within the top hits in legend
-      if(which(names(colours)%in%protein) <= n_legend){
+      #set lwd 2 if within the top hits in legend and 5 if highlighted
+      if(protein_to_highlight == protein){
+        lwd <- 5
+      }else if(which(names(colours)%in%protein) <= n_legend){
         lwd <- 2
       }else{
         lwd <- 1
@@ -239,7 +239,7 @@ shinyServer(function(input, output) {
   #   distance <- isolate(input$distance)
   #   # p_value_cutoff <- isolate(input$p_value_cutoff)
   #   top_label_count<-isolate(input$top_label_count)
-  #   phenotype <- isolate(input$phenotype)
+      protein_to_highlight <- isolate(input$protein_to_highlight)
   #   
   #   data<-get_data()
   #   if( is.null(data))return(NULL)

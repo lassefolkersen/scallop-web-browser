@@ -1,3 +1,5 @@
+library("shiny")
+
 source("../uifunctions.R")
 initialize('con',TRUE)
 
@@ -15,7 +17,7 @@ p<-data.frame(
   stringsAsFactors=F)
 p<-p[order(rownames(p)),]
 phenotypes_vector<-p[,"pheno_id"]
-names(phenotypes_vector) <- rownames(p)
+names(phenotypes_vector) <- c("none",rownames(p))
 
 
 
@@ -29,8 +31,12 @@ shinyUI(bootstrapPage(
   HTML("This page can be used to browse the pQTL effects of all SNPs proximal to any gene in the genome:<br><br>"),
   textInput(inputId="email", label = "E-mail", value = ""),
   textInput(inputId="gene", label = "Gene", value = ""),
-  selectInput("phenotype", "Protein", choices = phenotypes_vector),
+  
   checkboxInput("advanced", "Advanced options", value = FALSE),
+  conditionalPanel(
+    condition = "input.advanced",
+    selectInput("phenotype", "Highlight protein", choices = phenotypes_vector,selected="none")
+  ),
   conditionalPanel(
     condition = "input.advanced",
     sliderInput("distance","Distance from gene (bp)",min=100000,max=500000,value=200000)
