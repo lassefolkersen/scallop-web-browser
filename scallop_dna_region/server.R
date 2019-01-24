@@ -164,7 +164,7 @@ shinyServer(function(input, output) {
     
     #set tuning-parameters
     cutoff <- 5e-8
-    hit_per_kb <- 50
+    # hit_per_kb <- 50
     artifical_max <- 50
     artifical_min <- 20
     placement <- "topleft"
@@ -185,6 +185,8 @@ shinyServer(function(input, output) {
     xlab <- paste0("Chr ",sub(":.+$","",d[1,"MarkerName"])," (MB)")
     
     #start plot
+    layout(matrix(1:2,ncol=1),heights=c(0.8,0.2))
+    
     plot(NULL,ylim=ylim,xlim=xlim,xlab=xlab,ylab="-log10(P)")
     
     #prepare for saving max P-values (for legend)
@@ -255,6 +257,28 @@ shinyServer(function(input, output) {
     
     
     abline(h=-log10(5e-8),lty=2,lwd=2)
+    
+    
+    
+    
+    #get genemap
+    chr <- paste0("chr",sub(":.+$","",d[1,"MarkerName"]))
+    padding <- 500000 #to make sure all genes are in
+    w<-which(geneLocations[,"end"] < end + padding & geneLocations[,"start"] > start - padding & geneLocations[,"chr_name"] %in% chr)
+    w<-w[order(geneLocations[w,"start"])]
+    #plot genemap
+    plot(NULL,ylim=c(0,1),xlim=xlim,xlab="",ylab="",axes=FALSE,ann=FALSE)
+    for(j in 1:length(w)){
+      print(j)
+      start_gene <-geneLocations[w[j],"start"] / 1000000
+      end_gene <-geneLocations[w[j],"end"] / 1000000
+      gene_name <-rownames(geneLocations)[w[j]]
+      
+      lines(x=c(start_gene,end_gene),y=c((j%%10)/10,(j%%10)/10))
+      text(x=start_gene,y=0.02+(j%%10)/10,label=gene_name,adj=0)
+      
+    }
+    
     
     
     
