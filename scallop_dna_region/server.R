@@ -118,7 +118,7 @@ shinyServer(function(input, output) {
       if(nrow(d)==0){stop(safeError(paste("No SNPs found around gene",gene)))}
       
       
-      return(data)				
+      return(d)				
       
     }
   })
