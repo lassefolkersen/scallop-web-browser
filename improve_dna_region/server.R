@@ -87,14 +87,14 @@ shinyServer(function(input, output) {
       ##################################
       in_dir<-"~/data/2016-02-19_splits/"
       window<-1000000
-      if(!gene%in%rownames(geneLocations)){stop(paste(gene,"not found. Please only use human genesymbols (all upper-case letters)."))}
+      if(!gene%in%rownames(geneLocations)){stop(safeError(paste(gene,"not found. Please only use human genesymbols (all upper-case letters).")))}
       chr<-sub("^chr","",geneLocations[gene,"chr_name"])
       start<-geneLocations[gene,"start"] - distance
       end<-geneLocations[gene,"end"] + distance
       p1<-floor(start/window)
       p2<-floor(end/window)
       filename1<-paste(in_dir,"split_pheno_",phenotype,"_chr",chr,"_",p1,"_",p1+1,".txt.gz",sep="")
-      if(!file.exists(filename1))stop(paste("Could not find file",filename1))
+      if(!file.exists(filename1))stop(safeError(paste("Could not find file",filename1)))
       dh<-read.table(filename1,sep="\t",header=T,stringsAsFactors=F)
       
       #in case we are at a window breakpoint
@@ -106,7 +106,7 @@ shinyServer(function(input, output) {
       }
       
       data<-dh[dh[,"BP"]>start & dh[,"BP"]<end,]
-      if(nrow(data)==0){stop(paste("No SNPs found around gene",gene))}
+      if(nrow(data)==0){stop(safeError(paste("No SNPs found around gene",gene)))}
       
       data[,"-log10(P)"] <- -log10(data[,"P" ])
       rownames(data)<-data[,"SNP"]

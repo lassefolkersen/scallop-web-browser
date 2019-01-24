@@ -66,19 +66,19 @@ shinyServer(function(input, output) {
       top_label_count<-isolate(input$top_label_count)
       phenotype <- isolate(input$phenotype)
       
-      # if(!tolower(email) %in% accepted_users ){
-      #   m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"plot",email)
-      #   m<-paste(m,collapse="\t")
-      #   write(m,file="/home/ubuntu/logs/illegal_access_log.txt",append=TRUE)
-      #   Sys.sleep(2)
-      #   stop("In the test-phase non-privileged users are not allowed")
-      # }else{
-      #   
-      m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),NA,"protein",phenotype, gene, distance, p_value_cutoff, top_label_count)
-      m<-paste(m,collapse="\t")
-      write(m,file="/home/ubuntu/logs/log.txt",append=TRUE)
-      # }
-    
+      if(!tolower(email) %in% accepted_users ){
+        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"plot",email)
+        m<-paste(m,collapse="\t")
+        write(m,file="/home/ubuntu/logs/illegal_access_log.txt",append=TRUE)
+        Sys.sleep(2)
+        stop(safeError("In the test-phase non-privileged users are not allowed"))
+      }else{
+        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),NA,"scallop_protein_centric",phenotype, gene, distance, p_value_cutoff, top_label_count)
+        m<-paste(m,collapse="\t")
+        write(m,file="/home/ubuntu/logs/log.txt",append=TRUE)
+      }
+      
+      
       ##################################
       #Protein-aspect --- starting with 
       #a specific plasma protein
@@ -88,7 +88,7 @@ shinyServer(function(input, output) {
       file_name<-paste(in_dir,"trimmed_pheno_",phenotype,".txt.gz",sep="")
       data<-read.table(file_name, header=T,sep="\t",stringsAsFactors=FALSE)
       data<-data[data[,"P"] < 10^-p_value_cutoff,]
-      if(nrow(data)==0)stop("No SNPs were significant at this p_value_cutoff")
+      if(nrow(data)==0)stop(safeError("No SNPs were significant at this p_value_cutoff"))
       data[,"neglogp"] <- -log10(data[,"P"])
       
       

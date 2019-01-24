@@ -55,7 +55,7 @@ shinyServer(function(input, output) {
         m<-paste(m,collapse="\t")
         write(m,file="/home/ubuntu/logs/illegal_access_log.txt",append=TRUE)
         Sys.sleep(2)
-        stop("In the test-phase non-privileged users are not allowed")
+        stop(safeError("In the test-phase non-privileged users are not allowed"))
       }else{
         
         m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),NA,"scallop_regional",phenotype, gene, distance, top_label_count)
@@ -71,7 +71,7 @@ shinyServer(function(input, output) {
       ##################################
       data_dir<-"~/data/2019-01-23_regional/"
       window<-1000000
-      if(!gene%in%rownames(geneLocations)){stop(paste(gene,"not found. Please only use human genesymbols (all upper-case letters)."))}
+      if(!gene%in%rownames(geneLocations)){stop(safeError(paste(gene,"not found. Please only use human genesymbols (all upper-case letters).")))}
       chr<-sub("^chr","",geneLocations[gene,"chr_name"])
       start<-geneLocations[gene,"start"] - distance
       end<-geneLocations[gene,"end"] + distance
@@ -84,7 +84,7 @@ shinyServer(function(input, output) {
       dh <- list()
       for(protein in proteins){
         filename1<-paste(data_dir,"2019-01-22_",protein,"_",chr,"_",p1,"_region.txt",sep="")
-        if(!file.exists(filename1))stop(paste("Could not find file",filename1))
+        if(!file.exists(filename1))stop(safeError(paste("Could not find file",filename1)))
         if(!file.exists(filename1))next
         dh[[protein]]<-read.table(filename1,stringsAsFactors = F, header=T)
       }
@@ -103,7 +103,7 @@ shinyServer(function(input, output) {
         dh2 <- list()
         for(protein in proteins){
           filename1<-paste(data_dir,"2019-01-22_",protein,"_",chr,"_",p2,"_region.txt",sep="")
-          if(!file.exists(filename1))stop(paste("Could not find file",filename1))
+          if(!file.exists(filename1))stop(safeError(paste("Could not find file",filename1)))
           if(!file.exists(filename1))next
           dh2[[protein]]<-read.table(filename1,stringsAsFactors = F, header=T)
           
@@ -115,7 +115,7 @@ shinyServer(function(input, output) {
       
       
       d<-d[d[,"pos_mb"]>start & d[,"pos_mb"]<end,]
-      if(nrow(d)==0){stop(paste("No SNPs found around gene",gene))}
+      if(nrow(d)==0){stop(safeError(paste("No SNPs found around gene",gene)))}
       
       # d[,"-log10(P)"] <- -d[,"logP" ]
       
@@ -145,7 +145,7 @@ shinyServer(function(input, output) {
     
     #then get colours - strongest colours for strongest P-values
     colours<-colours[c(1:3,5:length(colours))] #remove colour #4, it's almost the same as #2
-    if(length(unique(d[,"protein"])) > length(colours)){stop("add more colours")}
+    if(length(unique(d[,"protein"])) > length(colours)){stop(safeError("add more colours"))}
     colours<-colours[1:(length(unique(d[,"protein"])))]
     names(colours) <- unique(d[,"protein"])
     
