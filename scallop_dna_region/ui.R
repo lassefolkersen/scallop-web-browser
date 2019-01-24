@@ -17,6 +17,7 @@ p<-data.frame(
   stringsAsFactors=F)
 p<-p[order(rownames(p)),]
 phenotypes_vector<-p[,"pheno_id"]
+phenotypes_vector<-c("none",p[,"pheno_id"])
 names(phenotypes_vector) <- c("none",rownames(p))
 
 
