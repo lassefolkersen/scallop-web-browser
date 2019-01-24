@@ -22,7 +22,7 @@ names(phenotypes_vector) <- rownames(p)
 shinyUI(bootstrapPage(
   head(),
   navigation(),
-  titlePanel("Per-SNP summary downloads"),
+  titlePanel("IMPROVE: Summary data download"),
   beginPage(),
   beginPanel('1/3'),
   HTML("<i>Note: This module queries the data presented in our <u><a href='http://dx.plos.org/10.1371/journal.pgen.1006706'>2017-paper on pQTL</a></u>. They are conserved here for consistency-reasons. You may however wish to start analysis with the larger SCALLOP analysis in other modules.</i><br><br>This page can be used to download per-SNP summary data:<br><br>"),
@@ -32,7 +32,7 @@ shinyUI(bootstrapPage(
   checkboxInput("advanced", "Advanced options", value = FALSE),
   conditionalPanel(
     condition = "input.advanced",
-    HTML("Documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-scallop'>github</a></u>.")
+    HTML("Documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-scallop'>github</a></u>. Note <u><a href='https://github.com/lassefolkersen/olink-scallop/issues/1'>known bug</a></u>.")
   ),
   actionButton("goButton","Run analysis"),
   endPanel(),

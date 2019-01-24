@@ -27,7 +27,7 @@ proteins<-c('ADM','AGRP','Beta-NGF','CA-125','CASP-8','CCL20','CCL3','CCL4','CD4
 shinyUI(bootstrapPage(
   head(),
   navigation(),
-  titlePanel("SNP-centric view - by a specific gene"),
+  titlePanel("SCALLOP: Genome-region browser"),
   beginPage(),
   beginPanel('1/3'),
   HTML("This page can be used to browse the pQTL effects of all SNPs proximal to any gene in the genome:<br><br>"),

@@ -23,7 +23,7 @@ names(phenotypes_vector) <- rownames(p)
 shinyUI(bootstrapPage(
   head(),
   navigation(),
-  titlePanel("Protein-centric view - all of the genome"),
+  titlePanel("IMPROVE: Protein-centric browser"),
   beginPage(),
   beginPanel('1/3'),
   HTML("<i>Note: This module queries the data presented in our <u><a href='http://dx.plos.org/10.1371/journal.pgen.1006706'>2017-paper on pQTL</a></u>. They are conserved here for consistency-reasons. You may however wish to start analysis with the larger SCALLOP analysis in other modules.</i><br><br>This page can be used to browse the significant pQTL effects of SNPs anywhere in the genome:<br><br>"),
