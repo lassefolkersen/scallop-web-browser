@@ -114,7 +114,7 @@ shinyServer(function(input, output) {
         
       
       
-      d<-d[d[,"pos_mb"]>start & d[,"pos_mb"]<end,]
+      d<-d[d[,"pos"]>start & d[,"pos"]<end,]
       if(nrow(d)==0){stop(safeError(paste("No SNPs found around gene",gene)))}
       
 
@@ -132,10 +132,7 @@ shinyServer(function(input, output) {
     
     d<-get_data()
     if(is.null(data))return(NULL)
-    print("")
-    print(d)    
-    print("")
-    
+
     
     #calculate in mb (because X-axis becomes nicer then)
     d[,"pos_mb"] <- d[,"pos"] / 1000000
