@@ -195,22 +195,27 @@ shinyServer(function(input, output) {
       d2 <- d1
       d2<-d2[order(d2[,"pos_mb"]),]
       
-      #set lwd 2 if within the top hits in legend and 5 if highlighted
-      if(protein_to_highlight == protein){
-        lwd <- 10
-      }else if(which(names(colours)%in%protein) <= n_legend){
-        lwd <- 2
-      }else{
-        lwd <- 1
-      }
       
       #plot top-line
-      lines(d2[,"pos_mb"],d2[,"logP"],col=colours[protein],lwd=lwd)
+      #set lwd 2 if within the top hits in legend and 10/black if highlighted
+      if(protein_to_highlight == protein){
+        lines(d2[,"pos_mb"],d2[,"logP"],col="black",lwd=lwd)
+      }else{
+        if(which(names(colours)%in%protein) <= n_legend){
+          lwd <- 2
+        }else{
+          lwd <- 1
+        }
+        lines(d2[,"pos_mb"],d2[,"logP"],col=colours[protein],lwd=lwd)
+      }
+      
+      
+      
       
       #plot filling: first do nice transparent colour, then polygonize it
       solid_col <- col2rgb(colours[protein])
       transparent_col <-  rgb(solid_col[1],solid_col[2],solid_col[3],255*0.3,maxColorValue=256)
-      x_lines <- c(xlim[1],xlim[1],d2[,"pos_mb"],xlim[2],xlim[2],xlim[1])
+      x_lines <- c(min(d2[,"pos_mb"]),min(d2[,"pos_mb"]),d2[,"pos_mb"],max(d2[,"pos_mb"]),max(d2[,"pos_mb"]),min(d2[,"pos_mb"]))
       y_lines <- c(0,d2[1,"logP"],d2[,"logP"],d2[nrow(d2),"logP"],0,0)
       polygon(x=x_lines, y = y_lines, density = NULL, angle = 45,border = NA, col = transparent_col)
       
