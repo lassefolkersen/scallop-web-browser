@@ -58,12 +58,12 @@ shinyUI(bootstrapPage(
   
   
   conditionalPanel(
-    condition = "show_gene_map",
+    condition = "input.show_gene_map == TRUE",
     plotOutput("mainPlot",height = "700px")
   ),
   
   conditionalPanel(
-    condition = "!show_gene_map",
+    condition = "input.show_gene_map == FALSE",
     plotOutput("mainPlot",height = "400px")
   ),
   
