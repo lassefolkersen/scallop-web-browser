@@ -80,7 +80,7 @@ shinyServer(function(input, output) {
       distance <- isolate(input$distance)
       p_value_cutoff <- isolate(input$p_value_cutoff)
       top_label_count<-isolate(input$top_label_count)
-      phenotype <- isolate(input$phenotype)
+      protein <- isolate(input$protein)
       
       if(!tolower(email) %in% accepted_users &  FALSE){
         m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"plot",email)
@@ -89,7 +89,7 @@ shinyServer(function(input, output) {
         Sys.sleep(2)
         stop(safeError("In the test-phase non-privileged users are not allowed"))
       }else{
-        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),NA,"scallop_protein_centric",phenotype, distance, p_value_cutoff, top_label_count)
+        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),NA,"scallop_protein_centric",protein, distance, p_value_cutoff, top_label_count)
         m<-paste(m,collapse="\t")
         write(m,file="/home/ubuntu/logs/log.txt",append=TRUE)
       }
@@ -109,8 +109,8 @@ shinyServer(function(input, output) {
       data[,"neglogp"] <- data[,"logP"]
       
       
-      data[,"trait_chr"]<-protein_pos[phenotype,"Chr"]
-      data[,"trait_pos"]<-protein_pos[phenotype,"CDS_start"]
+      data[,"trait_chr"]<-protein_pos[protein,"Chr"]
+      data[,"trait_pos"]<-protein_pos[protein,"CDS_start"]
       
       
       #calculate the "universal-BP" --- i.e. the BP-sum on chr + all-other-chr before it (=were on the circle to plot)
@@ -141,7 +141,7 @@ shinyServer(function(input, output) {
     # distance <- isolate(input$distance)
     p_value_cutoff <- isolate(input$p_value_cutoff)
     top_label_count<-isolate(input$top_label_count)
-    phenotype <- isolate(input$phenotype)
+    protein <- isolate(input$protein)
     
     data<-get_data()
     if(is.null(data))return(NULL)
@@ -219,11 +219,11 @@ shinyServer(function(input, output) {
     
     
     #labelling the trait
-    # trait<-phenotype
+    # trait<-protein
     dest<-data[i,"trait_abs_pos"]
     x3 = (base) * cos( 2*pi*(dest/maxPos) )
     y3 = (base) * sin( 2*pi*(dest/maxPos) )
-    text(x3,y3,phenotype,adj=0,font=4)
+    text(x3,y3,protein,adj=0,font=4)
     
     
     
@@ -258,7 +258,7 @@ shinyServer(function(input, output) {
     # gene <- isolate(input$gene)
     p_value_cutoff <- isolate(input$p_value_cutoff)
     top_label_count<-isolate(input$top_label_count)
-    phenotype <- isolate(input$phenotype)
+    protein <- isolate(input$protein)
     
     data<-get_data()
     if( is.null(data))return(NULL)
