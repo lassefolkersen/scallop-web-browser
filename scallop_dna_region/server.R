@@ -131,7 +131,7 @@ shinyServer(function(input, output) {
     protein_to_highlight <- isolate(input$protein_to_highlight)
     
     d<-get_data()
-    if(is.null(d) | nrow(d)==0){
+    if(is.null(d) || nrow(d)==0){
       print("no data ready")
       return(NULL)
     }

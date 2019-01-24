@@ -36,7 +36,7 @@ shinyUI(bootstrapPage(
   checkboxInput("advanced", "Advanced options", value = FALSE),
   conditionalPanel(
     condition = "input.advanced",
-    selectInput("phenotype", "Highlight protein", choices = phenotypes_vector,selected="none")
+    selectInput("protein_to_highlight", "Highlight protein", choices = phenotypes_vector,selected="none")
   ),
   conditionalPanel(
     condition = "input.advanced",
