@@ -187,7 +187,7 @@ shinyServer(function(input, output) {
     
     #optional - prepare to show gene map
     if(show_gene_map){
-      layout(matrix(1:2,ncol=1),heights=c(0.65,0.35))  
+      layout(matrix(1:2,ncol=1),heights=c(0.8,0.2))  
     }
     
     #start plot
@@ -310,7 +310,7 @@ shinyServer(function(input, output) {
     colnames(d)<-wanted_column_names
     
     #order by P-value
-    d <- d[order(d[,"P.value"]),]
+    d <- d[order(d[,"P-value"]),]
     
     #only get top-list
     if(top_label_count>nrow(d))top_label_count<-nrow(d)

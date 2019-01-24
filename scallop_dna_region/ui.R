@@ -31,13 +31,11 @@ shinyUI(bootstrapPage(
   HTML("This page can be used to browse the pQTL effects of all SNPs proximal to any gene in the genome:<br><br>"),
   textInput(inputId="email", label = "E-mail", value = ""),
   textInput(inputId="gene", label = "Gene (HGNC) or position (chr:bp)", value = ""),
-  
   checkboxInput("advanced", "Advanced options", value = FALSE),
   conditionalPanel(
     condition = "input.advanced",
     checkboxInput("show_gene_map", "Show gene map", value = FALSE)
   ),
-  
   conditionalPanel(
     condition = "input.advanced",
     selectInput("protein_to_highlight", "Highlight protein", choices = phenotypes_vector,selected="none")
@@ -57,7 +55,7 @@ shinyUI(bootstrapPage(
   actionButton("goButton","Run analysis"),
   endPanel(),
   beginPanel('2/3'),
-  plotOutput("mainPlot"),
+  plotOutput("mainPlot",height = "600px"),
   
   dataTableOutput("mainTable"),
   endPanel(),
