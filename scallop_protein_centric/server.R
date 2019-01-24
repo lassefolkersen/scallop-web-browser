@@ -75,14 +75,14 @@ shinyServer(function(input, output) {
       ##################################
       #input-variables, log and register	
       ##################################
-      email <- isolate(input$email)
+      email <- "disabled" #isolate(input$email)
       # gene <- isolate(input$gene)
       distance <- isolate(input$distance)
       p_value_cutoff <- isolate(input$p_value_cutoff)
       top_label_count<-isolate(input$top_label_count)
       phenotype <- isolate(input$phenotype)
       
-      if(!tolower(email) %in% accepted_users ){
+      if(!tolower(email) %in% accepted_users &  FALSE){
         m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"plot",email)
         m<-paste(m,collapse="\t")
         write(m,file="/home/ubuntu/logs/illegal_access_log.txt",append=TRUE)
