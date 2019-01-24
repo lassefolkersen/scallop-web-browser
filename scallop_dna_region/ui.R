@@ -43,7 +43,7 @@ shinyUI(bootstrapPage(
   ),
   conditionalPanel(
     condition = "input.advanced",
-    sliderInput("top_label_count","#SNPs to label",min=3,max=30,value=3,step=1)
+    sliderInput("top_label_count","#SNPs in table",min=10,max=300,value=50,step=1)
   ),
   conditionalPanel(
     condition = "input.advanced",

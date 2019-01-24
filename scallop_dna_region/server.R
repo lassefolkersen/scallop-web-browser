@@ -254,15 +254,24 @@ shinyServer(function(input, output) {
     distance <- isolate(input$distance)
     # p_value_cutoff <- isolate(input$p_value_cutoff)
     top_label_count<-isolate(input$top_label_count)
-      protein_to_highlight <- isolate(input$protein_to_highlight)
+    protein_to_highlight <- isolate(input$protein_to_highlight)
 
     d<-get_data()
     if(is.null(d) || nrow(d)==0){
       print("no data ready")
       return(NULL)
     }
-    
     d[,"chr"]<- d[,"pos_mb"] <- d[,"P.value.character"] <- d[,"logP"] <- NULL
+    
+    
+    
+    #order by P-value
+    d <- d[order(d[,"P.value"]),]
+    
+    #only get top-list
+    if(top_label_count>nrow(d))top_label_count<-nrow(d)
+    d<-d[1:top_label_count,]
+    
     
     return(d) 
      
