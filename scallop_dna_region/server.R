@@ -80,6 +80,7 @@ shinyServer(function(input, output) {
       if(length(grep(":",gene))>0){
         gene<-sub("^chr","",gene)
         gene<-gsub(" ","",gene)
+        gene<-gsub(",","",gene)
         s <- strsplit(gene,":")[[1]]
         if(length(s)!=2)stop(safeError("If giving position as e.g. chr4:43254 - there must exactly one :"))
         chr <- as.numeric(s[1])
@@ -115,24 +116,6 @@ shinyServer(function(input, output) {
       
       
       
-      # #in case we are at a window breakpoint
-      # if(p1!=p2){
-      #   print(paste("breakpoint",p1,p2))
-      #   d1 <- d
-      #   dh2 <- list()
-      #   for(protein in proteins){
-      #     filename1<-paste(data_dir,"2019-01-22_",protein,"_",chr,"_",p2,"_region.txt",sep="")
-      #     if(!file.exists(filename1))stop(safeError(paste("Could not find file",filename1)))
-      #     if(!file.exists(filename1))next
-      #     dh2[[protein]]<-read.table(filename1,stringsAsFactors = F, header=T)
-      #     
-      #   }
-      #   d2<-do.call(rbind,dh2)
-      #   d<-rbind(d1,d2)
-      # }
-      #some duplicates because of double load in
-      # d <- d[!duplicated(apply(d[,c("MarkerName","protein")],1,paste,collapse="_")),]
-      
       
       
       d<-d[d[,"pos"]>start & d[,"pos"]<end,]
@@ -141,18 +124,26 @@ shinyServer(function(input, output) {
       
       
       
-      return(d)				
+      return(list(
+        d=d,
+        chr=chr,
+        start=start,
+        end=end
+        ))				
       
     }
   })
   
+  
+  
+  
   output$mainPlot <- renderPlot({ 
-    gene <- isolate(input$gene)
-    distance <- isolate(input$distance)
+
     top_label_count<-isolate(input$top_label_count)
     protein_to_highlight <- isolate(input$protein_to_highlight)
     
-    d<-get_data()
+    o<-get_data()
+    d <- o[["d"]]
     if(is.null(d) || nrow(d)==0){
       print("no data ready")
       return(NULL)
@@ -185,8 +176,8 @@ shinyServer(function(input, output) {
     
     
     #set xlim and chr
-    start<-geneLocations[gene,"start"] - distance
-    end<-geneLocations[gene,"end"] + distance
+    start<- o[["start"]] / 1.5
+    end<-o[["end"]] / 1.5
     xlim <- range(start/ 1000000,end/ 1000000)
     xlab <- paste0("Chr ",sub(":.+$","",d[1,"MarkerName"])," (MB)")
     
@@ -214,10 +205,8 @@ shinyServer(function(input, output) {
         next
       }
       
-      #remove any but strongest hit per n kp
-      # keep <- which(!duplicated(round(d1[,"pos_mb"] / (hit_per_kb/1000)   )))
-      # d2<-d1[keep,]
-      d2 <- d1
+      
+      #order by location
       d2<-d2[order(d2[,"pos_mb"]),]
       
       
@@ -270,13 +259,13 @@ shinyServer(function(input, output) {
   
   output$mainTable <- renderDataTable({
 
-    gene <- isolate(input$gene)
-    distance <- isolate(input$distance)
-    # p_value_cutoff <- isolate(input$p_value_cutoff)
     top_label_count<-isolate(input$top_label_count)
     protein_to_highlight <- isolate(input$protein_to_highlight)
 
-    d<-get_data()
+    o<-get_data()
+    d<-o[["d"]]
+    
+    
     if(is.null(d) || nrow(d)==0){
       print("no data ready")
       return(NULL)
