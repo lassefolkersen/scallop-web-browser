@@ -50,7 +50,9 @@ shinyServer(function(input, output) {
       distance <- isolate(input$distance)
       top_label_count<-isolate(input$top_label_count)
       protein_to_highlight <- isolate(input$protein_to_highlight)
+
       
+            
       if(!tolower(email) %in% accepted_users ){
         m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"plot",email)
         m<-paste(m,collapse="\t")
@@ -114,7 +116,7 @@ shinyServer(function(input, output) {
       
       
       
-      d<-d[d[,"pos"]>start & d[,"pos"]<end,]
+      d<-d[d[,"pos"]>start-1000 & d[,"pos"]<end+1000,]
       if(nrow(d)==0){stop(safeError(paste("No SNPs found around gene",gene)))}
       
       
@@ -162,7 +164,9 @@ shinyServer(function(input, output) {
     
     
     #set xlim and chr
-    xlim <- range(d[,"pos_mb"])
+    start<-geneLocations[gene,"start"] - distance
+    end<-geneLocations[gene,"end"] + distance
+    xlim <- range(start,end)
     xlab <- paste0("Chr ",sub(":.+$","",d[1,"MarkerName"])," (MB)")
     
     #start plot
