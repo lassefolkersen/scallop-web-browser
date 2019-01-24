@@ -204,7 +204,7 @@ shinyServer(function(input, output) {
       #plot top-line
       #set lwd 2 if within the top hits in legend and 10/black if highlighted
       if(protein_to_highlight == protein){
-        lines(d2[,"pos_mb"],d2[,"logP"],col="black",lwd=lwd)
+        lines(d2[,"pos_mb"],d2[,"logP"],col="black",lwd=10)
       }else{
         if(which(names(colours)%in%protein) <= n_legend){
           lwd <- 2
@@ -248,24 +248,25 @@ shinyServer(function(input, output) {
     
   })
   
-  # output$mainTable <- renderDataTable({ 
-  #   # email <- isolate(input$email)
-  #   
-  #   gene <- isolate(input$gene)
-  #   distance <- isolate(input$distance)
-  #   # p_value_cutoff <- isolate(input$p_value_cutoff)
-  #   top_label_count<-isolate(input$top_label_count)
+  output$mainTable <- renderDataTable({
+
+    gene <- isolate(input$gene)
+    distance <- isolate(input$distance)
+    # p_value_cutoff <- isolate(input$p_value_cutoff)
+    top_label_count<-isolate(input$top_label_count)
       protein_to_highlight <- isolate(input$protein_to_highlight)
-  #   
-  #   data<-get_data()
-  #   if( is.null(data))return(NULL)
-  #   
-  #   
-  #     data<-data[,c("SNP","CHR","BP","P")]
-  #     return(data)
-  #   
-  #   
-  # })
+
+    d<-get_data()
+    if(is.null(d) || nrow(d)==0){
+      print("no data ready")
+      return(NULL)
+    }
+    
+    d[,"chr"]<- d[,"pos_mb"] <- d[,"P.value.character"] <- d[,"logP"] <- NULL
+    
+    return(d) 
+     
+  })
 })
 
 

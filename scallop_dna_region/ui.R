@@ -54,7 +54,7 @@ shinyUI(bootstrapPage(
   beginPanel('2/3'),
   plotOutput("mainPlot"),
   
-  # dataTableOutput("mainTable"),
+  dataTableOutput("mainTable"),
   endPanel(),
   
   endPage(),
