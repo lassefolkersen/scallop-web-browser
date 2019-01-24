@@ -185,7 +185,7 @@ shinyServer(function(input, output) {
     xlab <- paste0("Chr ",sub(":.+$","",d[1,"MarkerName"])," (MB)")
     
     #start plot
-    layout(matrix(1:2,ncol=1),heights=c(0.8,0.2))
+    layout(matrix(1:2,ncol=1),heights=c(0.7,0.3))
     
     plot(NULL,ylim=ylim,xlim=xlim,xlab=xlab,ylab="-log10(P)")
     
@@ -299,7 +299,7 @@ shinyServer(function(input, output) {
     }
 
     #set columns    
-    wanted_columns <- c('protein','MarkerName','Allele1','Allele2','Freq1','FreqSE','Effect','StdErr','P.value.character','TotalSampleSize','pos')
+    wanted_column <- c('protein','MarkerName','Allele1','Allele2','Freq1','FreqSE','Effect','StdErr','P.value.character','TotalSampleSize','pos')
     wanted_column_names <- c('Protein','MarkerName','Allele1','Allele2','Freq1','FreqSE','Effect','StdErr','P-value','SampleSize','Position')
     d<-d[,wanted_column]
     colnames(d)<-wanted_column_names
