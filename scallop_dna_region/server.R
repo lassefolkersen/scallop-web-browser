@@ -116,7 +116,7 @@ shinyServer(function(input, output) {
       
       
       
-      d<-d[d[,"pos"]>start-1000 & d[,"pos"]<end+1000,]
+      d<-d[d[,"pos"]>start-10000 & d[,"pos"]<end+10000,]
       if(nrow(d)==0){stop(safeError(paste("No SNPs found around gene",gene)))}
       
       
