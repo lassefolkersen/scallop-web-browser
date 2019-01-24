@@ -74,7 +74,7 @@ shinyServer(function(input, output) {
       ##################################
       data_dir<-"~/data/2019-01-23_regional/"
       window<-1000000
-      distance <- distance * 1.5
+      distance_expanded <- distance * 1.5
       
       #position or gene
       if(length(grep(":",gene))>0){
@@ -84,15 +84,17 @@ shinyServer(function(input, output) {
         s <- strsplit(gene,":")[[1]]
         if(length(s)!=2)stop(safeError("If giving position as e.g. chr4:43254 - there must exactly one :"))
         chr <- as.numeric(s[1])
-        start <- as.numeric(s[2]) - distance
-        end <- as.numeric(s[2]) + distance
+        start <- as.numeric(s[2])
+        end <- as.numeric(s[2])
+
         if(is.na(chr)|is.na(end)| is.na(start))stop(safeError(paste("couldn't recognize", gene, "as a chr5:423432 position. Make sure there's no non-numeric characters")))
 
       }else{
         if(!gene%in%rownames(geneLocations)){stop(safeError(paste(gene,"not found. Please only use human genesymbols (all upper-case letters).")))}
         chr<-sub("^chr","",geneLocations[gene,"chr_name"])
-        start<-geneLocations[gene,"start"] - distance
-        end<-geneLocations[gene,"end"] + distance
+        start<-geneLocations[gene,"start"]
+        end<-geneLocations[gene,"end"]
+
       }
 
       p1<-floor(start/window)
@@ -118,7 +120,7 @@ shinyServer(function(input, output) {
       
       
       
-      d<-d[d[,"pos"]>start & d[,"pos"]<end,]
+      d<-d[d[,"pos"]>start - distance_expanded & d[,"pos"]<end + distance_expanded,]
       if(nrow(d)==0){stop(safeError(paste("No SNPs found around gene",gene)))}
       
       
@@ -128,7 +130,8 @@ shinyServer(function(input, output) {
         d=d,
         chr=chr,
         start=start,
-        end=end
+        end=end,
+        distance = distance
         ))				
       
     }
@@ -176,8 +179,8 @@ shinyServer(function(input, output) {
     
     
     #set xlim and chr
-    start<- o[["start"]] / 1.5
-    end<-o[["end"]] / 1.5
+    start<- o[["start"]] - o[["distance"]]
+    end<-o[["end"]] + o[["distance"]]
     xlim <- range(start/ 1000000,end/ 1000000)
     xlab <- paste0("Chr ",sub(":.+$","",d[1,"MarkerName"])," (MB)")
     
