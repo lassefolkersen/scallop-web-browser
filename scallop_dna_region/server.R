@@ -111,13 +111,13 @@ shinyServer(function(input, output) {
         d2<-do.call(rbind,dh2)
         d<-rbind(d1,d2)
       }
-        
+      
       
       
       d<-d[d[,"pos"]>start & d[,"pos"]<end,]
       if(nrow(d)==0){stop(safeError(paste("No SNPs found around gene",gene)))}
       
-
+      
       return(data)				
       
     }
@@ -131,8 +131,10 @@ shinyServer(function(input, output) {
     phenotype <- isolate(input$phenotype)
     
     d<-get_data()
-    if(is.null(data))return(NULL)
-
+    if(is.null(data) | nrow(data)==0){
+      print("no data ready")
+      return(NULL)
+    }
     
     #calculate in mb (because X-axis becomes nicer then)
     d[,"pos_mb"] <- d[,"pos"] / 1000000
