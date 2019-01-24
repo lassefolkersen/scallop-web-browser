@@ -26,7 +26,7 @@ shinyUI(bootstrapPage(
   titlePanel("Protein-centric view - all of the genome"),
   beginPage(),
   beginPanel('1/3'),
-  HTML("This page can be used to browse the significant pQTL effects of SNPs anywhere in the genome:<br><br>"),
+  HTML("<i>Note: This module queries the data presented in our <u><a href='http://dx.plos.org/10.1371/journal.pgen.1006706'>2017-paper on pQTL</a></u>. They are conserved here for consistency-reasons. You may however wish to start analysis with the larger SCALLOP analysis in other modules.</i><br><br>This page can be used to browse the significant pQTL effects of SNPs anywhere in the genome:<br><br>"),
   # textInput(inputId="email", label = "E-mail", value = ""),
   selectInput("phenotype", "Protein", choices = phenotypes_vector),
   checkboxInput("advanced", "Advanced options", value = FALSE),
@@ -40,7 +40,7 @@ shinyUI(bootstrapPage(
   ),
   conditionalPanel(
     condition = "input.advanced",
-    HTML("<i>Note: This module queries the data presented in our <u><a href='http://dx.plos.org/10.1371/journal.pgen.1006706'>2017-paper on pQTL</a></u>. They are conserved here for consistency-reasons. You may however wish to start analysis with the larger SCALLOP analysis in other modules.</i><br><br>Documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-scallop'>github</a></u>.")
+    HTML("Documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-scallop'>github</a></u>.")
   ),
   actionButton("goButton","Run analysis"),
   endPanel(),
