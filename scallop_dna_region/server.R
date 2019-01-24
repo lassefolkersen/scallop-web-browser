@@ -166,7 +166,7 @@ shinyServer(function(input, output) {
     #set xlim and chr
     start<-geneLocations[gene,"start"] - distance
     end<-geneLocations[gene,"end"] + distance
-    xlim <- range(start,end)
+    xlim <- range(start/ 1000000,end/ 1000000)
     xlab <- paste0("Chr ",sub(":.+$","",d[1,"MarkerName"])," (MB)")
     
     #start plot
