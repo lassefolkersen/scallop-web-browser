@@ -28,22 +28,34 @@ names(cols) <- as.character(1:(length(cols)-1))
 
 
 #gene positions
-load("~/srv/olink-scallop/2014-07-16 gene locations.rdata")
+# load("~/srv/olink-scallop/2014-07-16 gene locations.rdata")
+
+#protein locations
 load("~/srv/olink-scallop/scallop_protein_centric/2019-01-24_cvd1_protein_positions.rdata")
 
+#significant hits - loaded at run-time instead
+# all_data<-read.table("/home/ubuntu/data/2019-01-24_significant_bits_scallop/2019-01-24_top_hits_pruned.txt.gz",sep="\t",header=T,stringsAsFactors = F)
+# for(protein in unique(all_data[,"protein"])){
+#   d1 <-all_data[all_data[,"protein"] %in% protein,]
+#   gz1 <- gzfile(paste0("/home/ubuntu/data/2019-01-24_significant_bits_scallop/2019-01-24_",protein,"_top_hits_pruned.txt.gz"), "w",compression = 9)
+#   write.table(d1, gz1,sep="\t",col.names=T,row.names=F,quote=F)
+#   close(gz1)
+# }
 
 
 
-load(protein_pos_file)
-p<-data.frame(
-  row.names=data[,"hgnc_symbol"],
-  pheno_id=data[,"No_in_GWAS_files"],
-  CHR = data[,"trait_chr"],
-  BP = data[,"trait_pos"],
-  stringsAsFactors=F)
-p<-p[order(rownames(p)),]
-phenotypes_vector<-p[,"pheno_id"]
-names(phenotypes_vector) <- rownames(p)
+
+
+# load(protein_pos_file)
+# p<-data.frame(
+#   row.names=data[,"hgnc_symbol"],
+#   pheno_id=data[,"No_in_GWAS_files"],
+#   CHR = data[,"trait_chr"],
+#   BP = data[,"trait_pos"],
+#   stringsAsFactors=F)
+# p<-p[order(rownames(p)),]
+# phenotypes_vector<-p[,"pheno_id"]
+# names(phenotypes_vector) <- rownames(p)
 
 
 
@@ -64,7 +76,7 @@ shinyServer(function(input, output) {
       #input-variables, log and register	
       ##################################
       email <- isolate(input$email)
-      gene <- isolate(input$gene)
+      # gene <- isolate(input$gene)
       distance <- isolate(input$distance)
       p_value_cutoff <- isolate(input$p_value_cutoff)
       top_label_count<-isolate(input$top_label_count)
@@ -88,20 +100,21 @@ shinyServer(function(input, output) {
       #a specific plasma protein
       ##################################
       
-      in_dir <- "~/data/2016-02-20_significant_bits/"
-      file_name<-paste(in_dir,"trimmed_pheno_",phenotype,".txt.gz",sep="")
+      in_dir <- "~/data/2019-01-24_significant_bits_scallop/"
+      file_name<-paste(in_dir,"2019-01-24_",protein,"_top_hits_pruned.txt.gz",sep="")
+      
       data<-read.table(file_name, header=T,sep="\t",stringsAsFactors=FALSE)
-      data<-data[data[,"P"] < 10^-p_value_cutoff,]
+      data<-data[data[,"logP"] > p_value_cutoff,]
       if(nrow(data)==0)stop(safeError("No SNPs were significant at this p_value_cutoff"))
-      data[,"neglogp"] <- -log10(data[,"P"])
+      data[,"neglogp"] <- data[,"logP"]
       
       
-      data[,"trait_chr"]<-p[p[,"pheno_id"]%in%phenotype,"CHR"]
-      data[,"trait_pos"]<-p[p[,"pheno_id"]%in%phenotype,"BP"]
+      data[,"trait_chr"]<-protein_pos[phenotype,"Chr"]
+      data[,"trait_pos"]<-protein_pos[phenotype,"CDS_start"]
       
       
       #calculate the "universal-BP" --- i.e. the BP-sum on chr + all-other-chr before it (=were on the circle to plot)
-      data[,"snp_abs_pos"]<-chrLengths[data[,"CHR"],"startsum"] + data[,"BP"]
+      data[,"snp_abs_pos"]<-chrLengths[data[,"chr"],"startsum"] + data[,"pos"]
       data[,"trait_abs_pos"]<-chrLengths[data[,"trait_chr"],"startsum"] + data[,"trait_pos"]
       
       
@@ -124,7 +137,7 @@ shinyServer(function(input, output) {
   
   output$mainPlot <- renderPlot({ 
     # email <- isolate(input$email)
-    gene <- isolate(input$gene)
+    # gene <- isolate(input$gene)
     # distance <- isolate(input$distance)
     p_value_cutoff <- isolate(input$p_value_cutoff)
     top_label_count<-isolate(input$top_label_count)
@@ -169,7 +182,7 @@ shinyServer(function(input, output) {
       x2 = (base) * cos( 2*pi*(dest/maxPos) )
       y2 = (base) * sin( 2*pi*(dest/maxPos) )
       lines(x=c(x1,x2),y=c(y1,y2),col=colour,lwd=1)
-      print(paste(x1,y1,x2,y2))
+      # print(paste(x1,y1,x2,y2))
     }
     
     
@@ -206,11 +219,11 @@ shinyServer(function(input, output) {
     
     
     #labelling the trait
-    trait<-rownames(p)[p[,"pheno_id"]%in%phenotype]
+    # trait<-phenotype
     dest<-data[i,"trait_abs_pos"]
     x3 = (base) * cos( 2*pi*(dest/maxPos) )
     y3 = (base) * sin( 2*pi*(dest/maxPos) )
-    text(x3,y3,trait,adj=0,font=4)
+    text(x3,y3,phenotype,adj=0,font=4)
     
     
     
