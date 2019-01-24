@@ -1,31 +1,15 @@
 library("shiny")
 
 
-
-#saving global variables
-#chr lengths #from here https://support.bioconductor.org/p/14766/
-cl<-c(247197891, 242713278, 199439629, 191246650, 180727832,
-      170735623, 158630410, 146252219, 140191642, 135347681,
-      134361903, 132289533, 114110907, 106354309, 100334282,
-      88771793,  78646005,  76106388,  63802660,  62429769,
-      46935585, 49396972, 154908521,  57767721)
-chrLengths<-data.frame(row.names=c(1:22,"X","Y"),sum=cl,number=1:length(cl),endsum=cumsum(cl))
-chrLengths[,"startsum"]<- chrLengths[,"endsum"] - chrLengths[,"sum"]
-
-#Misc small variables
-p_range<-1
-maxPos<-sum(cl)#max(data[,"snp_abs_pos"],na.rm=T)
-base<-2
-ip<-read.table("/home/ubuntu/misc/current_address.txt",stringsAsFactors=F)[1,1]
-
 #permissions
-# accepted_users<-tolower(read.table("/home/ubuntu/misc/accepted_emails.txt",sep="\t",header=F,stringsAsFactors=F)[,1])
+accepted_users<-tolower(read.table("/home/ubuntu/misc/accepted_emails.txt",sep="\t",header=F,stringsAsFactors=F)[,1])
 
-#colouring scheme
-#Setting colours
-# sum(cl)/1e7 this is 307 (meaning we could divide the genome into 307 1e7 bp chunks. Let's.
-cols<-rainbow(307, s = 1, v = 1, start = 0, end = 1, alpha = 1)
-names(cols) <- as.character(1:length(cols))
+
+
+#colours (could speed by saving as fixed)
+# library(RColorBrewer)
+# colours <- c(brewer.pal(9,"Set1"), brewer.pal(12,"Set3") ,brewer.pal(8,"Pastel2"),brewer.pal(8,"Pastel1"),brewer.pal(8,"Pastel2"),brewer.pal(8,"Pastel1"),brewer.pal(8,"Pastel2"),brewer.pal(8,"Pastel1"),brewer.pal(8,"Pastel2"),brewer.pal(8,"Pastel1") ,brewer.pal(8,"Pastel2"),brewer.pal(8,"Pastel1") )
+colours<-c('#E41A1C','#377EB8','#4DAF4A','#984EA3','#FF7F00','#FFFF33','#A65628','#F781BF','#999999','#8DD3C7','#FFFFB3','#BEBADA','#FB8072','#80B1D3','#FDB462','#B3DE69','#FCCDE5','#D9D9D9','#BC80BD','#CCEBC5','#FFED6F','#B3E2CD','#FDCDAC','#CBD5E8','#F4CAE4','#E6F5C9','#FFF2AE','#F1E2CC','#CCCCCC','#FBB4AE','#B3CDE3','#CCEBC5','#DECBE4','#FED9A6','#FFFFCC','#E5D8BD','#FDDAEC','#B3E2CD','#FDCDAC','#CBD5E8','#F4CAE4','#E6F5C9','#FFF2AE','#F1E2CC','#CCCCCC','#FBB4AE','#B3CDE3','#CCEBC5','#DECBE4','#FED9A6','#FFFFCC','#E5D8BD','#FDDAEC','#B3E2CD','#FDCDAC','#CBD5E8','#F4CAE4','#E6F5C9','#FFF2AE','#F1E2CC','#CCCCCC','#FBB4AE','#B3CDE3','#CCEBC5','#DECBE4','#FED9A6','#FFFFCC','#E5D8BD','#FDDAEC','#B3E2CD','#FDCDAC','#CBD5E8','#F4CAE4','#E6F5C9','#FFF2AE','#F1E2CC','#CCCCCC','#FBB4AE','#B3CDE3','#CCEBC5','#DECBE4','#FED9A6','#FFFFCC','#E5D8BD','#FDDAEC','#B3E2CD','#FDCDAC','#CBD5E8','#F4CAE4','#E6F5C9','#FFF2AE','#F1E2CC','#CCCCCC','#FBB4AE','#B3CDE3','#CCEBC5','#DECBE4','#FED9A6','#FFFFCC','#E5D8BD','#FDDAEC')
 
 
 #gene positions
@@ -43,7 +27,7 @@ phenotypes_vector<-p[,"pheno_id"]
 names(phenotypes_vector) <- rownames(p)
 
 
-
+proteins<-c('ADM','AGRP','Beta-NGF','CA-125','CASP-8','CCL20','CCL3','CCL4','CD40','CD40-L','CHI3L1','CSF-1','CSTB','CTSD','CTSL1','CX3CL1','CXCL1','CXCL16','CXCL6','Dkk-1','ECP','EGF','EN-RAGE','ESM-1','FABP4','FAS','FGF-23','FS','GAL','Gal-3','GDF-15','GH','HB-EGF','HGF','hK11','HSP_27','IL-18','IL-1ra','IL-27','IL-6','IL-6RA','IL-8','IL16','ITGB1BP2','KIM-1','KLK6','LEP','LOX-1','mAmP','MB','MCP-1','MMP-1','MMP-10','MMP-12','MMP-3','MMP-7','MPO','NEMO','NT-pro_BNP','OPG','PAPPA','PAR-1','PDGF_subunit_B','PECAM-1','PlGF','PSGL-1','PTX3','RAGE','REN','RETN','SCF','SELE','SIRT2','SPON1','ST2','t-PA','TF','TIE2','TM','TNF-R1','TNF-R2','TNFSF14','TRAIL','TRAIL-R2','TRANCE','U-PAR','VEGF-A','VEGF-D')
 
 
 
@@ -60,24 +44,24 @@ shinyServer(function(input, output) {
       ##################################
       #input-variables, log and register	
       ##################################
-      # email <- isolate(input$email)
+      email <- isolate(input$email)
       gene <- isolate(input$gene)
       distance <- isolate(input$distance)
       top_label_count<-isolate(input$top_label_count)
       phenotype <- isolate(input$phenotype)
       
-      # if(!tolower(email) %in% accepted_users ){
-      #   m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"plot",email)
-      #   m<-paste(m,collapse="\t")
-      #   write(m,file="/home/ubuntu/logs/illegal_access_log.txt",append=TRUE)
-      #   Sys.sleep(2)
-      #   stop("In the test-phase non-privileged users are not allowed")
-      # }else{
-      #   
-      m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),NA,"dna",phenotype, gene, distance, top_label_count)
-      m<-paste(m,collapse="\t")
-      write(m,file="/home/ubuntu/logs/log.txt",append=TRUE)
-      # }
+      if(!tolower(email) %in% accepted_users ){
+        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"plot",email)
+        m<-paste(m,collapse="\t")
+        write(m,file="/home/ubuntu/logs/illegal_access_log.txt",append=TRUE)
+        Sys.sleep(2)
+        stop("In the test-phase non-privileged users are not allowed")
+      }else{
+        
+        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),NA,"scallop_regional",phenotype, gene, distance, top_label_count)
+        m<-paste(m,collapse="\t")
+        write(m,file="/home/ubuntu/logs/log.txt",append=TRUE)
+      }
       
       
       
@@ -85,7 +69,7 @@ shinyServer(function(input, output) {
       #DNA-aspect --- starting at a 
       #genetic location
       ##################################
-      in_dir<-"~/data/2016-02-19_splits/"
+      data_dir<-"~/data/2019-01-23_regional/"
       window<-1000000
       if(!gene%in%rownames(geneLocations)){stop(paste(gene,"not found. Please only use human genesymbols (all upper-case letters)."))}
       chr<-sub("^chr","",geneLocations[gene,"chr_name"])
@@ -93,23 +77,47 @@ shinyServer(function(input, output) {
       end<-geneLocations[gene,"end"] + distance
       p1<-floor(start/window)
       p2<-floor(end/window)
-      filename1<-paste(in_dir,"split_pheno_",phenotype,"_chr",chr,"_",p1,"_",p1+1,".txt.gz",sep="")
-      if(!file.exists(filename1))stop(paste("Could not find file",filename1))
-      dh<-read.table(filename1,sep="\t",header=T,stringsAsFactors=F)
+      # dh<-read.table(filename1,sep="\t",header=T,stringsAsFactors=F)
+      
+      
+      
+      dh <- list()
+      for(protein in proteins){
+        filename1<-paste(data_dir,"2019-01-22_",protein,"_",chr,"_",p1,"_region.txt",sep="")
+        if(!file.exists(filename1))stop(paste("Could not find file",filename1))
+        if(!file.exists(filename1))next
+        dh[[protein]]<-read.table(filename1,stringsAsFactors = F, header=T)
+      }
+      d<-do.call(rbind,dh)      
+      
+      
+      
+      
+      
+      
       
       #in case we are at a window breakpoint
       if(p1!=p2){
-        dh1<-dh
-        filename2<-paste(in_dir,"split_pheno_",phenotype,"_chr",chr,"_",p2,"_",p2+1,".txt.gz",sep="")
-        dh2<-read.table(filename2,sep="\t",header=T,stringsAsFactors=F)
-        dh<-rbind(dh1,dh2)
+        print(paste("breakpoint",p1,p2))
+        d1 <- d
+        dh2 <- list()
+        for(protein in proteins){
+          filename1<-paste(data_dir,"2019-01-22_",protein,"_",chr,"_",p2,"_region.txt",sep="")
+          if(!file.exists(filename1))stop(paste("Could not find file",filename1))
+          if(!file.exists(filename1))next
+          dh2[[protein]]<-read.table(filename1,stringsAsFactors = F, header=T)
+          
+        }
+        d2<-do.call(rbind,dh2)
+        d<-rbind(d1,d2)
       }
+        
       
-      data<-dh[dh[,"BP"]>start & dh[,"BP"]<end,]
-      if(nrow(data)==0){stop(paste("No SNPs found around gene",gene))}
       
-      data[,"-log10(P)"] <- -log10(data[,"P" ])
-      rownames(data)<-data[,"SNP"]
+      d<-d[d[,"pos_mb"]>start & d[,"pos_mb"]<end,]
+      if(nrow(d)==0){stop(paste("No SNPs found around gene",gene))}
+      
+      # d[,"-log10(P)"] <- -d[,"logP" ]
       
       return(data)				
       
@@ -117,76 +125,134 @@ shinyServer(function(input, output) {
   })
   
   output$mainPlot <- renderPlot({ 
-    # email <- isolate(input$email)
     gene <- isolate(input$gene)
     distance <- isolate(input$distance)
     # p_value_cutoff <- isolate(input$p_value_cutoff)
     top_label_count<-isolate(input$top_label_count)
     phenotype <- isolate(input$phenotype)
     
-    data<-get_data()
+    d<-get_data()
     if(is.null(data))return(NULL)
     
     
-    chr<-sub("^chr","",geneLocations[gene,"chr_name"])
-    start<-geneLocations[gene,"start"] - distance
-    end<-geneLocations[gene,"end"] + distance
     
     
-    ylim<-c(0,max(c(5,data[,"-log10(P)"])))
-    xlim<-c(start,end)
-    plot(NULL,
-         xlim=xlim,
-         ylim=ylim,
-         xlab=paste("chr",chr),
-         ylab="-log10(P)",
-         main=paste0(rownames(p)[p[,"pheno_id"]%in%phenotype],"-affecting SNPs around ",gene)
-    )
     
-    points(
-      x=data[,"BP"],
-      y=data[,"-log10(P)"],
-      pch=19,
-      col="#821556"
-    )
+    #calculate in mb (because X-axis becomes nicer then)
+    d[,"pos_mb"] <- d[,"pos"] / 1000000
     
-    #highlight top-3 SNPs
-    tooClose<-vector()
-    tooCloseDist<-4000
-    count<-min(c(nrow(data),top_label_count))
-    for(i in 1:count){
-      snps<-rownames(data)[order(data[,"-log10(P)"],decreasing=T)]
-      if(sum(!snps%in%tooClose)==0)break
-      snp<-snps[!snps%in%tooClose][1]
-      text(x=data[snp,"BP"],y=data[snp,"-log10(P)"],label=snp,adj=0,cex=0.9)
-      tooCloseHere<-data[snp,"BP"] - tooCloseDist < data[,"BP"] & data[snp,"BP"] + tooCloseDist > data[,"BP"]
-      tooClose<-c(tooClose,rownames(data)[tooCloseHere])
+    d<-d[order(d[,"logP"],decreasing=T),]
+    
+    #then get colours - strongest colours for strongest P-values
+    colours<-colours[c(1:3,5:length(colours))] #remove colour #4, it's almost the same as #2
+    if(length(unique(d[,"protein"])) > length(colours)){stop("add more colours")}
+    colours<-colours[1:(length(unique(d[,"protein"])))]
+    names(colours) <- unique(d[,"protein"])
+    
+    #set tuning-parameters
+    cutoff <- 5e-8
+    hit_per_kb <- 50
+    artifical_max <- 50
+    artifical_min <- 20
+    placement <- "topleft"
+    
+    #auto-extract n_legend (=all stronger then cutoff)
+    n_legend <- length(unique(d[d[,"logP"] > -log10(cutoff),"protein"]))
+    
+    
+    
+    #set ylim
+    ylim <- c(0, max(d[,"logP"],na.rm=T))
+    if(ylim[2]>artifical_max){ylim[2]<-artifical_max  }
+    if(ylim[2]<artifical_min){ylim[2]<-artifical_min  }
+    
+    
+    #set xlim and chr
+    xlim <- range(d[,"pos_mb"])
+    xlab <- paste0("Chr ",sub(":.+$","",d[1,"MarkerName"])," (MB)")
+    
+    #start plot
+    plot(NULL,ylim=ylim,xlim=xlim,xlab=xlab,ylab="-log10(P)")
+    
+    #prepare for saving max P-values (for legend)
+    max_p_values <- vector()
+    
+    for(protein in rev(names(colours))){
+      #extract relevant protein data
+      d1<-d[d[,"protein"] %in% protein,]
+      
+      
+      #extract max P-value
+      max_p_value <- d1[1,"P.value.character"]
+      names(max_p_value) <- protein
+      max_p_values <- c(max_p_values, max_p_value)
+      
+      #skip if too low
+      if(max(d1[,"logP"])< 5)next
+      
+      #manually remove any but strongest hit per n kp
+      d2<-d1[!duplicated(round(d1[,"pos_mb"] / (hit_per_kb/1000)   )),]
+      d2<-d2[order(d2[,"pos_mb"]),]
+      
+      #set lwd 2 if within the top hits in legend
+      if(which(names(colours)%in%protein) <= n_legend){
+        lwd <- 2
+      }else{
+        lwd <- 1
+      }
+      
+      #plot top-line
+      lines(d2[,"pos_mb"],d2[,"logP"],col=colours[protein],lwd=lwd)
+      
+      #plot filling: first do nice transparent colour, then polygonize it
+      solid_col <- col2rgb(colours[protein])
+      transparent_col <-  rgb(solid_col[1],solid_col[2],solid_col[3],255*0.3,maxColorValue=256)
+      x_lines <- c(xlim[1],xlim[1],d2[,"pos_mb"],xlim[2],xlim[2],xlim[1])
+      y_lines <- c(0,d2[1,"logP"],d2[,"logP"],d2[nrow(d2),"logP"],0,0)
+      polygon(x=x_lines, y = y_lines, density = NULL, angle = 45,border = NA, col = transparent_col)
       
     }
-    lines(x=c(geneLocations[gene,"start"],geneLocations[gene,"end"]),y=c(0,0),lwd=4,col="black")
+    
+    
+    
+    
+    legend(
+      placement,
+      legend=paste0(
+        names(colours)[1:n_legend],
+        " (P<",
+        sub("\\.[0-9]+e-","e-",max_p_values[names(colours)[1:n_legend]]),
+        ")"
+      ),
+      col=colours[1:n_legend],
+      lwd=2,
+      cex=0.7)
+    
+    
+    abline(h=-log10(5e-8),lty=2,lwd=2)
     
     
     
   })
   
-  output$mainTable <- renderDataTable({ 
-    # email <- isolate(input$email)
-    
-    gene <- isolate(input$gene)
-    distance <- isolate(input$distance)
-    # p_value_cutoff <- isolate(input$p_value_cutoff)
-    top_label_count<-isolate(input$top_label_count)
-    phenotype <- isolate(input$phenotype)
-    
-    data<-get_data()
-    if( is.null(data))return(NULL)
-    
-    
-      data<-data[,c("SNP","CHR","BP","P")]
-      return(data)
-    
-    
-  })
+  # output$mainTable <- renderDataTable({ 
+  #   # email <- isolate(input$email)
+  #   
+  #   gene <- isolate(input$gene)
+  #   distance <- isolate(input$distance)
+  #   # p_value_cutoff <- isolate(input$p_value_cutoff)
+  #   top_label_count<-isolate(input$top_label_count)
+  #   phenotype <- isolate(input$phenotype)
+  #   
+  #   data<-get_data()
+  #   if( is.null(data))return(NULL)
+  #   
+  #   
+  #     data<-data[,c("SNP","CHR","BP","P")]
+  #     return(data)
+  #   
+  #   
+  # })
 })
 
 
