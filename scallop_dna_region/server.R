@@ -108,7 +108,7 @@ shinyServer(function(input, output) {
       
       dh <- list()
       for(protein in proteins){
-        filename1<-paste(data_dir,"2019-01-22_",protein,"_",chr,"_",p1,"_region.txt",sep="")
+        filename1<-paste(data_dir,"2019-01-22_",protein,"_",chr,"_",p1,"_region.txt.gz",sep="")
         if(!file.exists(filename1))stop(safeError(paste("Could not find file",filename1)))
         if(!file.exists(filename1))next
         dh[[protein]]<-read.table(filename1,stringsAsFactors = F, header=T)
