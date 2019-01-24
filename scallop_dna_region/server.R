@@ -207,7 +207,7 @@ shinyServer(function(input, output) {
       
       
       #order by location
-      d2<-d2[order(d2[,"pos_mb"]),]
+      d2<-d1[order(d1[,"pos_mb"]),]
       
       
       #plot top-line
