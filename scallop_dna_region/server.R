@@ -141,7 +141,7 @@ shinyServer(function(input, output) {
   
   
   output$mainPlot <- renderPlot({ 
-
+    show_gene_map <- isolate(input$show_gene_map)
     top_label_count<-isolate(input$top_label_count)
     protein_to_highlight <- isolate(input$protein_to_highlight)
     
@@ -184,9 +184,13 @@ shinyServer(function(input, output) {
     xlim <- range(start/ 1000000,end/ 1000000)
     xlab <- paste0("Chr ",sub(":.+$","",d[1,"MarkerName"])," (MB)")
     
-    #start plot
-    layout(matrix(1:2,ncol=1),heights=c(0.7,0.3))
     
+    #optional - prepare to show gene map
+    if(show_gene_map){
+      layout(matrix(1:2,ncol=1),heights=c(0.65,0.35))  
+    }
+    
+    #start plot
     plot(NULL,ylim=ylim,xlim=xlim,xlab=xlab,ylab="-log10(P)")
     
     #prepare for saving max P-values (for legend)
@@ -262,21 +266,22 @@ shinyServer(function(input, output) {
     
     
     #get genemap
-    chr <- paste0("chr",sub(":.+$","",d[1,"MarkerName"]))
-    padding <- 500000 #to make sure all genes are in
-    w<-which(geneLocations[,"end"] < end + padding & geneLocations[,"start"] > start - padding & geneLocations[,"chr_name"] %in% chr)
-    w<-w[order(geneLocations[w,"start"])]
-    #plot genemap
-    plot(NULL,ylim=c(0,1),xlim=xlim,xlab="",ylab="",axes=FALSE,ann=FALSE)
-    for(j in 1:length(w)){
-      print(j)
-      start_gene <-geneLocations[w[j],"start"] / 1000000
-      end_gene <-geneLocations[w[j],"end"] / 1000000
-      gene_name <-rownames(geneLocations)[w[j]]
+    if(show_gene_map){
       
-      lines(x=c(start_gene,end_gene),y=c((j%%10)/10,(j%%10)/10))
-      text(x=start_gene,y=0.02+(j%%10)/10,label=gene_name,adj=0)
-      
+      chr <- paste0("chr",sub(":.+$","",d[1,"MarkerName"]))
+      padding <- 500000 #to make sure all genes are in
+      w<-which(geneLocations[,"end"] < end + padding & geneLocations[,"start"] > start - padding & geneLocations[,"chr_name"] %in% chr)
+      w<-w[order(geneLocations[w,"start"])]
+      #plot genemap
+      plot(NULL,ylim=c(0,1),xlim=xlim,xlab="",ylab="",axes=FALSE,ann=FALSE)
+      for(j in 1:length(w)){
+        print(j)
+        start_gene <-geneLocations[w[j],"start"] / 1000000
+        end_gene <-geneLocations[w[j],"end"] / 1000000
+        gene_name <-rownames(geneLocations)[w[j]]
+        lines(x=c(start_gene,end_gene),y=c((j%%10)/10,(j%%10)/10))
+        text(x=start_gene,y=0.02+(j%%10)/10,label=gene_name,adj=0)
+      }
     }
     
     

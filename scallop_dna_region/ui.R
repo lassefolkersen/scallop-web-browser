@@ -35,6 +35,11 @@ shinyUI(bootstrapPage(
   checkboxInput("advanced", "Advanced options", value = FALSE),
   conditionalPanel(
     condition = "input.advanced",
+    checkboxInput("show_gene_map", "Show gene map", value = FALSE)
+  ),
+  
+  conditionalPanel(
+    condition = "input.advanced",
     selectInput("protein_to_highlight", "Highlight protein", choices = phenotypes_vector,selected="none")
   ),
   conditionalPanel(
