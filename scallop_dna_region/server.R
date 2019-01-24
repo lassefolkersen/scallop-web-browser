@@ -186,9 +186,9 @@ shinyServer(function(input, output) {
     
     
     #optional - prepare to show gene map
-    if(show_gene_map){
-      layout(matrix(1:2,ncol=1),heights=c(0.8,0.2))  
-    }
+    # if(show_gene_map){
+    layout(matrix(1:2,ncol=1),heights=c(0.7,0.3))  
+    # }
     
     #start plot
     plot(NULL,ylim=ylim,xlim=xlim,xlab=xlab,ylab="-log10(P)")
@@ -318,7 +318,7 @@ shinyServer(function(input, output) {
     
     
     #round sample size
-    d[,"TotalSampleSize"] <- round(d[,"TotalSampleSize"])
+    d[,"SampleSize"] <- round(d[,"SampleSize"])
     
     #return
     return(d) 

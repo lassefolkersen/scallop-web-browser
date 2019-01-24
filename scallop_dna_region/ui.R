@@ -55,7 +55,7 @@ shinyUI(bootstrapPage(
   actionButton("goButton","Run analysis"),
   endPanel(),
   beginPanel('2/3'),
-  plotOutput("mainPlot",height = "600px"),
+  plotOutput("mainPlot",height = "700px"),
   
   dataTableOutput("mainTable"),
   endPanel(),
