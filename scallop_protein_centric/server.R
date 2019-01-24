@@ -265,7 +265,7 @@ shinyServer(function(input, output) {
     data_for_table<-data[data[,"logP"]>p_value_cutoff,]
     data_for_table<-data_for_table[,c("MarkerName","Freq1","Effect","P.value.character","Direction","TotalSampleSize")]
     colnames(data_for_table) <- c("MarkerName","Frequency","Effect","P-value","Direction","SampleSize")
-    return(data)
+    return(data_for_table)
     
     
   })
