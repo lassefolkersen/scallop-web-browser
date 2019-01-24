@@ -206,14 +206,14 @@ shinyServer(function(input, output) {
     tooCloseDist<-20000000
     count<-min(c(nrow(data),top_label_count))
     for(i in 1:count){
-      snps<-data[order(data[,"neglogp"],decreasing=T),"SNP"]
-      if(sum(!snps%in%tooClose)==0)break
-      snp<-snps[!snps%in%tooClose][1]
-      x<-data[data[,"SNP"]%in%snp,"x"]
-      y<-data[data[,"SNP"]%in%snp,"y"]
-      text(x=x,y=y,label=snp,adj=0,cex=0.8)
-      pos<-data[data[,"SNP"]%in%snp,"snp_abs_pos"]
-      tooCloseHere<-data[abs(data[,"snp_abs_pos"] - pos) <tooCloseDist,"SNP"]
+      MarkerNames<-data[order(data[,"neglogp"],decreasing=T),"MarkerName"]
+      if(sum(!MarkerNames%in%tooClose)==0)break
+      MarkerName<-MarkerNames[!MarkerNames%in%tooClose][1]
+      x<-data[data[,"MarkerName"]%in%MarkerName,"x"]
+      y<-data[data[,"MarkerName"]%in%MarkerName,"y"]
+      text(x=x,y=y,label=markerName,adj=0,cex=0.8)
+      pos<-data[data[,"MarkerName"]%in%MarkerName,"snp_abs_pos"]
+      tooCloseHere<-data[abs(data[,"snp_abs_pos"] - pos) <tooCloseDist,"MarkerName"]
       tooClose<-c(tooClose,tooCloseHere)
     }
     
