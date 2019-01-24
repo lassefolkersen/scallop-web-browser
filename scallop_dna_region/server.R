@@ -78,8 +78,7 @@ shinyServer(function(input, output) {
       end<-geneLocations[gene,"end"] + distance
       p1<-floor(start/window)
       p2<-floor(end/window)
-      # dh<-read.table(filename1,sep="\t",header=T,stringsAsFactors=F)
-      
+
       
       
       dh <- list()
@@ -183,10 +182,17 @@ shinyServer(function(input, output) {
       max_p_values <- c(max_p_values, max_p_value)
       
       #skip if too low
-      if(max(d1[,"logP"])< 5)next
+      if(max(d1[,"logP"])< 4){
+        if(protein_to_highlight == protein){
+          stop(safeError(paste("Highlighted protein",protein_to_highlight,"not shown, because association strength too low")))
+        }
+        next
+      }
       
-      #manually remove any but strongest hit per n kp
-      d2<-d1[!duplicated(round(d1[,"pos_mb"] / (hit_per_kb/1000)   )),]
+      #remove any but strongest hit per n kp
+      # keep <- which(!duplicated(round(d1[,"pos_mb"] / (hit_per_kb/1000)   )))
+      # d2<-d1[keep,]
+      d2 <- d1
       d2<-d2[order(d2[,"pos_mb"]),]
       
       #set lwd 2 if within the top hits in legend and 5 if highlighted
