@@ -211,7 +211,7 @@ shinyServer(function(input, output) {
       MarkerName<-MarkerNames[!MarkerNames%in%tooClose][1]
       x<-data[data[,"MarkerName"]%in%MarkerName,"x"]
       y<-data[data[,"MarkerName"]%in%MarkerName,"y"]
-      text(x=x,y=y,label=markerName,adj=0,cex=0.8)
+      text(x=x,y=y,label=MarkerName,adj=0,cex=0.8)
       pos<-data[data[,"MarkerName"]%in%MarkerName,"snp_abs_pos"]
       tooCloseHere<-data[abs(data[,"snp_abs_pos"] - pos) <tooCloseDist,"MarkerName"]
       tooClose<-c(tooClose,tooCloseHere)
@@ -262,8 +262,9 @@ shinyServer(function(input, output) {
     
     data<-get_data()
     if( is.null(data))return(NULL)
-    data<-data[,c("SNP","CHR","BP","P")]
-    data<-data[data[,"P"]<p_value_cutoff,]
+    data_for_table<-data[data[,"logP"]>p_value_cutoff,]
+    data_for_table<-data_for_table[,c("MarkerName","Freq1","Effect","P.value.character","Direction","TotalSampleSize")]
+    colnames(data_for_table) <- c("MarkerName","Frequency","Effect","P-value","Direction","SampleSize")
     return(data)
     
     
