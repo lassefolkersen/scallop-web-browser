@@ -26,7 +26,7 @@ phenotypes_vector<-c('ADM','AGRP','Beta-NGF','CA-125','CASP-8','CCL20','CCL3','C
 shinyUI(bootstrapPage(
   head(),
   navigation(),
-  titlePanel("Protein-centric view - all of the genome"),
+  titlePanel("SCALLOP: Protein-centric browser"),
   beginPage(),
   beginPanel('1/3'),
   HTML("This page can be used to browse the significant pQTL effects of SNPs anywhere in the genome:<br><br>"),
