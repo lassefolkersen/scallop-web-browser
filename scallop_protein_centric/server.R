@@ -91,7 +91,7 @@ shinyServer(function(input, output) {
         Sys.sleep(2)
         stop(safeError("In the test-phase non-privileged users are not allowed"))
       }else{
-        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),NA,"scallop_protein_centric",protein, distance, p_value_cutoff, top_label_count)
+        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),NA,"scallop_protein_centric",protein, p_value_cutoff, top_label_count)
         m<-paste(m,collapse="\t")
         write(m,file="/home/ubuntu/logs/log.txt",append=TRUE)
       }
