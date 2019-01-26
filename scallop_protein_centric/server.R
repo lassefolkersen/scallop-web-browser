@@ -36,13 +36,15 @@ names(cols) <- as.character(1:(length(cols)-1))
 load("~/srv/olink-scallop/scallop_protein_centric/2019-01-24_cvd1_protein_positions.rdata")
 
 #significant hits - loaded at run-time instead
-# all_data<-read.table("/home/ubuntu/data/2019-01-24_significant_bits_scallop/2019-01-24_top_hits_pruned.txt.gz",sep="\t",header=T,stringsAsFactors = F)
-# for(protein in unique(all_data[,"protein"])){
-#   d1 <-all_data[all_data[,"protein"] %in% protein,]
-#   gz1 <- gzfile(paste0("/home/ubuntu/data/2019-01-24_significant_bits_scallop/2019-01-24_",protein,"_top_hits_pruned.txt.gz"), "w",compression = 9)
-#   write.table(d1, gz1,sep="\t",col.names=T,row.names=F,quote=F)
-#   close(gz1)
-# }
+all_data<-read.table("/home/ubuntu/data/2019-01-24_significant_bits_scallop/2019-01-24_top_hits_pruned.txt.gz",sep="\t",header=T,stringsAsFactors = F)
+all_data<-all_data[nchar(gsub("\\?","",all_data[,"Direction"]))>1,]
+
+for(protein in unique(all_data[,"protein"])){
+  d1 <-all_data[all_data[,"protein"] %in% protein,]
+  gz1 <- gzfile(paste0("/home/ubuntu/data/2019-01-24_significant_bits_scallop/2019-01-24_",protein,"_top_hits_pruned.txt.gz"), "w",compression = 9)
+  write.table(d1, gz1,sep="\t",col.names=T,row.names=F,quote=F)
+  close(gz1)
+}
 
 
 
