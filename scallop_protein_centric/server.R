@@ -238,7 +238,7 @@ shinyServer(function(input, output) {
         g1<-g1[order(g1[,"distance"]),]
         gene_label_count <- 4
         gene_label <- paste(rownames(g1)[1:gene_label_count],collapse=", ")
-        text(x=x,y=y-0.5,label=gene_label,adj=0,cex=0.8)
+        text(x=x,y=y-0.25,label=gene_label,adj=0,cex=0.8)
       }
       
     }
