@@ -307,8 +307,8 @@ shinyServer(function(input, output) {
     }
 
     #set columns    
-    wanted_column <- c('protein','MarkerName','Allele1','Allele2','Freq1','FreqSE','Effect','StdErr','P.value.character','TotalSampleSize','pos')
-    wanted_column_names <- c('Protein','MarkerName','Allele1','Allele2','Freq1','FreqSE','Effect','StdErr','P-value','SampleSize','Position')
+    wanted_column <- c('protein','MarkerName','Allele1','Allele2','Freq1','FreqSE','Effect','StdErr','P.value.character','logP','TotalSampleSize','pos')
+    wanted_column_names <- c('Protein','MarkerName','Allele1','Allele2','Freq1','FreqSE','Effect','StdErr','P-value','logP','SampleSize','Position')
     d<-d[,wanted_column]
     colnames(d)<-wanted_column_names
     

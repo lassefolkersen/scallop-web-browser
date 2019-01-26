@@ -29,6 +29,8 @@ names(cols) <- as.character(1:(length(cols)-1))
 
 #gene positions
 # load("~/srv/olink-scallop/2014-07-16 gene locations.rdata")
+#load these when needed instead
+
 
 #protein locations
 load("~/srv/olink-scallop/scallop_protein_centric/2019-01-24_cvd1_protein_positions.rdata")
@@ -77,7 +79,7 @@ shinyServer(function(input, output) {
       ##################################
       email <- "disabled" #isolate(input$email)
       # gene <- isolate(input$gene)
-      distance <- isolate(input$distance)
+      # distance <- isolate(input$distance)
       p_value_cutoff <- isolate(input$p_value_cutoff)
       top_label_count<-isolate(input$top_label_count)
       protein <- isolate(input$protein)
@@ -136,12 +138,18 @@ shinyServer(function(input, output) {
   })
   
   output$mainPlot <- renderPlot({ 
-    # email <- isolate(input$email)
-    # gene <- isolate(input$gene)
-    # distance <- isolate(input$distance)
     p_value_cutoff <- isolate(input$p_value_cutoff)
     top_label_count<-isolate(input$top_label_count)
     protein <- isolate(input$protein)
+    include_closest_genes <- isolate(input$include_closest_genes)
+    
+    #load the gene locations only if necessary
+    if(include_closest_genes){
+      if(!exists("geneLocations")){
+        load("~/srv/olink-scallop/2014-07-16 gene locations.rdata")  
+      }
+    }
+    
     
     data<-get_data()
     if(is.null(data))return(NULL)
@@ -201,7 +209,8 @@ shinyServer(function(input, output) {
     }
     
     
-    #labelling top-X hits
+    
+    #labelling top-X hits - with gene-labels if requested
     tooClose<-vector()
     tooCloseDist<-20000000
     count<-min(c(nrow(data),top_label_count))
@@ -215,6 +224,23 @@ shinyServer(function(input, output) {
       pos<-data[data[,"MarkerName"]%in%MarkerName,"snp_abs_pos"]
       tooCloseHere<-data[abs(data[,"snp_abs_pos"] - pos) <tooCloseDist,"MarkerName"]
       tooClose<-c(tooClose,tooCloseHere)
+      
+      
+      #optionally also include closest genes
+      if(include_closest_genes){
+        chr <- paste0("chr",sub(":.+$","",MarkerName ))
+        pos <- as.numeric(sub(":.+$","",sub("[0-9]+:","",MarkerName)))
+        g1 <- geneLocations[geneLocations[,"chr_name"]%in%chr,]
+        g1[,"start_to_pos"] <- abs(g1[,"start"] - pos)
+        g1[,"end_to_pos"] <- abs(g1[,"end"] - pos)
+        g1[,"distance"] <- apply(g1[,c("start_to_pos","end_to_pos")],1,min)
+        g1[g1[,"start"] < pos & g1[,"end"] > pos,"distance"] <- 0 #set distance to 0 if within gene
+        g1<-g1[order(g1[,"distance"]),]
+        gene_label_count <- 4
+        gene_label <- paste(rownames(g1)[1:gene_label_count],collapse=", ")
+        text(x=x,y=y-0.5,label=gene_label,adj=0,cex=0.8)
+      }
+      
     }
     
     

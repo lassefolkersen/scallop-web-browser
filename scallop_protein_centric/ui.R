@@ -34,12 +34,17 @@ shinyUI(bootstrapPage(
   checkboxInput("advanced", "Advanced options", value = FALSE),
   conditionalPanel(
     condition = "input.advanced",
-    sliderInput("p_value_cutoff","P-value cutoff (log)",min=4,max=12,value=6,step=0.1)
+    sliderInput("p_value_cutoff","P-value cutoff (log)",min=5,max=12,value=6,step=0.1)
   ),
   conditionalPanel(
     condition = "input.advanced",
     sliderInput("top_label_count","#SNPs to label",min=3,max=30,value=3,step=1)
   ),
+  conditionalPanel(
+    condition = "input.advanced",
+    checkboxInput("include_closest_genes","Also label closest genes",value = FALSE)
+  ),
+  
   conditionalPanel(
     condition = "input.advanced",
     HTML("Documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-scallop'>github</a></u>.")
