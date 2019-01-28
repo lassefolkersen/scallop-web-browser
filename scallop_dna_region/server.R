@@ -75,7 +75,7 @@ shinyServer(function(input, output) {
       #DNA-aspect --- starting at a 
       #genetic location
       ##################################
-      data_dir<-"~/data/2019-01-23_regional/"
+      data_dir<-"~/data/2019-01-26_regional/"
       window<-1000000
       distance_expanded <- distance * 1.5
       
