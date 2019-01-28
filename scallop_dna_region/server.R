@@ -18,20 +18,6 @@ proteins<-c('ADM','AGRP','Beta-NGF','CA-125','CASP-8','CCL20','CCL3','CCL4','CD4
 
 
 
-# protein_pos_file<-"~/srv/olink-scallop/2017-04-07_protein_pos_data.rdata"
-# load(protein_pos_file)
-# p<-data.frame(
-#   row.names=data[,"hgnc_symbol"],
-#   pheno_id=data[,"No_in_GWAS_files"],
-#   CHR = data[,"trait_chr"],
-#   BP = data[,"trait_pos"],
-#   stringsAsFactors=F)
-# p<-p[order(rownames(p)),]
-# phenotypes_vector<-c("none",rownames(p))
-
-
-
-
 
 
 
@@ -151,7 +137,6 @@ shinyServer(function(input, output) {
     o<-get_data()
     d <- o[["d"]]
     if(is.null(d) || nrow(d)==0){
-      print("no data ready")
       return(NULL)
     }
     
