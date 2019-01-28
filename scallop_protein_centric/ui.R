@@ -38,11 +38,11 @@ shinyUI(bootstrapPage(
   ),
   conditionalPanel(
     condition = "input.advanced",
-    sliderInput("top_label_count","Top-SNPs to label",min=3,max=30,value=3,step=1)
+    sliderInput("top_label_count","Top-SNPs to label",min=0,max=30,value=3,step=1)
   ),
   conditionalPanel(
     condition = "input.advanced",
-    checkboxInput("include_closest_genes","Also label closest 4 genes",value = FALSE)
+    checkboxInput("include_closest_genes","Also label closest 4 genes",value = TRUE)
   ),
   
   conditionalPanel(

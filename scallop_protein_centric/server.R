@@ -213,36 +213,37 @@ shinyServer(function(input, output) {
     
     
     #labelling top-X hits - with gene-labels if requested
-    tooClose<-vector()
-    tooCloseDist<-20000000
-    count<-min(c(nrow(data),top_label_count))
-    for(i in 1:count){
-      MarkerNames<-data[order(data[,"neglogp"],decreasing=T),"MarkerName"]
-      if(sum(!MarkerNames%in%tooClose)==0)break
-      MarkerName<-MarkerNames[!MarkerNames%in%tooClose][1]
-      x<-data[data[,"MarkerName"]%in%MarkerName,"x"]
-      y<-data[data[,"MarkerName"]%in%MarkerName,"y"]
-      text(x=x,y=y,label=MarkerName,adj=0,cex=0.8)
-      pos<-data[data[,"MarkerName"]%in%MarkerName,"snp_abs_pos"]
-      tooCloseHere<-data[abs(data[,"snp_abs_pos"] - pos) <tooCloseDist,"MarkerName"]
-      tooClose<-c(tooClose,tooCloseHere)
-      
-      
-      #optionally also include closest genes
-      if(include_closest_genes){
-        chr <- paste0("chr",sub(":.+$","",MarkerName ))
-        pos <- as.numeric(sub(":.+$","",sub("[0-9]+:","",MarkerName)))
-        g1 <- geneLocations[geneLocations[,"chr_name"]%in%chr,]
-        g1[,"start_to_pos"] <- abs(g1[,"start"] - pos)
-        g1[,"end_to_pos"] <- abs(g1[,"end"] - pos)
-        g1[,"distance"] <- apply(g1[,c("start_to_pos","end_to_pos")],1,min)
-        g1[g1[,"start"] < pos & g1[,"end"] > pos,"distance"] <- 0 #set distance to 0 if within gene
-        g1<-g1[order(g1[,"distance"]),]
-        gene_label_count <- 4
-        gene_label <- paste(rownames(g1)[1:gene_label_count],collapse=", ")
-        text(x=x,y=y-0.15,label=gene_label,adj=0,cex=0.8)
+    if(top_label_count > 0){
+      tooClose<-vector()
+      tooCloseDist<-20000000
+      count<-min(c(nrow(data),top_label_count))
+      for(i in 1:count){
+        MarkerNames<-data[order(data[,"neglogp"],decreasing=T),"MarkerName"]
+        if(sum(!MarkerNames%in%tooClose)==0)break
+        MarkerName<-MarkerNames[!MarkerNames%in%tooClose][1]
+        x<-data[data[,"MarkerName"]%in%MarkerName,"x"]
+        y<-data[data[,"MarkerName"]%in%MarkerName,"y"]
+        text(x=x,y=y,label=MarkerName,adj=0,cex=0.8)
+        pos<-data[data[,"MarkerName"]%in%MarkerName,"snp_abs_pos"]
+        tooCloseHere<-data[abs(data[,"snp_abs_pos"] - pos) <tooCloseDist,"MarkerName"]
+        tooClose<-c(tooClose,tooCloseHere)
+        
+        
+        #optionally also include closest genes
+        if(include_closest_genes){
+          chr <- paste0("chr",sub(":.+$","",MarkerName ))
+          pos <- as.numeric(sub(":.+$","",sub("[0-9]+:","",MarkerName)))
+          g1 <- geneLocations[geneLocations[,"chr_name"]%in%chr,]
+          g1[,"start_to_pos"] <- abs(g1[,"start"] - pos)
+          g1[,"end_to_pos"] <- abs(g1[,"end"] - pos)
+          g1[,"distance"] <- apply(g1[,c("start_to_pos","end_to_pos")],1,min)
+          g1[g1[,"start"] < pos & g1[,"end"] > pos,"distance"] <- 0 #set distance to 0 if within gene
+          g1<-g1[order(g1[,"distance"]),]
+          gene_label_count <- 4
+          gene_label <- paste(rownames(g1)[1:gene_label_count],collapse=", ")
+          text(x=x,y=y-0.15,label=gene_label,adj=0,cex=0.8)
+        }
       }
-      
     }
     
     
