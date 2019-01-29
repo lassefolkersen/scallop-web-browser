@@ -34,14 +34,16 @@ shinyServer(function(input, output) {
       ##################################
       #input-variables, log and register	
       ##################################
-      email <- "disabled"#isolate(input$email)
+      email <- NA #isolate(input$email)
       gene <- isolate(input$gene)
       distance <- isolate(input$distance)
       top_label_count<-isolate(input$top_label_count)
       protein_to_highlight <- isolate(input$protein_to_highlight)
+      show_gene_map <- isolate(input$show_gene_map)
+      
 
       
-            
+      #the mail checker and logger - first part is not needed when we don't check mail, but left in anyway
       if(!tolower(email) %in% accepted_users & FALSE){
         m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"plot",email)
         m<-paste(m,collapse="\t")
@@ -49,23 +51,18 @@ shinyServer(function(input, output) {
         Sys.sleep(2)
         stop(safeError("In the test-phase non-privileged users are not allowed"))
       }else{
-        
-        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),NA,"scallop_regional",protein_to_highlight, gene, distance, top_label_count)
+        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),email,"scallop_regional",protein_to_highlight, gene, distance, top_label_count, show_gene_map)
         m<-paste(m,collapse="\t")
         write(m,file="/home/ubuntu/logs/log.txt",append=TRUE)
       }
       
       
-      
-      ##################################
-      #DNA-aspect --- starting at a 
-      #genetic location
-      ##################################
+      #setting a few basic variables      
       data_dir<-"~/data/2019-01-26_regional/"
       window<-1000000
       distance_expanded <- distance * 1.5
       
-      #position or gene
+      #figure out where from position or gene
       if(length(grep(":",gene))>0){
         gene<-sub("^chr","",gene)
         gene<-gsub(" ","",gene)
@@ -75,46 +72,34 @@ shinyServer(function(input, output) {
         chr <- as.numeric(s[1])
         start <- as.numeric(s[2])
         end <- as.numeric(s[2])
-
         if(is.na(chr)|is.na(end)| is.na(start))stop(safeError(paste("couldn't recognize", gene, "as a chr5:423432 position. Make sure there's no non-numeric characters")))
-
       }else{
         if(!gene%in%rownames(geneLocations)){stop(safeError(paste(gene,"not found. Please only use human genesymbols (all upper-case letters).")))}
         chr<-sub("^chr","",geneLocations[gene,"chr_name"])
         start<-geneLocations[gene,"start"]
         end<-geneLocations[gene,"end"]
-
       }
-
       p1<-floor(start/window)
-      # p2<-floor(end/window)
-      
+
 
       
-      
+      #use this position to get the relevant data from 'data_dir'      
       dh <- list()
       for(protein in proteins){
         filename1<-paste(data_dir,"2019-01-22_",protein,"_",chr,"_",p1,"_region.txt.gz",sep="")
-        if(!file.exists(filename1))stop(safeError(paste("Could not find file",filename1)))
         if(!file.exists(filename1))next
         dh[[protein]]<-read.table(filename1,stringsAsFactors = F, header=T)
       }
       d<-do.call(rbind,dh)      
       
       
-      
-      
-      
-      
-      
-      
-      
+      #only taking the area needed
       d<-d[d[,"pos"]>start - distance_expanded & d[,"pos"]<end + distance_expanded,]
       if(nrow(d)==0){stop(safeError(paste("No SNPs found around gene",gene)))}
       
       
       
-      
+      #returning
       return(list(
         d=d,
         chr=chr,

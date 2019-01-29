@@ -50,21 +50,6 @@ for(protein in unique(all_data[,"protein"])){
 
 
 
-# load(protein_pos_file)
-# p<-data.frame(
-#   row.names=data[,"hgnc_symbol"],
-#   pheno_id=data[,"No_in_GWAS_files"],
-#   CHR = data[,"trait_chr"],
-#   BP = data[,"trait_pos"],
-#   stringsAsFactors=F)
-# p<-p[order(rownames(p)),]
-# phenotypes_vector<-p[,"pheno_id"]
-# names(phenotypes_vector) <- rownames(p)
-
-
-
-
-
 
 shinyServer(function(input, output) {
   
@@ -79,13 +64,13 @@ shinyServer(function(input, output) {
       ##################################
       #input-variables, log and register	
       ##################################
-      email <- "disabled" #isolate(input$email)
-      # gene <- isolate(input$gene)
-      # distance <- isolate(input$distance)
+      email <- NA #isolate(input$email)
       p_value_cutoff <- isolate(input$p_value_cutoff)
       top_label_count<-isolate(input$top_label_count)
       protein <- isolate(input$protein)
-      
+      include_closest_genes <- isolate(input$include_closest_genes)
+
+      #the mail checker and logger - first part is not needed when we don't check mail, but left in anyway
       if(!tolower(email) %in% accepted_users &  FALSE){
         m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"plot",email)
         m<-paste(m,collapse="\t")
@@ -93,7 +78,7 @@ shinyServer(function(input, output) {
         Sys.sleep(2)
         stop(safeError("In the test-phase non-privileged users are not allowed"))
       }else{
-        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),NA,"scallop_protein_centric",protein, p_value_cutoff, top_label_count)
+        m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),email,"scallop_protein_centric",protein, p_value_cutoff, top_label_count,include_closest_genes)
         m<-paste(m,collapse="\t")
         write(m,file="/home/ubuntu/logs/log.txt",append=TRUE)
       }
