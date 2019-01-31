@@ -71,7 +71,7 @@ shinyServer(function(input, output) {
       visEvents(select = "function(nodes) {
             Shiny.onInputChange('focus_node', nodes.nodes);
             ;}") %>%
-      visIgraphLayout(layout = "layout_as_tree",randomSeed = 42,root=1 )
+      visIgraphLayout(layout = "layout_as_tree",root=1,flip.y=TRUE )
       
 
     
