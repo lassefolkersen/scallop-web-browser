@@ -55,8 +55,9 @@ shinyServer(function(input, output) {
     
     #get the shape etc.     
     # show_small <- which(V(e1)$distance == max(V(e1)$distance))
+    
     V(e1)$shape <- "circle"
-    V(e1)$label.cex <- 2
+    V(e1)$label.cex <- 1.5
     # V(e1)$label.cex[show_small] <- 0.4
     
     V(e1)$color<-"#F5F5F5"
@@ -70,7 +71,7 @@ shinyServer(function(input, output) {
       visEvents(select = "function(nodes) {
             Shiny.onInputChange('focus_node', nodes.nodes);
             ;}") %>%
-      visIgraphLayout(layout = "layout_as_tree",randomSeed = 42 )
+      visIgraphLayout(layout = "layout_as_tree",randomSeed = 42,root=1 )
       
 
     
@@ -79,14 +80,14 @@ shinyServer(function(input, output) {
   
   
   
-  
-  #function to get ID-hover working (I think)
-  observe({
-    nodes_selection <- input$selnodes
-    visNetworkProxy("network_proxy_select") %>%
-      visSelectNodes(id = nodes_selection) 
-  })
-  
+  # 
+  # #function to get ID-hover working (I think)
+  # observe({
+  #   nodes_selection <- input$selnodes
+  #   visNetworkProxy("network_proxy_select") %>%
+  #     visSelectNodes(id = nodes_selection) 
+  # })
+  # 
   
   
   #getting a table of hits in a bubble
