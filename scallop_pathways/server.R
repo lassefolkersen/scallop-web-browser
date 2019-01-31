@@ -27,7 +27,7 @@ shinyServer(function(input, output) {
     e<-graph_from_edgelist(as.matrix(edges[,c("source","target")]), directed = TRUE)
     
     #set edge types and strength
-    e<-set_edge_attr(e,"width",value=edges[,"strength"])
+    e<-set_edge_attr(e,"value",value=edges[,"strength"])
     e<-set_edge_attr(e,"type",value=edges[,"type"])
     
     #set node type
@@ -61,7 +61,7 @@ shinyServer(function(input, output) {
     V(e1)$color<-"#CCCCCC"
     
     #big and light for snps
-    V(e1)$label.cex[V(e1)$type=="snp"] <- 0.8
+    V(e1)$label.cex[V(e1)$type=="snp"] <- 0.7
     V(e1)$color[V(e1)$type=="snp"]<-"#F5F5F5"
     
     
