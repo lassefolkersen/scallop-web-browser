@@ -26,7 +26,7 @@ shinyUI(bootstrapPage(
 	beginPanel('2/3'),
 	visNetworkOutput("plot1"),
 	# tableOutput("table1"),	
-	htmlOutput("text_1"),
+	# htmlOutput("text_1"),
 	endPanel(),
 	
 	
