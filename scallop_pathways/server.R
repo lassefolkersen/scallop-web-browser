@@ -27,7 +27,7 @@ shinyServer(function(input, output) {
     e<-graph_from_edgelist(as.matrix(edges[,c("source","target")]), directed = TRUE)
     
     #set edge types and strength
-    e<-set_edge_attr(e,"strength",value=edges[,"strength"])
+    e<-set_edge_attr(e,"weight",value=edges[,"strength"])
     e<-set_edge_attr(e,"type",value=edges[,"type"])
     
     #set node type
