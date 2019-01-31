@@ -80,11 +80,11 @@ shinyServer(function(input, output) {
     
     #then create the visNetwork from this igraph object    
     a<-visIgraph(e1)%>%
-      visInteraction(tooltipStyle = 'position: fixed;visibility:hidden;padding: 5px;white-space: wrap;font-family: arial;font-size:18px;font-color:black;') %>%
+      # visInteraction(tooltipStyle = 'position: fixed;visibility:hidden;padding: 5px;white-space: wrap;font-family: arial;font-size:18px;font-color:black;') %>%
       visOptions(highlightNearest = TRUE, nodesIdSelection = FALSE) %>%
-      visEvents(select = "function(nodes) {
-            Shiny.onInputChange('focus_node', nodes.nodes);
-            ;}") %>%
+      # visEvents(select = "function(nodes) {
+            # Shiny.onInputChange('focus_node', nodes.nodes);
+            # ;}") %>%
       visIgraphLayout(layout = "layout_as_tree",flip.y=TRUE, mode="in" )
       
 
