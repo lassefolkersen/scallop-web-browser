@@ -17,7 +17,10 @@ proteins<-c('ADM','AGRP','Beta-NGF','CA-125','CASP-8','CCL20','CCL3','CCL4','CD4
 for(target_protein in proteins){
   
   
-  if(!target_protein %in% d[,"trait_protein_olink_name.(network_analysis_01)"])stop("Target protein not found")
+  if(!target_protein %in% d[,"trait_protein_olink_name.(network_analysis_01)"]){
+    print(paste("Target protein",target_protein,"not found"))
+    next    
+  }
   d1<-d[d[,"trait_protein_olink_name.(network_analysis_01)"] %in% target_protein,]
   
   
@@ -34,7 +37,9 @@ for(target_protein in proteins){
     markerName <- d2[1,1]
     rsid <- unique(S1[S1[,"MarkerName"] %in% markerName,"rs-id"])
     if(length(rsid)!=1)stop("!!!")
-    if(d2[1,"path_pvalue.(network_analysis_01)"  ] > d2[2,"path_pvalue.(network_analysis_01)"  ])stop("odd, these data should be sorted")
+    # if(d2[1,"path_pvalue.(network_analysis_01)"  ] > d2[2,"path_pvalue.(network_analysis_01)"  ])stop("odd, these data should be sorted")
+    
+    
     
     
     #take either path with the best p-value - or all significant (whichever is most paths)
@@ -49,7 +54,10 @@ for(target_protein in proteins){
     
     for(cis_gene_i in 1:nrow(d3)){ 
       
+      if(is.na(d3[cis_gene_i,"all_shortest_paths.(network_analysis_01)"]))next
       
+        
+        
       paths <- strsplit(d3[cis_gene_i,"all_shortest_paths.(network_analysis_01)"],";")[[1]]
       best_pvalue <- d3[cis_gene_i,"path_pvalue.(network_analysis_01)" ]
       
