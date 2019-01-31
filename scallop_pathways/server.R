@@ -18,7 +18,22 @@ shinyServer(function(input, output) {
       return(NULL)
     }
     protein<-isolate(input$protein)
+    email <- NA #isolate(input$email)
 
+    #the mail checker and logger - first part is not needed when we don't check mail, but left in anyway
+    if(!tolower(email) %in% accepted_users &  FALSE){
+      m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"plot",email)
+      m<-paste(m,collapse="\t")
+      write(m,file="/home/ubuntu/logs/illegal_access_log.txt",append=TRUE)
+      Sys.sleep(2)
+      stop(safeError("In the test-phase non-privileged users are not allowed"))
+    }else{
+      m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),email,"scallop_pathways",protein)
+      m<-paste(m,collapse="\t")
+      write(m,file="/home/ubuntu/logs/log.txt",append=TRUE)
+    }
+    
+    
     
     path_to_read<-paste0(input_path,"2019-01-31_",protein,"_pathway.txt")
     if(!file.exists(path_to_read))stop(safeError(paste("Didn't find the network for protein",protein,"likely because no paths were possible.")))

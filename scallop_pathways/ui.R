@@ -13,7 +13,7 @@ shinyUI(bootstrapPage(
 	head(),
 	navigation(),
 
-	titlePanel("Pathways"),
+	titlePanel("Trans-pQTL pathways in CVD1 analysis"),
 	beginPage(),
 	beginPanel('1/3'),
 	HTML("Visualization of trans-pathways"),
