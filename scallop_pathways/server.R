@@ -55,36 +55,12 @@ shinyServer(function(input, output) {
     
     #get the shape etc.     
     # show_small <- which(V(e1)$distance == max(V(e1)$distance))
-    # V(e1)$shape <- "circle"
-    # V(e1)$label.cex <- 1
+    V(e1)$shape <- "circle"
+    V(e1)$label.cex <- 2
     # V(e1)$label.cex[show_small] <- 0.4
     
-    
-    #getting the colour code
-    o <- NULL
-    if(is.null(o)){
-      V(e1)$color<-"#F5F5F5"
-      
-      
-      
-    }else{
-      o2<-o[["ICD_link"]]
+    V(e1)$color<-"#F5F5F5"
 
-      safe_names <- V(e1)$name
-      safe_names[!safe_names%in%rownames(o2)] <- NA
-      V(e1)$color <- o2[safe_names,"colour"]
-
-      no_info_nodes <- which(is.na(V(e1)$color))
-      V(e1)$color[no_info_nodes]<-"#F5F5F5"
-      E(e1)$color <- "#BDBDBD"
-      
-      
-    }
-    
-    
-    layout <- "layout_as_tree"
-
-    
     
     
     #then create the visNetwork from this igraph object    
@@ -94,7 +70,7 @@ shinyServer(function(input, output) {
       visEvents(select = "function(nodes) {
             Shiny.onInputChange('focus_node', nodes.nodes);
             ;}") %>%
-      visIgraphLayout(layout = layout,randomSeed = 42 )
+      visIgraphLayout(layout = "layout_as_tree",randomSeed = 42 )
       
 
     
@@ -126,7 +102,7 @@ shinyServer(function(input, output) {
     #write the score to the log file
     log_function<-function(uniqueID,focus_node){
       user_log_file<-paste("/home/ubuntu/data/",uniqueID,"/user_log_file.txt",sep="")
-      m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"diseaseNetworks",uniqueID,focus_node)
+      m<-c(format(Sys.time(),"%Y-%m-%d-%H-%M-%S"),"scallop_pathways",uniqueID,focus_node)
       m<-paste(m,collapse="\t")
       if(file.exists(user_log_file)){
         write(m,file=user_log_file,append=TRUE)

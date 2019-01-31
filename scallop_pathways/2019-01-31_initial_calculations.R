@@ -38,7 +38,7 @@ for(target_protein in proteins){
     rsid <- unique(S1[S1[,"MarkerName"] %in% markerName,"rs-id"])
     if(length(rsid)!=1)stop("!!!")
     # if(d2[1,"path_pvalue.(network_analysis_01)"  ] > d2[2,"path_pvalue.(network_analysis_01)"  ])stop("odd, these data should be sorted")
-    
+    if(is.na(rsid))rsid <- markerName
     
     
     
