@@ -25,8 +25,14 @@ shinyServer(function(input, output) {
     edges <- read.table(path_to_read,stringsAsFactors = F,header=T)    
     
     e<-graph_from_edgelist(as.matrix(edges[,c("source","target")]), directed = TRUE)
+    
+    #set edge types and strength
     e<-set_edge_attr(e,"strength",value=edges[,"strength"])
     e<-set_edge_attr(e,"type",value=edges[,"type"])
+    
+    #set node type
+    V(e)$type <- "gene"
+    V(e)$type[grep("^[0-9r]",V(e)$name)]<-"snp"
     
     
     
@@ -44,6 +50,8 @@ shinyServer(function(input, output) {
     
     e1 <- get_data()
     
+    if(is.null(e1))return(NULL)
+    
     #get the tooltip
     # V(e1)$title <- V(e1)$niceName #to get the tooltip
     
@@ -57,10 +65,16 @@ shinyServer(function(input, output) {
     # show_small <- which(V(e1)$distance == max(V(e1)$distance))
     
     V(e1)$shape <- "circle"
-    V(e1)$label.cex <- 1
-    # V(e1)$label.cex[show_small] <- 0.4
     
-    V(e1)$color<-"#F5F5F5"
+    #big and grey for genes/proteins
+    V(e1)$label.cex <- 1
+    V(e1)$color<-"#CCCCCC"
+    
+    #big and light for snps
+    V(e1)$label.cex[V(e1)$type=="snp"] <- 0.8
+    V(e1)$color[V(e1)$type=="snp"]<-"#F5F5F5"
+    
+    
 
     
     
