@@ -8,6 +8,10 @@ library("visNetwork")
 #data path
 input_path <- "/home/ubuntu/data/2019-01-31_pathways/"
 
+#permissions
+accepted_users<-tolower(read.table("/home/ubuntu/misc/accepted_emails.txt",sep="\t",header=F,stringsAsFactors=F)[,1])
+
+
 # Define server logic for a template
 shinyServer(function(input, output) {
   
