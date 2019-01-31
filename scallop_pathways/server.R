@@ -57,7 +57,7 @@ shinyServer(function(input, output) {
     # show_small <- which(V(e1)$distance == max(V(e1)$distance))
     
     V(e1)$shape <- "circle"
-    V(e1)$label.cex <- 1.5
+    V(e1)$label.cex <- 1
     # V(e1)$label.cex[show_small] <- 0.4
     
     V(e1)$color<-"#F5F5F5"
