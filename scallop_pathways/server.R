@@ -85,9 +85,10 @@ shinyServer(function(input, output) {
     
     
     # For legened
-    ledges <- data.frame(color = c("grey70","grey70","grey70"),
+    ledges <- data.frame(color = c("grey70","grey70","grey20"),
                          label = c("1", "0.05","5e-4"), 
-                         width=c(0.5,1,4))
+                         width=c(0.5,1,4),
+                         arrows=c("none","from","to"))
     
     
     #then create the visNetwork from this igraph object    
