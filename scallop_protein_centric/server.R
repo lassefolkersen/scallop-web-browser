@@ -171,7 +171,8 @@ shinyServer(function(input, output) {
     for(j in 1:nrow(data)){
       orig<-data[j,"snp_abs_pos"]
       dest<-data[j,"trait_abs_pos"]
-      colour<-rainbow(nrow(data), s = 1, v = 1, start = 0, end = 1, alpha = 1)[sum(data[,"snp_abs_pos"]<orig)+1]
+      # colour<-rainbow(nrow(data), s = 1, v = 1, start = 0, end = 1, alpha = 1)[sum(data[,"snp_abs_pos"]<orig)+1]
+      colour <- data[j,"colours"]
       x1 = (base) * cos( 2*pi*(orig/maxPos) )
       y1 = (base) * sin( 2*pi*(orig/maxPos) )
       x2 = (base) * cos( 2*pi*(dest/maxPos) )
