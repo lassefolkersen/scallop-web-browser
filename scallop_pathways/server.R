@@ -88,8 +88,11 @@ shinyServer(function(input, output) {
     E(e1)$dashes[E(e1)$value > -log10(0.05)] <- TRUE
     
     
-    # For legened
-    ledges <- data.frame(color = c("grey70","grey70","grey90"),
+    E(e1)$dash <- E(e1)$dashes
+    E(e1)$lty <- 2
+    
+    # For legend
+    ledges <- data.frame(color = c("grey70","grey70","red"),
                          label = c("P>0.05", "P<0.05","P<0.005"), 
                          width=c(0.5,1,3),
                          dashes=c(T,F,F),
