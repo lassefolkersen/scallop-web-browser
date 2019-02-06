@@ -83,12 +83,17 @@ shinyServer(function(input, output) {
     V(e1)$label.cex[V(e1)$type=="snp"] <- 0.7
     V(e1)$color[V(e1)$type=="snp"]<-"#F5F5F5"
     
+    #dash the non-significant
+    E(e1)$dash <- FALSE
+    E(e1)$dash[E(e1)$value > -log10(0.05)] <- TRUE
+    
     
     # For legened
-    ledges <- data.frame(color = c("grey70","grey70","grey20"),
-                         label = c("1", "0.05","5e-4"), 
-                         width=c(0.5,1,4),
-                         arrows=c("none","from","to"))
+    ledges <- data.frame(color = c("grey70","grey70","grey70"),
+                         label = c("P>0.05", "0.05","0.005"), 
+                         width=c(0.5,1,3),
+                         dashes=c(T,F,F)
+                         arrows=c("none","none","none"))
     
     
     #then create the visNetwork from this igraph object    
