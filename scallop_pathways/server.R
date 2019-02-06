@@ -83,9 +83,9 @@ shinyServer(function(input, output) {
     V(e1)$label.cex[V(e1)$type=="snp"] <- 0.7
     V(e1)$color[V(e1)$type=="snp"]<-"#F5F5F5"
     
-    #dash the non-significant
-    E(e1)$dash <- FALSE
-    E(e1)$dash[E(e1)$value > -log10(0.05)] <- TRUE
+    # #dash the non-significant
+    # E(e1)$dash <- FALSE
+    # E(e1)$dash[E(e1)$value > -log10(0.05)] <- TRUE
     
     
     # For legened
