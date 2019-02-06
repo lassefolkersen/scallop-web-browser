@@ -84,12 +84,18 @@ shinyServer(function(input, output) {
     V(e1)$color[V(e1)$type=="snp"]<-"#F5F5F5"
     
     
-
+    # For legened
+    ledges <- data.frame(color = c("grey50","grey50","grey50"),
+                         label = c("1", "0.05","5e-4"), 
+                         arrows =c("to", "to","to"),
+                         value=c(0.5,1,4))
+    
+    
     #then create the visNetwork from this igraph object    
     a<-visIgraph(e1)%>%
       visOptions(highlightNearest = TRUE, nodesIdSelection = FALSE) %>%
       visIgraphLayout(layout = "layout_as_tree",flip.y=TRUE, mode="in" ) %>%
-      visLegend(enabled=TRUE)
+      visLegend(addEdges = ledges)
       
 
     
