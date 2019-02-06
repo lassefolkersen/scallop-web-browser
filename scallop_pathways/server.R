@@ -84,13 +84,12 @@ shinyServer(function(input, output) {
     V(e1)$color[V(e1)$type=="snp"]<-"#F5F5F5"
     
     
-    # edges <- mutate(edges, width = weight/5 + 1)
-    
-    
+
     #then create the visNetwork from this igraph object    
     a<-visIgraph(e1)%>%
       visOptions(highlightNearest = TRUE, nodesIdSelection = FALSE) %>%
-      visIgraphLayout(layout = "layout_as_tree",flip.y=TRUE, mode="in" )
+      visIgraphLayout(layout = "layout_as_tree",flip.y=TRUE, mode="in" ) %>%
+      visLegend(enabled=TRUE)
       
 
     
