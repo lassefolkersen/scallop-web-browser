@@ -85,14 +85,14 @@ shinyServer(function(input, output) {
     
     # #dash the non-significant
     E(e1)$dashes <- FALSE
-    E(e1)$dashes[E(e1)$value > -log10(0.05)] <- TRUE
+    E(e1)$dashes[E(e1)$value < -log10(0.05)] <- TRUE
     
     
-    E(e1)$dash <- E(e1)$dashes
-    E(e1)$lty <- 2
+    # E(e1)$dash <- E(e1)$dashes
+    # E(e1)$lty <- 2
     
     # For legend
-    ledges <- data.frame(color = c("grey70","grey70","red"),
+    ledges <- data.frame(color = c("gray","gray","gray"),
                          label = c("P>0.05", "P<0.05","P<0.005"), 
                          width=c(0.5,1,3),
                          dashes=c(T,F,F),
