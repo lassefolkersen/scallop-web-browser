@@ -253,8 +253,8 @@ shinyServer(function(input, output) {
         start_gene <-geneLocations[w[j],"start"] / 1000000
         end_gene <-geneLocations[w[j],"end"] / 1000000
         gene_name <-rownames(geneLocations)[w[j]]
-        lines(x=c(start_gene,end_gene),y=c((gene_map_size/0.6)*(j%%10)/10,(gene_map_size/0.6)*(j%%10)/10))
-        text(x=start_gene,y=0.07+(gene_map_size/0.6)*(j%%10)/10,label=gene_name,adj=0,cex=gene_map_size)
+        lines(x=c(start_gene,end_gene),y=c((j%%10)/10,(j%%10)/10))
+        text(x=start_gene,y=0.07+(j%%10)/10,label=gene_name,adj=0,cex=gene_map_size)
       }
     }
     
