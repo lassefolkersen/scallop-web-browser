@@ -40,7 +40,6 @@ shinyServer(function(input, output) {
       top_label_count<-isolate(input$top_label_count)
       protein_to_highlight <- isolate(input$protein_to_highlight)
       show_gene_map <- isolate(input$show_gene_map)
-      gene_map_size <- isolate(input$gene_map_size)
 
       
       #the mail checker and logger - first part is not needed when we don't check mail, but left in anyway
@@ -118,6 +117,8 @@ shinyServer(function(input, output) {
     show_gene_map <- isolate(input$show_gene_map)
     top_label_count<-isolate(input$top_label_count)
     protein_to_highlight <- isolate(input$protein_to_highlight)
+    gene_map_size <- isolate(input$gene_map_size)
+    
     
     o<-get_data()
     d <- o[["d"]]
