@@ -25,10 +25,6 @@ shinyUI(bootstrapPage(
   checkboxInput("advanced", "Advanced options", value = FALSE),
   conditionalPanel(
     condition = "input.advanced",
-    checkboxInput("show_gene_map", "Show gene map", value = FALSE)
-  ),
-  conditionalPanel(
-    condition = "input.advanced",
     selectInput("protein_to_highlight", "Highlight protein", choices = c("none",proteins),selected="none")
   ),
   conditionalPanel(
@@ -38,6 +34,14 @@ shinyUI(bootstrapPage(
   conditionalPanel(
     condition = "input.advanced",
     sliderInput("top_label_count","#SNPs in table",min=10,max=300,value=50,step=1)
+  ),
+  conditionalPanel(
+    condition = "input.advanced",
+    checkboxInput("show_gene_map", "Show gene map", value = FALSE)
+  ),
+  conditionalPanel(
+    condition = "input.advanced",
+    sliderInput("gene_map_size","Gene map label size",min=0.5,max=2.0,value=0.6,step=0.1)
   ),
   conditionalPanel(
     condition = "input.advanced",

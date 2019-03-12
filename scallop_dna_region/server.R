@@ -40,7 +40,7 @@ shinyServer(function(input, output) {
       top_label_count<-isolate(input$top_label_count)
       protein_to_highlight <- isolate(input$protein_to_highlight)
       show_gene_map <- isolate(input$show_gene_map)
-      
+      gene_map_size <- isolate(input$gene_map_size)
 
       
       #the mail checker and logger - first part is not needed when we don't check mail, but left in anyway
@@ -253,7 +253,7 @@ shinyServer(function(input, output) {
         end_gene <-geneLocations[w[j],"end"] / 1000000
         gene_name <-rownames(geneLocations)[w[j]]
         lines(x=c(start_gene,end_gene),y=c((j%%10)/10,(j%%10)/10))
-        text(x=start_gene,y=0.07+(j%%10)/10,label=gene_name,adj=0,cex=0.6)
+        text(x=start_gene,y=0.07+(j%%10)/10,label=gene_name,adj=0,cex=gene_map_size)
       }
     }
     
