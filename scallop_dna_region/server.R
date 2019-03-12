@@ -94,7 +94,7 @@ shinyServer(function(input, output) {
       
       #only taking the area needed
       d<-d[d[,"pos"]>start - distance_expanded & d[,"pos"]<end + distance_expanded,]
-      if(nrow(d)==0){stop(safeError(paste("No SNPs found around gene",gene)))}
+      if(is.null(d) || nrow(d)==0){stop(safeError(paste("No SNPs found around gene",gene,"or no data file found for the region. If you suspect the latter is the case, please write to admin.")))}
       
       
       
