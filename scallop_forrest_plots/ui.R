@@ -21,7 +21,7 @@ shinyUI(bootstrapPage(
 
 	endPanel(),
 	beginPanel('2/3'),
-	plotOutput("plot1"),
+	plotOutput("mainPlot"),
 	endPanel(),
 	
 	

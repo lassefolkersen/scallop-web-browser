@@ -33,7 +33,7 @@ shinyServer(function(input, output) {
   
   
   #Get the pre-calculated genetic data for this user
-  output$plot_1 <- renderPlot({ 
+  output$mainPlot <- renderPlot({ 
     if(input$goButton == 0){
       return(NULL)
     }
