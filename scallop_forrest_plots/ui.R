@@ -21,7 +21,7 @@ shinyUI(bootstrapPage(
 
 	endPanel(),
 	beginPanel('2/3'),
-	visNetworkOutput("plot1"),
+	plotOutput("plot1"),
 	endPanel(),
 	
 	
