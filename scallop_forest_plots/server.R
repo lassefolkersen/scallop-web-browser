@@ -108,7 +108,7 @@ shinyServer(function(input, output) {
       mean=d[,"BETA"], 
       lower= d[,"BETA"]-d[,"SE"]*1.96, 
       upper= d[,"BETA"]+d[,"SE"]*1.96,
-      title=paste0(MarkerName," / ",protein," (S1-line ",data[s1_entry,"data_line"],", Phet=",data[s1_entry,"HetPVal"],")")
+      title=paste0(MarkerName," and ",protein)
     )
     
     

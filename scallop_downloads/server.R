@@ -30,7 +30,7 @@ shinyServer(function(input, output) {
   
   
   output$text1 <- renderText({
-    stop(safeError("Not implemented yet"))
+    stop(safeError("Not available before publication."))
   })
   
   

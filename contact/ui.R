@@ -143,11 +143,10 @@ shinyUI(bootstrapPage(
 	        </table>
 	        <hr>
 	        <h2>pQTL publications and data from SCALLOP members</h2>
-	        <p>Folkersen L, Fauman E, Sabater-Lleal M, Strawbridge R, FrÃ¥nberg M, Sennblad B, Baldassarre D, Veglia F, Humphries S, Rauramaa R, de Faire U, Smit A, Giral P, Kurl S, Mannarino E, Enroth S, Johansson Ã…, Bosdotter Enroth S, Gustafsson S, Lind L, Lindgren C, Morris A, Giedraitis V, Silveira A, Franco-Cereceda A, Tremoli E, IMPROVE study group , Gyllensten U, Ingelsson E, Brunak S, Eriksson P, Ziemek D, Hamsten A and MÃ¤larstig A.<strong>&nbsp;Mapping of 79 loci for 83 plasma protein biomarkers in cardiovascular disease.</strong>&nbsp;(2017) PLOS Genetics 13(4), doi.org/10.1371/journal.pgen.1006706<br>
+	        <p>Folkersen L, Fauman E, Sabater-Lleal M, Strawbridge R, Frånberg M, Sennblad B, Baldassarre D, Veglia F, Humphries S, Rauramaa R, de Faire U, Smit A, Giral P, Kurl S, Mannarino E, Enroth S, Johansson A, Bosdotter Enroth S, Gustafsson S, Lind L, Lindgren C, Morris A, Giedraitis V, Silveira A, Franco-Cereceda A, Tremoli E, IMPROVE study group , Gyllensten U, Ingelsson E, Brunak S, Eriksson P, Ziemek D, Hamsten A and Mälarstig A.<strong>&nbsp;Mapping of 79 loci for 83 plasma protein biomarkers in cardiovascular disease.</strong>&nbsp;(2017) PLOS Genetics 13(4), doi.org/10.1371/journal.pgen.1006706<br>
 	        
 	        
-	        <hr>
-	        <p>Enroth S, Johansson Ã…, Bosdotter Enroth S and Ulf Gyllensten U.&nbsp;<strong>Strong effects of genetic and lifestyle factors on biomarker variation and use of personalized cutoffs</strong>. Nature Commun. (2014) Aug 22;5:4684. doi: 10.1038/ncomms5684.<br>
+	        <p>Enroth S, Johansson A, Bosdotter Enroth S and Ulf Gyllensten U.&nbsp;<strong>Strong effects of genetic and lifestyle factors on biomarker variation and use of personalized cutoffs</strong>. Nature Commun. (2014) Aug 22;5:4684. doi: 10.1038/ncomms5684.<br>
 	        
 	        <hr>
 	        <p>&nbsp;</p>

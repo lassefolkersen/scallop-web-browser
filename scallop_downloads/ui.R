@@ -22,10 +22,10 @@ names(phenotypes_vector) <- rownames(p)
 shinyUI(bootstrapPage(
   head(),
   navigation(),
-  titlePanel("Per-SNP summary downloads"),
+  titlePanel("Data downloads"),
   beginPage(),
   beginPanel('1/3'),
-  HTML("This page can be used to download per-SNP summary data:<br><br>"),
+  HTML("This page can be used to download per-SNP summary data using the dropbox overview below. The same data can be obtained in the permanent data repository at <a href='https://doi.org/10.5281/zenodo.2615265'>zenodo.org</a>. Additionally here is a collection of links to supplementary material, including all <u><a href='/scallop_forest_plots'>per-hit forest plots</a></u>. <br><br>"),
   # textInput(inputId="email", label = "E-mail", value = ""),
   # textInput(inputId="gene", label = "Gene", value = ""),
   selectInput("phenotype", "Protein", choices = phenotypes_vector),
