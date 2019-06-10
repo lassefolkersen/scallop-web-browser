@@ -7,15 +7,15 @@ shinyUI(bootstrapPage(
 	titlePanel("Contact"),
 	beginPage(),
 	HTML("
-<img src=www/composite-banner-scallop.png alt=''>
+<img src=../www/composite-banner-scallop.png alt=''>
 <h1>SCALLOP genetics of the proteome</h1>
 <p>The SCALLOP consortium is a collaborative framework for discovery and follow-up of genetic associations with proteins on the Olink Proteomics platform. To date, 19 PIs from 10 research institutions have joined the effort, which now comprises summary level data on SNP to protein level associations from almost 30,000 patients or controls. SCALLOP welcomes new members.</p>
-	      <p>For more information please contact <u><a href='mailto:Anders.Malarstig@ki.se?subject=Scallop%20inquiry%20from%20Olink.com'>Anders Mälarstig</a></u></p>
+	      <p>For more information please contact <u><a href='mailto:Anders.Malarstig@ki.se?subject=Scallop%20inquiry%20from%20scallopconsortium.com'>Anders Mälarstig</a></u></p>
 	      <p>For the latest news about SCALLOP: <u><a href='https://www.olink.com/scallop/scallop-news/'>view our news page</a></u></p>
 	      <h2>Introduction from Anders Mälarstig</h2>
         <iframe width='932' height='524' src='https://www.youtube.com/embed/mtUAz4uRODc' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
 	      <h2>Current work</h2>
-	      <p><img src='www/scallop_logo.png' alt='' width='200' height='121'>Each SCALLOP member works on human study collections from the general population, clinical trials or patients with certain diseases such as coronary artery disease, rheumatoid arthritis, bipolar disease, heart failure, dementias or metabolic syndrome.</p>
+	      <p><img src='../www/scallop_logo.png' alt='' width='200' height='121'>Each SCALLOP member works on human study collections from the general population, clinical trials or patients with certain diseases such as coronary artery disease, rheumatoid arthritis, bipolar disease, heart failure, dementias or metabolic syndrome.</p>
 	      <p>The aim of the SCALLOP consortium is to identify novel molecular connections and protein biomarkers that are causal in diseases.</p>
 	      <p>This work starts with identification of so called protein quantitative trait loci, pQTLs, which are robust connections between a gene variant and the levels of a protein.</p>
 	      <p>There are two types of pQTLs:</p>
@@ -25,9 +25,9 @@ shinyUI(bootstrapPage(
 	      </ul>
 	      <p>Cis-pQTLs are strong instruments for determining if a protein biomarker for disease is causing disease or elevated or suppressed as a consequence of it. The SCALLOP consortium is currently underway with mapping novel pQTLs for several 100s of proteins in unprecedented sample sizes, something which will yield much deeper insights into the trans-regulation of plasma proteins than what has been possible to date.</p>
 	      <h4>Identify causal protein biomarkers</h4>
-	      <p><img src='www/scallop-infographic.png'></p>
+	      <p><img src='../www/scallop-infographic.png'></p>
 	      <h2>Operations</h2>
-	      <p>To be a member of the SCALLOP consortium you have to be the PI of a study collection with Olink proteomics and genome-wide genotyping data. We also expect members to sign up to the Consortium Agreement, which manages conduct and authorships. <u><a href='www/SCALLOP_consortium_agreement_March_2019.pdf' target='_blank' rel='noopener'>Download the&nbsp; Consortium Agreement here</a></u>.</p>
+	      <p>To be a member of the SCALLOP consortium you have to be the PI of a study collection with Olink proteomics and genome-wide genotyping data. We also expect members to sign up to the Consortium Agreement, which manages conduct and authorships. <u><a href='../www/SCALLOP_consortium_agreement_March_2019.pdf' target='_blank' rel='noopener'>Download the&nbsp; Consortium Agreement here</a></u>.</p>
 	      <p>The leadership for subprojects within the SCALLOP consortium rotates and members can take new ideas and suggestions for additional subprojects to the monthly steering committee meetings.</p>
 	      <p>SCALLOP uses a dedicated server for sharing of data. The server is set up under the Danish node of the TRYGGVE server structure. TRYGGVE allows sharing of sensitive data thanks to 2-step authorization procedures and high data security. Thanks to this structure SCALLOP is set up to move to individual-level data should the consortium wish to do so.</p>
 	      <h2>Repository browser</h2>
