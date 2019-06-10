@@ -15,7 +15,7 @@ shinyUI(bootstrapPage(
 	titlePanel("Forest plots"),
 	beginPage(),
 	beginPanel('1/3'),
-	HTML("This page contains forest plots for all pQTL associations that were significant in the CVD1 meta-analysis. Corresponding to the main paper description, all values are given in standard deviations of protein expression. Error bars indicate 95% confidence intervals.<br><br>"),
+	HTML("This page contains forest plots for all pQTL associations that were significant in the CVD1 meta-analysis. As further described in the main paper, all values are given in standard deviations of protein expression. Error bars indicate 95% confidence intervals.<br><br>"),
 	
 	selectInput("s1_entry", "pQTLs", choices = rownames(data)),
 	

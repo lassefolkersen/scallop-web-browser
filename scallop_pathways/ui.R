@@ -16,7 +16,7 @@ shinyUI(bootstrapPage(
 	titlePanel("Trans-pQTL pathways"),
 	beginPage(),
 	beginPanel('1/3'),
-	HTML("Visualization of trans-pathways"),
+	HTML("Visualization of trans-pathways. For each of the target proteins, this module shows likely paths from trans-pQTL SNPs through possible gene intermediaries. The width of each edge indicates the significance of the finding, as calculated using permutation analysis in randomly generated networks."),
 
 	selectInput("protein", "Protein", choices = proteins),
 	
