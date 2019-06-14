@@ -12,6 +12,7 @@ shinyUI(bootstrapPage(
 <p>The SCALLOP consortium is a collaborative framework for discovery and follow-up of genetic associations with proteins on the Olink Proteomics platform. To date, 19 PIs from 10 research institutions have joined the effort, which now comprises summary level data on SNP to protein level associations from almost 30,000 patients or controls. SCALLOP welcomes new members.</p>
 	      <p>For more information please contact <u><a href='mailto:Anders.Malarstig@ki.se?subject=Scallop%20inquiry%20from%20scallopconsortium.com'>Anders Mälarstig</a></u></p>
 	      <p>For the latest news about SCALLOP: <u><a href='https://www.olink.com/scallop/scallop-news/'>view this news page</a></u></p>
+        <p>Or read more in our <u><a href=../www/Scallop_Flyer_v1.0.pdf>flyer</a></u>.</p>
         <br><br><br>
 	      <h2>Introduction from Anders Mälarstig</h2>
         <iframe width='932' height='524' src='https://www.youtube.com/embed/mtUAz4uRODc' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
@@ -150,7 +151,7 @@ shinyUI(bootstrapPage(
 	        
 	        <hr>
 	        <p>&nbsp;</p>
-          <p><u><i><a href=../www/Scallop_Flyer_v1.0.pdf>Download our flyer</a></i></u></p>
+          
 
 	        </div>
 	        
