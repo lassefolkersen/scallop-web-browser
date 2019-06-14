@@ -150,6 +150,8 @@ shinyUI(bootstrapPage(
 	        
 	        <hr>
 	        <p>&nbsp;</p>
+          <p><u><i><a href=../www/Scallop_Flyer_v1.0.pdf>Download our flyer</a></i></u></p>
+
 	        </div>
 	        
 
