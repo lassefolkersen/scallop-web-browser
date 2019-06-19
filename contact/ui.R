@@ -108,7 +108,7 @@ shinyUI(bootstrapPage(
 	        <tr>
 	        <td>ORCADES</td>
 	        <td>Population isolate</td>
-	        <td><a href='http://www.orcades.ed.ac.uk/orcades/'>www.orcades.ed.ac.uk/orcades/</a></td>
+	        <td><a href='https://www.ed.ac.uk/viking/about-us/orcades'>www.ed.ac.uk/viking/about-us/orcades</a></td>
 	        </tr>
 	        <tr>
 	        <td>Pfizer trials (RA, UC, psoriasis)</td>
