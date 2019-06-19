@@ -63,6 +63,7 @@ shinyServer(function(input, output) {
       
       #figure out where from position or gene
       if(length(grep(":",gene))>0){
+        is_gene <- FALSE
         gene<-sub("^chr","",gene)
         gene<-gsub(" ","",gene)
         gene<-gsub(",","",gene)
@@ -71,8 +72,9 @@ shinyServer(function(input, output) {
         chr <- as.numeric(s[1])
         start <- as.numeric(s[2])
         end <- as.numeric(s[2])
-        if(is.na(chr)|is.na(end)| is.na(start))stop(safeError(paste("couldn't recognize", gene, "as a chr5:423432 position. Make sure there's no non-numeric characters")))
+        if(is.na(chr)|is.na(end)| is.na(start))stop(safeError(paste("couldn't recognize", gene, "as a chr1:23456 style-position indication. Make sure there's no non-numeric characters")))
       }else{
+        is_gene <- TRUE
         if(!gene%in%rownames(geneLocations)){stop(safeError(paste(gene,"not found. Please only use human genesymbols (all upper-case letters).")))}
         chr<-sub("^chr","",geneLocations[gene,"chr_name"])
         start<-geneLocations[gene,"start"]
@@ -94,7 +96,16 @@ shinyServer(function(input, output) {
       
       #only taking the area needed
       d<-d[d[,"pos"]>start - distance_expanded & d[,"pos"]<end + distance_expanded,]
-      if(is.null(d) || nrow(d)==0){stop(safeError(paste("No SNPs found around gene",gene,"or no data file found for the region. If you suspect the latter is the case, please write to admin and ask for e.g. file: ",filename1)))}
+      if(is.null(d) || nrow(d)==0){
+        if(chr=="X"){
+          stop(safeError(paste0("Unfortunately the X-chromosome was not part of the pre-specified SCALLOP analysis and therefore this region is unavailable.")))
+        }
+        if(is_gene){
+          stop(safeError(paste0("Although the gene ",gene," does exists in the database, there were no analyzed SNPs in the vicinity of it.")))  
+        }else{
+          stop(safeError(paste0("The location ",gene," does not exist in the SCALLOP data.")))  
+        }
+      }
       
       
       
