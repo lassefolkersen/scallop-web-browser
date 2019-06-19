@@ -72,7 +72,14 @@ shinyServer(function(input, output) {
         chr <- as.numeric(s[1])
         start <- as.numeric(s[2])
         end <- as.numeric(s[2])
-        if(is.na(chr)|is.na(end)| is.na(start))stop(safeError(paste("couldn't recognize", gene, "as a chr1:23456 style-position indication. Make sure there's no non-numeric characters")))
+        if(is.na(chr)|is.na(end)| is.na(start)){
+          if(chr=="X"){
+            stop(safeError(paste0("Unfortunately the X-chromosome was not part of the pre-specified SCALLOP analysis and therefore this region is unavailable.")))
+          }else{
+            stop(safeError(paste("couldn't recognize", gene, "as a chr1:23456 style-position indication. Make sure there's no non-numeric characters")))  
+          }
+          
+        }
       }else{
         is_gene <- TRUE
         if(!gene%in%rownames(geneLocations)){stop(safeError(paste(gene,"not found. Please only use human genesymbols (all upper-case letters).")))}
