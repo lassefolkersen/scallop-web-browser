@@ -110,7 +110,7 @@ shinyServer(function(input, output) {
         if(is_gene){
           stop(safeError(paste0("Although the gene ",gene," does exists in the database, there were no analyzed SNPs in the vicinity of it.")))  
         }else{
-          stop(safeError(paste0("The location ",gene," does not exist in the SCALLOP data.")))  
+          stop(safeError(paste0("The location ",gene," does not exist in the SCALLOP data. Likely it is outside or at the very end of this chromosome.")))  
         }
       }
       
