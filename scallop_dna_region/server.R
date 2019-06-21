@@ -201,7 +201,7 @@ shinyServer(function(input, output) {
       #skip if too low
       if(max(d1[,"logP"])< 4){
         if(protein_to_highlight == protein){
-          stop(safeError(paste("Highlighted protein",protein_to_highlight,"not shown, because none of the reginal SNPs were associated at P<1e-4")))
+          stop(safeError(paste("Highlighted protein",protein_to_highlight,"not shown, because no SNPs in this region were associated with it at P<1e-4")))
         }
         next
       }
