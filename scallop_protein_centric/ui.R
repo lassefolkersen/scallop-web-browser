@@ -30,10 +30,6 @@ shinyUI(bootstrapPage(
     checkboxInput("include_closest_genes","Also label closest 4 genes",value = TRUE)
   ),
   
-  conditionalPanel(
-    condition = "input.advanced",
-    HTML("Documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-scallop'>github</a></u>.")
-  ),
   actionButton("goButton","Run analysis"),
   endPanel(),
   beginPanel('2/3'),

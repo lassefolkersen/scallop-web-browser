@@ -325,15 +325,17 @@ shinyServer(function(input, output) {
     if(input$goButton == 0){
       methodsToReturn
     }else{
-      methodsToReturn<-paste0("<small><br><b>Methods</b><br>The circular manhattan plot shows the association strength of all observed pQTL effects, both cis- and trans-effects. The highlighted protein-name shows the location of the protein-encoding gene and any proximal peaks are cis-effects. Trans-effects are indicated with connecting lines towards the protein-encoding gene. The fully drawn grey circle indicates a significance level of P=5e-8. The dashed line indicates the customizable treshold, defaulting to P=1e-6. The markerNames of the 3 strongest associations are labelled on plot along with the names of their 4 most proximal genes. These numbers can be altered in advanced options. 
+      methodsToReturn<-paste0("<small><br><b>Methods</b><br>The circular manhattan plot shows the association strength of all observed pQTL effects, both cis- and trans-effects. The highlighted protein-name shows the location of the protein-encoding gene and any proximal peaks are cis-effects. Trans-effects are indicated with connecting lines towards the protein-encoding gene. The fully drawn grey circle indicates a significance level of P=5e-8. The dashed line indicates the customizable treshold, defaulting to P=1e-6. The markerNames of the 3 strongest associations are labelled on plot along with the names of their 4 most proximal genes. These numbers can be altered in advanced options.<br><br> 
 
-                              <br><br>The table shows extended information for each of the pQTL shown in the circular manhattan plot. The markername in the format of chr:pos:A1_A2, where A1/A2 is by alphabetical sorting.  The frequency-column shows the observed A1 alelle frequency. The effect-column shows the effect of the A1 allele in standardized units, meaning 1 equals one SD of protein level change. P-value and logP indicates significance, the logP-column is included because values less than 1e-300 often results in failure of analysis software (including R) and logP-units are recommended. Direction is given for the participating SCALLOP studies, alphabetically: EpiHealth, Estonian_Biobank, IMPROVE, INTERVAL, LifeLinesDeep, MPP_RES, NSPHS, ORCADES, PIVUS, STABILITY, STANLEY_lah1, STANLEY_swe6, ULSAM, VIS. A question mark indicates that either the protein or the SNP was not available in this study. Sample size is the effective sample size for the indicated pQTL. Only the strongest effect in each 50kb window is shown in the table.<br></small>")
+                              The table shows extended information for each of the pQTL shown in the circular manhattan plot. The markername in the format of chr:pos:A1_A2, where A1/A2 is by alphabetical sorting.  The frequency-column shows the observed A1 alelle frequency. The effect-column shows the effect of the A1 allele in standardized units, meaning 1 equals one SD of protein level change. P-value and logP indicates significance, the logP-column is included because values less than 1e-300 often results in failure of analysis software (including R) and logP-units are recommended. Direction is given for the participating SCALLOP studies, alphabetically: EpiHealth, Estonian_Biobank, IMPROVE, INTERVAL, LifeLinesDeep, MPP_RES, NSPHS, ORCADES, PIVUS, STABILITY, STANLEY_lah1, STANLEY_swe6, ULSAM, VIS. A question mark indicates that either the protein or the SNP was not available in this study. Sample size is the effective sample size for the indicated pQTL. Only the strongest effect in each 50kb window is shown in the table.<br><br>
+                              
+                              Further documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-scallop'>github</a></u>.
+                              </small>")
     }
   })
   
   
   
 })
-
 
 
