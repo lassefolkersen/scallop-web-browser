@@ -54,6 +54,7 @@ shinyUI(bootstrapPage(
   plotOutput("mainPlot",height = "700px"),
   HTML("<br><br>"),
   dataTableOutput("mainTable"),
+  htmlOutput("text_1"),
   endPanel(),
   
   endPage(),

@@ -154,7 +154,7 @@ shinyServer(function(input, output) {
     
     
     #drawing the frame-work circles (we want a P 0, 10^-8 and a 'current-cutoff-circle)
-    ch<-data.frame(offset=c(0,log10(p_value_cutoff),log10(8)),lty=c(1,2,1),col=c("black","grey70","grey50"),stringsAsFactors=F)
+    ch<-data.frame(offset=c(0,log10(p_value_cutoff),log10(7.30103)),lty=c(1,2,1),col=c("black","grey70","grey50"),stringsAsFactors=F)
     for(k in 1:nrow(ch)){
       res<-50
       b<-seq(0,2*pi,length.out=res)
@@ -260,7 +260,7 @@ shinyServer(function(input, output) {
     }
     legend(
       x=-3,y=4,
-      legend=c("P=1e-8",paste("P=1e-",signif(p_value_cutoff,2),sep="")),
+      legend=c("P=5e-8",paste("P=1e-",signif(p_value_cutoff,2),sep="")),
       lty=c(1,2),
       lwd=c(1,1),
       col=c("grey50","grey70"),
@@ -281,10 +281,58 @@ shinyServer(function(input, output) {
     data_for_table <- data_for_table[order(data_for_table[,"logP"],decreasing=T),]
     data_for_table<-data_for_table[,c("MarkerName","Freq1","Effect","P.value.character","logP","Direction","TotalSampleSize")]
     colnames(data_for_table) <- c("MarkerName","Frequency","Effect","P-value","logP","Direction","SampleSize")
+    
+    
+    #round sample size
+    d[,"SampleSize"] <- round(d[,"SampleSize"])
+    
+    #shorten other numbers
+    d[,"Frequency"] <- signif(d[,"Frequency"],2)
+    d[,"Effect"] <- signif(d[,"Effect"],3)
+    d[,"P-value"] <- signif(d[,"P-value"],2)
+    d[,"logP"] <- signif(d[,"logP"],3)
+    
     return(data_for_table)
     
     
   })
+  
+  
+  
+  
+  
+  
+  #The long methods section written after the SNPs-table
+  output$text_3 <- renderText({ 
+    
+    if(input$goButton == 0){
+      methodsToReturn<-""
+      
+      
+    }else{
+      o<-get_data()
+      methodsToReturn<-o[["methodsToReturn"]]
+    }
+    return(methodsToReturn)
+  })
+  
+  
+  
+  #The methods text box
+  output$text_1 <- renderText({ 
+    
+    
+    if(input$goButton == 0){
+      methodsToReturn
+    }else{
+      methodsToReturn<-paste0("<small><br><b>Methods</b><br>The circular manhattan plot shows the association strength of all observed pQTL effects, both cis- and trans-effects. The highlighted protein-name shows the location of the protein-encoding gene and any proximal peaks are cis-effects. Trans-effects are indicated with connecting lines towards the protein-encoding gene. The fully drawn grey circle indicates a significance level of P=5e-8. The dashed line indicates the customizable treshold, defaulting to P=1e-6. The markerNames of the 3 strongest associations are labelled on plot along with the names of their 4 most proximal genes. These numbers can be altered in advanced options. 
+
+                              <br><br>The table shows extended information for each of the pQTL shown in the circular manhattan plot. The markername in the format of chr:pos:A1_A2, where A1/A2 is by alphabetical sorting.  The frequency-column shows the observed A1 alelle frequency. The effect-column shows the effect of the A1 allele in standardized units, meaning 1 equals one SD of protein level change. P-value and logP indicates significance, the logP-column is included because values less than 1e-300 often results in failure of analysis software (including R) and logP-units are recommended. Direction is given for the participating SCALLOP studies, alphabetically: EpiHealth, Estonian_Biobank, IMPROVE, INTERVAL, LifeLinesDeep, MPP_RES, NSPHS, ORCADES, PIVUS, STABILITY, STANLEY_lah1, STANLEY_swe6, ULSAM, VIS. A question mark indicates that either the protein or the SNP was not available in this study. Sample size is the effective sample size for the indicated pQTL. Only the strongest effect in each 50kb window is shown in the table.<br></small>")
+    }
+  })
+  
+  
+  
 })
 
 

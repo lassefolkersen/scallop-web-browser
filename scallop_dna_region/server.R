@@ -40,7 +40,7 @@ shinyServer(function(input, output) {
       top_label_count<-isolate(input$top_label_count)
       protein_to_highlight <- isolate(input$protein_to_highlight)
       show_gene_map <- isolate(input$show_gene_map)
-
+      
       
       #the mail checker and logger - first part is not needed when we don't check mail, but left in anyway
       if(!tolower(email) %in% accepted_users & FALSE){
@@ -88,8 +88,8 @@ shinyServer(function(input, output) {
         end<-geneLocations[gene,"end"]
       }
       p1<-floor(start/window)
-
-
+      
+      
       
       #use this position to get the relevant data from 'data_dir'      
       dh <- list()
@@ -123,7 +123,7 @@ shinyServer(function(input, output) {
         start=start,
         end=end,
         distance = distance
-        ))				
+      ))				
       
     }
   })
@@ -163,7 +163,7 @@ shinyServer(function(input, output) {
     
     #auto-extract n_legend (=all stronger then cutoff)
     n_legend <- length(unique(d[d[,"logP"] > -log10(cutoff),"protein"]))
-
+    
     #set ylim
     ylim <- c(0, max(d[,"logP"],na.rm=T))
     if(ylim[2]>artifical_max){ylim[2]<-artifical_max  }
@@ -282,10 +282,10 @@ shinyServer(function(input, output) {
   })
   
   output$mainTable <- renderDataTable({
-
+    
     top_label_count<-isolate(input$top_label_count)
     protein_to_highlight <- isolate(input$protein_to_highlight)
-
+    
     o<-get_data()
     d<-o[["d"]]
     
@@ -294,10 +294,10 @@ shinyServer(function(input, output) {
       print("no data ready")
       return(NULL)
     }
-
+    
     #set columns    
-    wanted_column <- c('protein','MarkerName','Allele1','Allele2','Freq1','FreqSE','Effect','StdErr','P.value.character','logP','TotalSampleSize','pos')
-    wanted_column_names <- c('Protein','MarkerName','Allele1','Allele2','Freq1','FreqSE','Effect','StdErr','P-value','logP','SampleSize','Position')
+    wanted_column <- c('protein','MarkerName','Freq1','Effect','P.value.character','logP','Direction','TotalSampleSize')
+    wanted_column_names <- c('Protein','MarkerName','Frequency','Effect','P-value','logP','Direction','SampleSize')
     d<-d[,wanted_column]
     colnames(d)<-wanted_column_names
     
@@ -312,10 +312,31 @@ shinyServer(function(input, output) {
     #round sample size
     d[,"SampleSize"] <- round(d[,"SampleSize"])
     
+    #shorten other numbers
+    d[,"Frequency"] <- signif(d[,"Frequency"],2)
+    d[,"Effect"] <- signif(d[,"Effect"],3)
+    d[,"P-value"] <- signif(d[,"P-value"],2)
+    d[,"logP"] <- signif(d[,"logP"],3)
+    
     #return
     return(d) 
-     
+    
   })
+  
+  #The methods text box
+  output$text_1 <- renderText({ 
+    
+    
+    if(input$goButton == 0){
+      methodsToReturn
+    }else{
+      methodsToReturn<-paste0("<small><br><b>Methods</b><br>
+The plot shows a regional manhattan plot, i.e. an illustration of association strength in a local region of the genome, defaulting to 200 kb up and down-stream from a gene or location of interest. The purpose of the plot is to show the effects of all measured proteins at the same time, which currently is the 90 proteins on the CVD1-olink array. To provide a (more) clear picture with so many overlaid plots, only the strongest effect in each 50 kb window is shown, both in plot and in table. All positions are in GRCh37/hg19 coordinates and further details on plotting is available at <u><a href='https://github.com/lassefolkersen/olink-scallop'>GitHub</a></u>. Under advanced options, it is possible to adjust the zoom-level of the plot as well as table-size and gene-label size in the (optional) gene-map. <br><br>
+
+                              The table shows extended information for each of the pQTL shown in the main plot. The markername in the format of chr:pos:A1_A2, where A1/A2 is by alphabetical sorting.  The frequency-column shows the observed A1 alelle frequency. The effect-column shows the effect of the A1 allele in standardized units, meaning 1 equals one SD of protein level change. P-value and logP indicates significance, the logP-column is included because values less than 1e-300 often results in failure of analysis software (including R) and logP-units are recommended. Direction is given for the participating SCALLOP studies, alphabetically: EpiHealth, Estonian_Biobank, IMPROVE, INTERVAL, LifeLinesDeep, MPP_RES, NSPHS, ORCADES, PIVUS, STABILITY, STANLEY_lah1, STANLEY_swe6, ULSAM, VIS. A question mark indicates that either the protein or the SNP was not available in this study. Sample size is the effective sample size for the indicated pQTL.<br></small>")
+    }
+  })
+  
 })
 
 

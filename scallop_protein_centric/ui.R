@@ -40,6 +40,7 @@ shinyUI(bootstrapPage(
   plotOutput("mainPlot",height="800px",width="800px"),
   
   dataTableOutput("mainTable"),
+  htmlOutput("text_1"),
   endPanel(),
   
   endPage(),
