@@ -277,10 +277,10 @@ shinyServer(function(input, output) {
     
     data<-get_data()
     if( is.null(data))return(NULL)
-    data_for_table<-data[data[,"logP"]>p_value_cutoff,]
-    data_for_table <- data_for_table[order(data_for_table[,"logP"],decreasing=T),]
-    data_for_table<-data_for_table[,c("MarkerName","Freq1","Effect","P.value.character","logP","Direction","TotalSampleSize")]
-    colnames(data_for_table) <- c("MarkerName","Frequency","Effect","P-value","logP","Direction","SampleSize")
+    d<-data[data[,"logP"]>p_value_cutoff,]
+    d <- d[order(d[,"logP"],decreasing=T),]
+    d<-d[,c("MarkerName","Freq1","Effect","P.value.character","logP","Direction","TotalSampleSize")]
+    colnames(d) <- c("MarkerName","Frequency","Effect","P-value","logP","Direction","SampleSize")
     
     
     #round sample size
@@ -292,7 +292,7 @@ shinyServer(function(input, output) {
     d[,"P-value"] <- signif(d[,"P-value"],2)
     d[,"logP"] <- signif(d[,"logP"],3)
     
-    return(data_for_table)
+    return(d)
     
     
   })

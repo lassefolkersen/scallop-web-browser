@@ -40,12 +40,8 @@ shinyUI(bootstrapPage(
     checkboxInput("show_gene_map", "Show gene map", value = FALSE)
   ),
   conditionalPanel(
-    condition = "input.advanced",
+    condition = "input.advanced & input.show_gene_map",
     sliderInput("gene_map_size","Gene map label size",min=0.5,max=2.0,value=0.6,step=0.1)
-  ),
-  conditionalPanel(
-    condition = "input.advanced",
-    HTML("Documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-improve'>github</a></u>. All positions are in GRCh37/hg19 coordinates.")
   ),
   actionButton("goButton","Run analysis"),
   endPanel(),
