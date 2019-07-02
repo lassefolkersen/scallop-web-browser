@@ -288,7 +288,9 @@ shinyServer(function(input, output) {
     
     o<-get_data()
     d<-o[["d"]]
-    
+    if(is.null(d) || nrow(d)==0){
+      return(NULL)
+    }
     
     if(is.null(d) || nrow(d)==0){
       print("no data ready")
