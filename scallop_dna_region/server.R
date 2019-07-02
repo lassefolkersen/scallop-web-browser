@@ -289,10 +289,6 @@ shinyServer(function(input, output) {
     o<-get_data()
     d<-o[["d"]]
     if(is.null(d) || nrow(d)==0){
-      return(NULL)
-    }
-    
-    if(is.null(d) || nrow(d)==0){
       print("no data ready")
       return(NULL)
     }
@@ -330,7 +326,7 @@ shinyServer(function(input, output) {
     
     
     if(input$goButton == 0){
-      methodsToReturn
+      methodsToReturn<-""
     }else{
       methodsToReturn<-paste0("<small><br><b>Methods</b><br>
                               The plot shows a regional manhattan plot, i.e. an illustration of association strength in a local region of the genome, defaulting to 200 kb up and down-stream from a gene or location of interest. The purpose of the plot is to show the regional effects of all measured proteins at the same time, which currently is the 90 proteins on the CVD1-olink array. To provide a (more) clear picture with so many overlaid plots, only the strongest effect in each 50 kb window is shown, both in plot and in table. All positions are in GRCh37/hg19 coordinates. Under advanced options, it is possible to adjust the zoom-level of the plot as well as table-size and gene-label size in the (optional) gene-map. <br><br>
