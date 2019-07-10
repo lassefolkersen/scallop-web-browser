@@ -199,10 +199,10 @@ shinyServer(function(input, output) {
       max_p_values <- c(max_p_values, max_p_value)
       
       #skip if too low
-      if(max(d1[,"logP"])< 4){
-        if(protein_to_highlight == protein){
-          stop(safeError(paste("Highlighted protein",protein_to_highlight,"not shown, because no SNPs in this region were associated with it at P<1e-4")))
-        }
+      if(protein_to_highlight != protein & max(d1[,"logP"])< 4){
+        # if(protein_to_highlight == protein){
+        #   stop(safeError(paste("Highlighted protein",protein_to_highlight,"not shown, because no SNPs in this region were associated with it at P<1e-4")))
+        # }
         next
       }
       
