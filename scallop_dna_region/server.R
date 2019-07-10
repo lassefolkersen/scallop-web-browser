@@ -188,7 +188,14 @@ shinyServer(function(input, output) {
     #prepare for saving max P-values (for legend)
     max_p_values <- vector()
     
-    for(protein in rev(names(colours))){
+    
+    #preparing plot order (moving highlighted protein to front if applicable)
+    protein_plot_order <- rev(names(colours))
+    if(protein_to_highlight != "none"){
+      protein_plot_order<-c(protein_plot_order[!protein_plot_order%in%protein_to_highlight],protein_to_highlight)
+    }
+    
+    for(protein in protein_plot_order){
       #extract relevant protein data
       d1<-d[d[,"protein"] %in% protein,]
       
