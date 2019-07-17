@@ -1,1 +1,1 @@
-~/srv/olink-scallop/Olink_panel_IMPROVE_May_28th.txt
+~/srv/scallop-web-browser/Olink_panel_IMPROVE_May_28th.txt

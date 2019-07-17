@@ -13,7 +13,7 @@ colours<-c('#E41A1C','#377EB8','#4DAF4A','#984EA3','#FF7F00','#FFFF33','#A65628'
 
 
 #gene positions
-load("~/srv/olink-scallop/2014-07-16 gene locations.rdata")
+load("~/srv/scallop-web-browser/2014-07-16 gene locations.rdata")
 proteins<-c('ADM','AGRP','Beta-NGF','CA-125','CASP-8','CCL20','CCL3','CCL4','CD40','CD40-L','CHI3L1','CSF-1','CSTB','CTSD','CTSL1','CX3CL1','CXCL1','CXCL16','CXCL6','Dkk-1','ECP','EGF','EN-RAGE','ESM-1','FABP4','FAS','FGF-23','FS','GAL','Gal-3','GDF-15','GH','HB-EGF','HGF','hK11','HSP_27','IL-18','IL-1ra','IL-27','IL-6','IL-6RA','IL-8','IL16','ITGB1BP2','KIM-1','KLK6','LEP','LOX-1','mAmP','MB','MCP-1','MMP-1','MMP-10','MMP-12','MMP-3','MMP-7','MPO','NEMO','NT-pro_BNP','OPG','PAPPA','PAR-1','PDGF_subunit_B','PECAM-1','PlGF','PSGL-1','PTX3','RAGE','REN','RETN','SCF','SELE','SIRT2','SPON1','ST2','t-PA','TF','TIE2','TM','TNF-R1','TNF-R2','TNFSF14','TRAIL','TRAIL-R2','TRANCE','U-PAR','VEGF-A','VEGF-D')
 
 
@@ -340,7 +340,7 @@ shinyServer(function(input, output) {
 
                               The table shows extended information for each of the pQTL shown in the main plot. The markername is in the format of chr:pos:A1_A2, where A1/A2 is by alphabetical sorting.  The frequency-column shows the observed A1 alelle frequency. The effect-column shows the effect of the A1 allele in standardized units, meaning that a value of 1 equals one standard-devation of protein level increase for each A1 allele. P-value and logP indicates significance. The logP-column is included because values less than 1e-300 often results in failure of analysis software (including R) and logP-units are recommended. Sample size is the effective sample size for the indicated pQTL.<br><br>
                               
-                              Further documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-scallop'>github</a></u>.</small>")
+                              Further documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/scallop-web-browser'>github</a></u>.</small>")
     }
   })
   

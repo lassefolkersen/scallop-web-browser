@@ -4,8 +4,8 @@ initialize('con',TRUE)
 
 
 #gene positions
-load("~/srv/olink-scallop/2014-07-16 gene locations.rdata")
-protein_pos_file<-"~/srv/olink-scallop/2017-04-07_protein_pos_data.rdata"
+load("~/srv/scallop-web-browser/2014-07-16 gene locations.rdata")
+protein_pos_file<-"~/srv/scallop-web-browser/2017-04-07_protein_pos_data.rdata"
 load(protein_pos_file)
 p<-data.frame(
   row.names=data[,"hgnc_symbol"], 
@@ -32,7 +32,7 @@ shinyUI(bootstrapPage(
   checkboxInput("advanced", "Advanced options", value = FALSE),
   conditionalPanel(
     condition = "input.advanced",
-    HTML("Documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-scallop'>github</a></u>. Note <u><a href='https://github.com/lassefolkersen/olink-scallop/issues/1'>known bug</a></u>.")
+    HTML("Documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/scallop-web-browser'>github</a></u>. Note <u><a href='https://github.com/lassefolkersen/scallop-web-browser/issues/1'>known bug</a></u>.")
   ),
   actionButton("goButton","Run analysis"),
   endPanel(),

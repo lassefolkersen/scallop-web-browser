@@ -1,5 +1,5 @@
 library("shiny")
-source("~/srv/olink-scallop/functions.R")
+source("~/srv/scallop-web-browser/functions.R")
 
 
 #Replace 'template' with name of module throughout the script

@@ -28,12 +28,11 @@ names(cols) <- as.character(1:(length(cols)-1))
 
 
 #gene positions
-# load("~/srv/olink-scallop/2014-07-16 gene locations.rdata")
 #load these when needed instead
 
 
 #protein locations
-load("~/srv/olink-scallop/scallop_protein_centric/2019-01-24_cvd1_protein_positions.rdata")
+load("~/srv/scallop-web-browser/scallop_protein_centric/2019-01-24_cvd1_protein_positions.rdata")
 
 #significant hits - loaded at run-time instead
 # all_data<-read.table("/home/ubuntu/data/2019-01-24_significant_bits_scallop/2019-01-24_top_hits_pruned.txt.gz",sep="\t",header=T,stringsAsFactors = F)
@@ -133,7 +132,7 @@ shinyServer(function(input, output) {
     #load the gene locations only if necessary
     if(include_closest_genes){
       if(!exists("geneLocations")){
-        load("~/srv/olink-scallop/2014-07-16 gene locations.rdata")  
+        load("~/srv/scallop-web-browser/2014-07-16 gene locations.rdata")  
       }
     }
     
@@ -329,7 +328,7 @@ shinyServer(function(input, output) {
 
                               The table shows extended information for each of the pQTL shown in the circular manhattan plot. The markername is in the format of chr:pos:A1_A2, where A1/A2 is by alphabetical sorting.  All positions are in GRCh37/hg19 coordinates. The frequency-column shows the observed A1 alelle frequency. The effect-column shows the effect of the A1 allele in standardized units, meaning that a value of 1 equals one standard-devation of protein level increase for each A1 allele. P-value and logP indicates significance. The logP-column is included because values less than 1e-300 often results in failure of analysis software (including R) and logP-units are recommended. Sample size is the effective sample size for the indicated pQTL. Only the strongest effect in each 50kb window is shown in the table.<br><br>
                               
-                              Further documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/olink-scallop'>github</a></u>.
+                              Further documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/scallop-web-browser'>github</a></u>.
                               </small>")
     }
   })
