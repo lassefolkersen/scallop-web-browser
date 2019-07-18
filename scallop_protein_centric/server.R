@@ -322,7 +322,7 @@ shinyServer(function(input, output) {
     
     
     if(input$goButton == 0){
-      methodsToReturn
+      methodsToReturn<-""
     }else{
       methodsToReturn<-paste0("<small><br><b>Methods</b><br>The circular manhattan plot shows the association strength of all observed pQTL effects, both cis- and trans-effects. The highlighted protein-name shows the location of the protein-encoding gene and any proximal peaks are cis-effects. Trans-effects are indicated with connecting lines towards the protein-encoding gene. The fully drawn grey circle indicates a significance level of P=5e-8. The dashed line indicates the customizable treshold, defaulting to P=1e-6. The markerNames of the 3 strongest associations are labelled on plot along with the names of their 4 most proximal genes. These numbers can be altered in advanced options.<br><br> 
 
