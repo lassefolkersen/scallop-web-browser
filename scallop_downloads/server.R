@@ -30,7 +30,7 @@ shinyServer(function(input, output) {
   
   
   output$text1 <- renderText({
-    stop(safeError("Not available before publication."))
+    stop(safeError("The bulk data download function is unfortunately not available before publication, neither here nor at the zenodo.org location (DOI:10.5281/zenodo.2615265). This embargo is motivated because the review may change the final format of the sumstats and we do not wish for different versions to be used or implemented elsewhere. However, the full set of data is already browsable in the other modules implemented in this web-site, they are just not bulk-downloadable."))
   })
   
   
