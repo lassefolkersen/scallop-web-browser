@@ -116,6 +116,9 @@ shinyServer(function(input, output) {
       
       
       
+      
+      
+      
       #returning
       return(list(
         d=d,
@@ -299,12 +302,19 @@ shinyServer(function(input, output) {
       print("no data ready")
       return(NULL)
     }
+
+    #remove anything outside of (non-expanded) distance (fixing a bug where a slightly stronger hit just outside of the view could be shown in table and confusing everyone)
+    d<-d[d[,"pos"]> o[["start"]]-o[["distance"]] & d[,"pos"]<o[["end"]]+o[["distance"]],]
     
+    
+    
+        
     #set columns    
     wanted_column <- c('protein','MarkerName','Freq1','Effect','P.value.character','logP','TotalSampleSize')
     wanted_column_names <- c('Protein','MarkerName','Frequency','Effect','P-value','logP','SampleSize')
     d<-d[,wanted_column]
     colnames(d)<-wanted_column_names
+    
     
     #order by P-value
     d <- d[order(d[,"P-value"]),]
