@@ -200,11 +200,12 @@ shinyServer(function(input, output) {
     
     for(protein in protein_plot_order){
       #extract relevant protein data
-      #while remove anything outside of (non-expanded) distance (fixing a bug where
-      d1<-d[d[,"protein"] %in% protein & d[,"pos"]> o[["start"]]-o[["distance"]] & d[,"pos"]<o[["end"]]+o[["distance"]],]
+      d1<-d[d[,"protein"] %in% protein,]
       
-      #extract max P-value
-      max_p_value <- d1[1,"P.value.character"]
+      
+      
+      #extract max P-value in plotted region
+      max_p_value<-d1[d1[,"pos"]> o[["start"]]-o[["distance"]] & d1[,"pos"]<o[["end"]]+o[["distance"]],][1,"P.value.character"]
       names(max_p_value) <- protein
       max_p_values <- c(max_p_values, max_p_value)
       
