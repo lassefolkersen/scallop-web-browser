@@ -11,12 +11,11 @@ shinyServer(function(input, output) {
 	  }
 		
 		if(input$goButton > 0){
-	    original_folder<-getwd()
 	    setwd("/home/ubuntu/srv/scallop-web-browser")
 	    m1<-system("git pull",intern=T)
+	    setwd("/home/ubuntu/srv/scallop-web-browser/update")
 	    Sys.sleep(1)
-	  
-	    m2<-paste("Executed update command with this output:",m1,"also note this:",original_folder)
+	    m2<-paste("<br>Executed update command with this output:<br>",m1)
 	    return(m2)  
 	  }
 	  
