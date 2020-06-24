@@ -10,8 +10,7 @@ shinyServer(function(input, output) {
 	    return(NULL)
 	  }
 		
-		
-	  if(input$goButton > 0){
+		if(input$goButton > 0){
 	    
 	    setwd("/home/ubuntu/srv/scallop-web-browser")
 	    m1<-system("git pull",intern=T)

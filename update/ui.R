@@ -7,6 +7,7 @@ shinyUI(bootstrapPage(
 	titlePanel("Update"),
 	beginPage(),
 	actionButton("goButton","update"),
+	htmlOutput("text1"),
 	footer()
 ))
 
