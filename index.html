@@ -112,6 +112,17 @@
         <h2>Repository browser</h2>
 	 <br>
 	      <table style="width:80%">
+<style>
+div {
+  background-color: yellow;
+  padding: 20px;
+  display: none;
+}
+  
+span:hover + div {
+  display: block;
+}
+</style>
 	      <tbody>
 	      <tr bgcolor='#077183'>
 	        <td width='300' style="padding:10px"><span style='color: #077183;'><strong><span style='color: #ffffff;'>Acronym</span></strong></span></td>
@@ -123,7 +134,8 @@
 <td style="padding:10px"><a href='https://www.sciencedirect.com/science/article/abs/pii/S0002870309009454' target="_blank"><font color="0E90A4">Aristotle</a></td>
 <td>Atrial fibrillation</td>
 <td align="center">1500</td>
-<td align="center">3</td>
+<td align="center"><span>3</span>
+<div>I will show on hover</div></td>
 </tr>		
 		<tr>
 		<td style="padding:10px"><a href='http://www.ki.se/en/meds/team-per-eriksson' target="_blank"><font color="0E90A4">ASAP</a></td>		
