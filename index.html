@@ -19,6 +19,46 @@
     <title>SCALLOP - genetic regulation of the proteome</title>
     <meta name="description" content="System to serve protein quantiative trait loci data (pQTL).">
 <meta name="keywords" content="genetic, genetic disease, mendelian randomization">
+	<style>
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
 </head>
 <body>
 
@@ -124,7 +164,7 @@
 <td style="padding:10px"><a href='https://www.sciencedirect.com/science/article/abs/pii/S0002870309009454' target="_blank"><font color="0E90A4">Aristotle</a></td>
 <td>Atrial fibrillation</td>
 <td align="center">1500</td>
-<td align="center" title="CVD-II, CVD-III, INF">3</td>
+<td align="center"><div class="tooltip">3<span class="tooltiptext">CVD-II, CVD-III, INF</span></div></td>
 </tr>		
 		<tr>
 		<td style="padding:10px"><a href='http://www.ki.se/en/meds/team-per-eriksson' target="_blank"><font color="0E90A4">ASAP</a></td>		
