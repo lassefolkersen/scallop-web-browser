@@ -9,15 +9,23 @@
 
   ga('create', 'UA-87917782-1', 'auto');
   ga('send', 'pageview');
-
 </script>
+
+
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="layout/styling/base.css">
-    <title>SCALLOP - genetic regulation of the proteome</title>
-    <meta name="description" content="System to serve protein quantiative trait loci data (pQTL).">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+
+
+<link rel="stylesheet" href="layout/styling/base.css">
+<title>SCALLOP - genetic regulation of the proteome</title>
+<meta name="description" content="System to serve protein quantiative trait loci data (pQTL).">
 <meta name="keywords" content="genetic, genetic disease, mendelian randomization">	
 </head>
 <body>
@@ -120,18 +128,24 @@
 		<td width='200' align="center"><span style='color: #ffffff;'><strong>Sample size</strong></span></td>
 		<td width='200' align="center"><span style='color: #ffffff;'><strong>Olink panels</strong></span></td>
 	        </tr>
+<!--example one test: as a link to the olink-webpage overview of arrays-->
 <tr>
 <td style="padding:10px"><a href='https://www.sciencedirect.com/science/article/abs/pii/S0002870309009454' target="_blank"><font color="0E90A4">Aristotle</a></td>
 <td>Atrial fibrillation</td>
 <td align="center">1500</td>
-<td align="center" title="CVD-II, CVD-III, INF"><font color="0E90A4">3</td>
+<td align="center"><font color="0E90A4"><a data-toggle="tooltip" title="CVD-II, CVD-III, INF" href='https://www.olink.com/products/'>3</a></td>
 </tr>		
-		<tr>
-		<td style="padding:10px"><a href='http://www.ki.se/en/meds/team-per-eriksson' target="_blank"><font color="0E90A4">ASAP</a></td>		
-		<td>Aortic valve surgery</td>		
-		<td align="center">573</td>
-		<td align="center" title="CVD-III, MET, CM, IR, DEV"><font color="0E90A4">5</td>
-	        </tr>
+
+
+<!--#example one test: as a link to the olink-webpage overview of arrays-->
+<tr>
+<td style="padding:10px"><a href='http://www.ki.se/en/meds/team-per-eriksson' target="_blank"><font color="0E90A4">ASAP</a></td>		
+<td>Aortic valve surgery</td>		
+<td align="center">573</td>
+<td align="center" data-toggle="tooltip" title="CVD-III, MET, CM, IR, DEV"><font color="0E90A4">5</td>
+</tr>
+
+
 	        <tr>
 		<td style="padding:10px"><a href='http://biofinder.se/' target="_blank"><font color="0E90A4">BioFinder</a></td>
 	        <td>Dementia</td>
