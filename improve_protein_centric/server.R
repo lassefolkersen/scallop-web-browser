@@ -28,8 +28,8 @@ names(cols) <- as.character(1:length(cols))
 
 
 #gene positions
-load("~/srv/scallop-web-browser/2014-07-16 gene locations.rdata")
-protein_pos_file<-"~/srv/scallop-web-browser/2017-04-07_protein_pos_data.rdata"
+load("~/srv/scallop-web-browser/location_files/2014-07-16 gene locations.rdata")
+protein_pos_file<-"~/srv/scallop-web-browser/location_files/2017-04-07_protein_pos_data.rdata"
 load(protein_pos_file)
 p<-data.frame(
   row.names=data[,"hgnc_symbol"],

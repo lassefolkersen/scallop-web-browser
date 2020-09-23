@@ -132,7 +132,7 @@ shinyServer(function(input, output) {
     #load the gene locations only if necessary
     if(include_closest_genes){
       if(!exists("geneLocations")){
-        load("~/srv/scallop-web-browser/2014-07-16 gene locations.rdata")  
+        load("~/srv/scallop-web-browser/location_files/2014-07-16 gene locations.rdata")
       }
     }
     
