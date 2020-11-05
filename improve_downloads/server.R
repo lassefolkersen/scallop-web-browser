@@ -43,8 +43,7 @@ shinyServer(function(input, output) {
       # email <- isolate(input$email)
       phenotype <- isolate(input$phenotype)
       
-      # get_data()
-      
+      stop(safeError("Due to server costs we are no longer hosting these files on-server. They are available for long-term conservation at Zenodo (http://doi.org/10.5281/zenodo.264128) and of course by-request again, should that source ever fail."))
       allFiles<-list.files("~/srv/scallop-web-browser/www/dl/")
       chr<-sub("_pheno.+$","",sub("^.+chr","",allFiles)	)
       phenoNumber<-sub("\\.txt.+$","",sub("^.+pheno","",allFiles)	)
