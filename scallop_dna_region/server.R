@@ -311,8 +311,8 @@ shinyServer(function(input, output) {
     
         
     #set columns    
-    wanted_column <- c('protein','MarkerName','Freq1','Effect','P.value.character','logP','TotalSampleSize')
-    wanted_column_names <- c('Protein','MarkerName','Frequency','Effect','P-value','logP','SampleSize')
+    wanted_column <- c('protein','MarkerName','Allele1','Allele2','Freq1','Effect','P.value.character','logP','TotalSampleSize')
+    wanted_column_names <- c('Protein','MarkerName','A1','A2','Frequency','Effect','P-value','logP','SampleSize')
     d<-d[,wanted_column]
     colnames(d)<-wanted_column_names
     
@@ -349,7 +349,7 @@ shinyServer(function(input, output) {
       methodsToReturn<-paste0("<small><br><b>Methods</b><br>
                               The plot shows a regional manhattan plot, i.e. an illustration of association strength in a local region of the genome, defaulting to 200 kb up and down-stream from a gene or location of interest. The purpose of the plot is to show the regional effects of all measured proteins at the same time, which currently is the 90 proteins on the CVD1-olink array. To provide a (more) clear picture with so many overlaid plots, only the strongest effect in each 50 kb window is shown, both in plot and in table. All positions are in GRCh37/hg19 coordinates. Under advanced options, it is possible to adjust the zoom-level of the plot as well as table-size and gene-label size in the (optional) gene-map. <br><br>
 
-                              The table shows extended information for each of the pQTL shown in the main plot. The markername is in the format of chr:pos:A1_A2, where A1/A2 is by alphabetical sorting.  The frequency-column shows the observed A1 alelle frequency. The effect-column shows the effect of the A1 allele in standardized units, meaning that a value of 1 equals one standard-devation of protein level increase for each A1 allele. P-value and logP indicates significance. The logP-column is included because values less than 1e-300 often results in failure of analysis software (including R) and logP-units are recommended. Sample size is the effective sample size for the indicated pQTL.<br><br>
+                              The table shows extended information for each of the pQTL shown in the main plot. The frequency-column shows the observed A1 alelle frequency. The effect-column shows the effect of the A1 allele in standardized units, meaning that a value of 1 equals one standard-devation of protein level increase for each A1 allele. P-value and logP indicates significance. The logP-column is included because values less than 1e-300 often results in failure of analysis software (including R) and logP-units are recommended. Sample size is the effective sample size for the indicated pQTL.<br><br>
                               
                               Further documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/scallop-web-browser'>github</a></u>.</small>")
     }

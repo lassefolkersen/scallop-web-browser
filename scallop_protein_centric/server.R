@@ -278,8 +278,8 @@ shinyServer(function(input, output) {
     if( is.null(data))return(NULL)
     d<-data[data[,"logP"]>p_value_cutoff,]
     d <- d[order(d[,"logP"],decreasing=T),]
-    d<-d[,c("MarkerName","Freq1","Effect","P.value.character","logP","TotalSampleSize")]
-    colnames(d) <- c("MarkerName","Frequency","Effect","P-value","logP","SampleSize")
+    d<-d[,c("MarkerName","Allele1","Allele2","Freq1","Effect","P.value.character","logP","TotalSampleSize")]
+    colnames(d) <- c("MarkerName","A1","A2","Frequency","Effect","P-value","logP","SampleSize")
     
     
     #round sample size
@@ -326,7 +326,7 @@ shinyServer(function(input, output) {
     }else{
       methodsToReturn<-paste0("<small><br><b>Methods</b><br>The circular manhattan plot shows the association strength of all observed pQTL effects, both cis- and trans-effects. The highlighted protein-name shows the location of the protein-encoding gene and any proximal peaks are cis-effects. Trans-effects are indicated with connecting lines towards the protein-encoding gene. The fully drawn grey circle indicates a significance level of P=5e-8. The dashed line indicates the customizable treshold, defaulting to P=1e-6. The markerNames of the 3 strongest associations are labelled on plot along with the names of their 4 most proximal genes. These numbers can be altered in advanced options.<br><br> 
 
-                              The table shows extended information for each of the pQTL shown in the circular manhattan plot. The markername is in the format of chr:pos:A1_A2, where A1/A2 is by alphabetical sorting.  All positions are in GRCh37/hg19 coordinates. The frequency-column shows the observed A1 alelle frequency. The effect-column shows the effect of the A1 allele in standardized units, meaning that a value of 1 equals one standard-devation of protein level increase for each A1 allele. P-value and logP indicates significance. The logP-column is included because values less than 1e-300 often results in failure of analysis software (including R) and logP-units are recommended. Sample size is the effective sample size for the indicated pQTL. Only the strongest effect in each 50kb window is shown in the table.<br><br>
+                              The table shows extended information for each of the pQTL shown in the circular manhattan plot. All positions are in GRCh37/hg19 coordinates. The frequency-column shows the observed A1 alelle frequency. The effect-column shows the effect of the A1 allele in standardized units, meaning that a value of 1 equals one standard-devation of protein level increase for each A1 allele. P-value and logP indicates significance. The logP-column is included because values less than 1e-300 often results in failure of analysis software (including R) and logP-units are recommended. Sample size is the effective sample size for the indicated pQTL. Only the strongest effect in each 50kb window is shown in the table.<br><br>
                               
                               Further documentation for analysis is available at <u><a href='http://github.com/lassefolkersen/scallop-web-browser'>github</a></u>.
                               </small>")
