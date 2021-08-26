@@ -30,7 +30,7 @@ shinyServer(function(input, output) {
   
   
   output$text1 <- renderText({
-    stop(safeError("The bulk data download function is unfortunately not ready yet. However the bulk data has already been released at zenodo.org  (https://doi.org/10.5281/zenodo.2615265) and will soon be available at GWAS catalog. You can download them from there. Further, the full set of data is already browsable in the other modules implemented in this web-site, just not bulk-downloadable. Yet."))
+    stop(safeError("The bulk data download function is unfortunately not available. However the bulk data has already been released at zenodo.org  (https://doi.org/10.5281/zenodo.2615265) and will soon be available at GWAS catalog. You can download them from there. Further, the full set of data is already browsable in the other modules implemented in this web-site, just not bulk-downloadable."))
   })
   
   
